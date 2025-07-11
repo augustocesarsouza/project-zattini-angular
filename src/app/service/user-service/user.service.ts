@@ -12,6 +12,7 @@ import { take } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
+  // private baseUrl = environment.BASE_URL || '/api';
   private baseUrl = environment.BASE_URL || '/api';
 
   constructor(private _http: HttpClient) {}
@@ -26,7 +27,6 @@ export class UserService {
     // return this._http
     //   .get<ReturnGetUser>(`${this.baseUrl}/user/get-by-id-info-user/${userId}`, { headers })
     //   .pipe(take(1));
-    console.log(this.baseUrl);
 
     return this._http
       .get(`${this.baseUrl}/user/get-by-id-info-user/${userId}`, { headers })
