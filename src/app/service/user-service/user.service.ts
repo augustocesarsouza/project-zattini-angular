@@ -14,15 +14,15 @@ import { isPlatformServer } from '@angular/common';
 })
 export class UserService {
   // private baseUrl = environment.BASE_URL || '/api';
-  private baseUrl = '';
+  // private baseUrl = '';
 
   constructor(
     private _http: HttpClient,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject('BASE_URL') private baseUrl: string
   ) {
-    if (isPlatformServer(this.platformId)) {
-      this.baseUrl = process.env['BASE_URL'] || '';
-    }
+    // if (isPlatformServer(this.platformId)) {
+    //   this.baseUrl = process.env['BASE_URL'] || '';
+    // }
   }
 
   getByIdInfoUser(userId: string, token: string) {

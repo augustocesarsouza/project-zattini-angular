@@ -4,9 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "node dist/project-zattini-angular/server/server.mjs",
-    "startProx": "ng serve --proxy-config proxy.conf.js --configuration=development",
     "build": "ng build",
-    "build:ssr": "ng build --configuration production && ng run project-zattini-angular:server:production",
+    "startProx": "ng serve --proxy-config proxy.conf.js --configuration=development",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:project-zattini-angular": "node dist/project-zattini-angular/server/server.mjs"
