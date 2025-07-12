@@ -11,8 +11,6 @@ ARG RAILWAY_ENVIRONMENT
 COPY package*.json ./
 RUN npm ci
 COPY . .
-# Configure environment.prod.ts para usar process.env.BASE_URL, etc.
-RUN BASE_URL="$BASE_URL" KEY_USER="$KEY_USER" npm run build:ssr -- --configuration production
 
 # Runtime stage
 FROM node:18-alpine AS runner
