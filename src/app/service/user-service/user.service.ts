@@ -1,9 +1,7 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { take } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { isPlatformServer } from '@angular/common';
-import { AppConfigService } from '../../core/app-config.service';
 
 // export interface ReturnGetUser {
 //   data: User;
@@ -14,15 +12,9 @@ import { AppConfigService } from '../../core/app-config.service';
   providedIn: 'root',
 })
 export class UserService {
-  // private baseUrl = environment.BASE_URL || '/api';
-  private baseUrl = '';
+  private baseUrl = environment.BASE_URL || '/api';
 
-  constructor(
-    private _http: HttpClient,
-    private configService: AppConfigService
-  ) {
-    this.baseUrl = this.configService.baseUrl;
-  }
+  constructor(private _http: HttpClient) {}
 
   getByIdInfoUser(userId: string, token: string) {
     const headers = new HttpHeaders({

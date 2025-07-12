@@ -16,4 +16,4 @@ COPY . ./
 RUN npm run build
 
 # Serve the app
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "serve:ssr"]

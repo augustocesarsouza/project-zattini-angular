@@ -4,12 +4,12 @@
   "scripts": {
     "ng": "ng",
     "start": "node dist/project-zattini-angular/server/server.mjs",
-    "dev:ssr": "cross-env BASE_URL=https://example.com ng run project-zattini-angular:serve-ssr",
     "build": "ng build",
     "startProx": "ng serve --proxy-config proxy.conf.js --configuration=development",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:project-zattini-angular": "node dist/project-zattini-angular/server/server.mjs"
+    "serve:ssr:project-zattini-angular": "node dist/project-zattini-angular/server/server.mjs",
+    "serve:ssr": "node dist/project-zattini-angular/server/main.js"
   },
   "private": true,
   "dependencies": {
