@@ -2,25 +2,26 @@
 FROM node:18-alpine AS builder
 WORKDIR /app
 
-# Declare chaves que Railway injeta em build-time
-ARG BASE_URL
-ARG KEY_USER
-# Adicione caso use NODE_ENV ou outros
-ARG RAILWAY_ENVIRONMENT
-
+# Copia dependências e instala
 COPY package*.json ./
 RUN npm ci
-COPY . .
 
-# Runtime stage
+# Copia código-fonte e gera a build de produção com SSR
+COPY . .
+RUN npm run build:ssr --configuration production
+
+# --- Runtime stage ---
 FROM node:18-alpine AS runner
 WORKDIR /app
+
+# Copia apenas o que precisa para rodar
 COPY --from=builder /app/dist/project-zattini-angular /app/dist
 
-ENV PORT=${PORT:-3000}
-# Variáveis em runtime
-ENV BASE_URL=${BASE_URL}
-ENV KEY_USER=${KEY_USER}
+# Variáveis em tempo de execução (Railway injeta automaticamente!)
+ENV PORT=3000
+# Railway vai injetar BASE_URL e KEY_USER automaticamente aqui
 
-EXPOSE ${PORT}
+EXPOSE $PORT
+
+# Inicia a aplicação SSR (Angular Universal)
 CMD ["node", "dist/server/server.mjs"]
