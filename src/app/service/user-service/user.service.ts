@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { take } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 // export interface ReturnGetUser {
 //   data: User;
@@ -12,7 +12,6 @@ import { take } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
-  // private baseUrl = environment.BASE_URL || '/api';
   private baseUrl = environment.BASE_URL || '/api';
 
   constructor(private _http: HttpClient) {}

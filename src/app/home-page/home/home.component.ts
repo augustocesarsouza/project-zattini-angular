@@ -9,6 +9,7 @@ import { UserService } from '../../service/user-service/user.service';
 })
 export class HomeComponent implements OnInit {
   constructor(private userService: UserService) {}
+  showParagra = false;
 
   ngOnInit(): void {
     const userId = 'e4ff899f-3504-4b20-be9f-31bf6ddb5223';
@@ -16,6 +17,7 @@ export class HomeComponent implements OnInit {
       next: (success) => {
         console.log(success);
         console.log('oupnjiafi9ujads');
+        this.showParagra = true;
       },
       error: (error) => {
         if (error.status === 400) {
