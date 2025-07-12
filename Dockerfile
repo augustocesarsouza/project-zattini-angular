@@ -1,29 +1,19 @@
-# --- Build stage ---
-FROM node:18-alpine AS builder
+FROM node:lts-alpine
+
+# Create and change to the app directory.
 WORKDIR /app
 
-# Copia dependências
+# Copy the files to the container image
 COPY package*.json ./
+
+# Install packages
 RUN npm ci
 
-# Copia o código-fonte
-COPY . .
+# Copy local code to the container image.
+COPY . ./
 
-# Build Angular Universal (SSR)
-RUN npm run build:ssr
+# Build the app.
+RUN npm run build
 
-# --- Runtime stage ---
-FROM node:18-alpine AS runner
-WORKDIR /app
-
-# Copia apenas os artefatos necessários
-COPY --from=builder /app/dist /app/dist
-COPY --from=builder /app/node_modules /app/node_modules
-COPY --from=builder /app/package.json /app/package.json
-
-# Railway injeta as variáveis aqui automaticamente
-ENV PORT=3000
-EXPOSE $PORT
-
-# Start do SSR
-CMD ["npm", "start"]
+# Serve the app
+CMD ["npm", "run", "start"]
