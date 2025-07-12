@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "node dist/project-zattini-angular/server/server.mjs",
+    "dev:ssr": "cross-env BASE_URL=https://example.com ng run project-zattini-angular:serve-ssr",
     "build": "ng build",
     "startProx": "ng serve --proxy-config proxy.conf.js --configuration=development",
     "watch": "ng build --watch --configuration development",
@@ -45,6 +46,7 @@
     "@typescript-eslint/eslint-plugin": "^8.36.0",
     "@typescript-eslint/parser": "^8.36.0",
     "angular-eslint": "^20.1.1",
+    "cross-env": "^7.0.3",
     "eslint": "^9.30.1",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.5.1",

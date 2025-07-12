@@ -4,6 +4,7 @@ import express from 'express';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import AppServerModule from './main.server';
+import { readFileSync } from 'node:fs';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
@@ -11,6 +12,7 @@ const indexHtml = join(serverDistFolder, 'index.server.html');
 
 const app = express();
 const commonEngine = new CommonEngine();
+const DIST_FOLDER = join(process.cwd(), 'dist/project-zattini-angular/browser');
 
 /**
  * Example Express Rest API endpoints can be defined here.
@@ -31,9 +33,20 @@ app.get(
   '**',
   express.static(browserDistFolder, {
     maxAge: '1y',
-    index: 'index.html'
-  }),
+    index: 'index.html',
+  })
 );
+
+// Inject runtime ENV VAR into index.html
+app.get('*', (req, res) => {
+  const indexHtml = readFileSync(join(DIST_FOLDER, 'index.html')).toString();
+  const htmlWithEnv = indexHtml.replace(
+    '</head>',
+    `<script>window.BASE_URL="${process.env['BASE_URL']}"</script></head>`
+  );
+
+  res.send(htmlWithEnv);
+});
 
 /**
  * Handle all other requests by rendering the Angular application.

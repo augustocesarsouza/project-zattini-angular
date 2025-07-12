@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { take } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { isPlatformServer } from '@angular/common';
+import { AppConfigService } from '../../core/app-config.service';
 
 // export interface ReturnGetUser {
 //   data: User;
@@ -14,15 +15,13 @@ import { isPlatformServer } from '@angular/common';
 })
 export class UserService {
   // private baseUrl = environment.BASE_URL || '/api';
-  // private baseUrl = '';
+  private baseUrl = '';
 
   constructor(
     private _http: HttpClient,
-    @Inject('BASE_URL') private baseUrl: string
+    private configService: AppConfigService
   ) {
-    // if (isPlatformServer(this.platformId)) {
-    //   this.baseUrl = process.env['BASE_URL'] || '';
-    // }
+    this.baseUrl = this.configService.baseUrl;
   }
 
   getByIdInfoUser(userId: string, token: string) {
