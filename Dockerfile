@@ -8,7 +8,7 @@ RUN npm ci
 
 # Copia código-fonte e gera a build de produção com SSR
 COPY . .
-RUN npm run build:ssr --configuration production
+RUN npm run build:ssr
 
 # --- Runtime stage ---
 FROM node:18-alpine AS runner
