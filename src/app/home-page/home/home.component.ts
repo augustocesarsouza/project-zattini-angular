@@ -9,28 +9,25 @@ import { UserService } from '../../service/user-service/user.service';
 })
 export class HomeComponent implements OnInit {
   constructor(private userService: UserService) {}
-  showParagra = false;
 
   ngOnInit(): void {
     const userId = 'e4ff899f-3504-4b20-be9f-31bf6ddb5223';
-    this.userService.getByIdInfoUser(userId, '').subscribe({
-      next: (success) => {
-        console.log(success);
-        console.log('oupnjiafi9ujads');
-        this.showParagra = true;
-      },
-      error: (error) => {
-        if (error.status === 400) {
-          console.log(error);
+    // this.userService.getByIdInfoUser(userId, '').subscribe({
+    //   next: (success) => {
+    //     console.log(success);
+    //   },
+    //   error: (error) => {
+    //     if (error.status === 400) {
+    //       console.log(error);
 
-          // this.confirmEmail = false;
-        }
+    //       // this.confirmEmail = false;
+    //     }
 
-        // if (error.status !== 400) {
-        //   localStorage.removeItem('user');
-        //   this.router.navigate(['/login'], { queryParams: { changePassword: false } });
-        // }
-      },
-    });
+    //     // if (error.status !== 400) {
+    //     //   localStorage.removeItem('user');
+    //     //   this.router.navigate(['/login'], { queryParams: { changePassword: false } });
+    //     // }
+    //   },
+    // });
   }
 }

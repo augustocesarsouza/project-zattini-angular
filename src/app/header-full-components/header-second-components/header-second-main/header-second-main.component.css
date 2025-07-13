@@ -1,0 +1,71 @@
+.container-all-enter::after {
+  border-bottom: 1px solid #fff;
+  border-left: 1px solid #fff;
+  content: '';
+  display: block;
+  height: 10px;
+  margin-bottom: 5px;
+  margin-left: 10px;
+  min-width: 10px;
+  transform: rotate(-45deg);
+  width: 10px;
+}
+
+.container-all-enter.rotate-after::after {
+  margin-bottom: 0px;
+  margin-top: 5px;
+  transform: rotate(135deg);
+}
+
+.container-img-zattini {
+  background-image: url(https://static.netshoes.com.br/vue-components/6.87.1/zattini/images/d0f072fdd29a249439767d25e25d1736.svg);
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 100%;
+  width: 100%;
+}
+
+.container-login-main-modal {
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px 0 hsla(0, 0%, 85%, 0.5);
+  display: none;
+  min-width: 180px;
+  position: absolute;
+  right: 31px;
+  bottom: 9px;
+  transform: translateY(100%);
+  z-index: 10;
+}
+
+.container-login-main-modal::after {
+  border: 15px solid transparent;
+  border-bottom-color: #fff;
+  content: '';
+  position: absolute;
+  right: 18px;
+  top: -29px;
+}
+
+.container-shopping-card-modal {
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px 0 hsla(0, 0%, 85%, 0.5);
+  display: none;
+  min-width: 150px;
+  position: absolute;
+  right: -12px;
+  bottom: 6px;
+  transform: translateY(100%);
+  z-index: 10;
+}
+
+.container-shopping-card-modal::after {
+  border: 15px solid transparent;
+  border-bottom-color: #fff;
+  content: '';
+  position: absolute;
+  right: 18px;
+  top: -29px;
+}

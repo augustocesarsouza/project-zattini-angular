@@ -1,0 +1,75 @@
+<div class="flex justify-center bg-[black]">
+  <div class="flex h-[79px] items-center justify-between text-[#fff] !px-[15px] w-[1300px]">
+    <div class="flex w-[160px] h-[100%]">
+      <div class="container-img-zattini"></div>
+    </div>
+
+    <div class="flex w-[633px] h-[42px] relative">
+      <input
+        type="text"
+        placeholder="O que você procura hoje"
+        class="input-what-you-search-today flex outline-none w-full text-[#000] text-[12px] bg-[#fff] !px-[10px]"
+      />
+      <div class="container-app-magnifying-glass absolute top-[8px] right-[10px]">
+        <app-magnifying-glass></app-magnifying-glass>
+      </div>
+    </div>
+
+    <div class="flex justify-between w-[300px] h-[100%] relative">
+      <div class="container-heart-svg-and-span flex gap-[5px] items-center">
+        <app-heart-svg></app-heart-svg>
+        <span class="text-[12px] font-semibold">Lista de Desejos</span>
+      </div>
+
+      <div
+        class="relative flex z-[10] items-center container-all-enter gap-[5px] cursor-pointer"
+        #containerAllEnter
+        (mouseenter)="onMouseEnterLogin()"
+        (mouseleave)="onMouseLeaveLogin()"
+      >
+        <div class="flex w-[25px]">
+          <img
+            src="https://static.netshoes.com.br/vue-components/6.87.1/zattini/images/8873f01bf36af32c19419879c17bacfa.svg"
+            alt="img-body-user-login"
+            class="w-[100%] h-full"
+          />
+        </div>
+
+        <span class="span-login-enter text-[12px] font-semibold">Entrar</span>
+      </div>
+      <!-- login-and-register-user -->
+      <div
+        class="container-login-main-modal flex gap-[7px] flex-col !px-[15px] !py-[5px] cursor-pointer"
+        #containerLoginMainModal
+        (mouseenter)="onMouseEnterLogin()"
+        (mouseleave)="onMouseLeaveLogin()"
+      >
+        <span class="text-[#000000] text-[13px] font-medium" (click)="onClickLogin()">Login</span>
+        <span class="text-[#000000] text-[13px] font-medium">Meus Pedidos</span>
+        <span class="text-[#000000] text-[13px] font-medium">Endereços</span>
+      </div>
+
+      <div
+        class="container-shopping-card-svg flex items-center relative cursor-pointer"
+        (mouseenter)="onMouseEnterContainerShoppingCardSvg()"
+        (mouseleave)="onMouseLeaveContainerShoppingCardSvg()"
+      >
+        <app-shopping-card-svg></app-shopping-card-svg>
+
+        <span
+          class="flex items-center justify-center text-[10px] font-bold absolute text-center right-[0px] bottom-[24px] bg-[#fff] text-[black] rounded-md w-[16px] h-[16px]"
+          >0</span
+        >
+      </div>
+
+      <div
+        class="container-shopping-card-modal flex gap-[7px] flex-col !p-[20px] !px-[60px] cursor-pointer"
+        #containerShoppingCardModal
+        (mouseenter)="onMouseEnterContainerShoppingCardSvg()"
+        (mouseleave)="onMouseLeaveContainerShoppingCardSvg()"
+      >
+        <span class="text-[#000000] text-[13px] font-bold">Seu carrinho está vazio</span>
+      </div>
+    </div>
+  </div>
+</div>
