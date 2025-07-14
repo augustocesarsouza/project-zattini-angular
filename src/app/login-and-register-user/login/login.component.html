@@ -1,1 +1,97 @@
-<p>login works!</p>
+<app-header-main></app-header-main>
+<div class="flex justify-center !my-[42px]">
+  <div class="flex gap-[100px]">
+    <div class="flex flex-col w-[364px]">
+      <h1 class="text-[17px] font-semibold !mb-[10px]">Já sou cliente</h1>
+      <div class="flex flex-col gap-[10px] !mb-[18px]">
+        <div class="flex flex-col">
+          <div class="text-[12px] flex w-full relative">
+            <input
+              type="text"
+              placeholder=""
+              class="w-full outline-none !px-[10px] !py-[18px] border-[1px] border-[#00000018] rounded-sm"
+              #inputEmailCpfCnpj
+              (focus)="
+                onInputEmailFocus(spanEmailCpfCnpj, inputEmailCpfCnpj, spanErrorEmailCpfCnpj)
+              "
+              (blur)="onInputEmailBlur(spanEmailCpfCnpj, inputEmailCpfCnpj, spanErrorEmailCpfCnpj)"
+              (input)="onInputEmail(inputEmailCpfCnpj, spanErrorEmailCpfCnpj, spanEmailCpfCnpj)"
+              (keydown)="onKeyDownInputEmail($event)"
+            />
+            <span
+              class="absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+              #spanEmailCpfCnpj
+              >E-mail, CPF ou CNPJ</span
+            >
+          </div>
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanErrorEmailCpfCnpj
+            >O campo “E-mail, CPF ou CNPJ“ é obrigatório</span
+          >
+        </div>
+
+        <div class="flex flex-col">
+          <div class="text-[12px] flex w-full relative">
+            <input
+              type="password"
+              placeholder=""
+              #inputPassword
+              (focus)="onInputPasswordFocus(spanPassword, inputPassword, spanFieldPasswordRequired)"
+              (blur)="onInputPasswordBlur(spanPassword, inputPassword, spanFieldPasswordRequired)"
+              (input)="
+                onInputPassword(
+                  inputPassword,
+                  spanPassword,
+                  spanFieldPasswordRequired,
+                  spanFieldPasswordRequired3Caracteres
+                )
+              "
+              class="text-[12px] w-full outline-none !px-[10px] !py-[18px] border-[1px] border-[#00000018] rounded-sm"
+            />
+            <span
+              class="absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+              #spanPassword
+              >Senha</span
+            >
+            <div
+              class="container-eye-open"
+              #containerEyeOpen
+              (click)="onClickEyeOpen(inputPassword, containerEyeOpen, containerEyeClose)"
+            ></div>
+            <div
+              class="container-eye-close"
+              #containerEyeClose
+              (click)="onClickEyeClose(inputPassword, containerEyeOpen, containerEyeClose)"
+            ></div>
+          </div>
+
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanFieldPasswordRequired
+            >O campo “Senha“ é obrigatório</span
+          >
+
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanFieldPasswordRequired3Caracteres
+            >O campo “Senha“ precisa ter pelo menos 3 caracteres.</span
+          >
+        </div>
+      </div>
+      <span class="text-[12px] text-[#707070] underline cursor-pointer !mb-[38px]"
+        >Esqueci minha senha</span
+      >
+
+      <button
+        class="text-[14px] font-semibold !px-[2px] !py-[14px] bg-[#f4546a] text-[#fff] cursor-pointer uppercase"
+      >
+        Acessar conta
+      </button>
+    </div>
+    <div class="container-border-between"></div>
+    <div class="flex flex-col">
+      <h1 class="text-[17px] font-semibold">Criar conta</h1>
+    </div>
+  </div>
+</div>

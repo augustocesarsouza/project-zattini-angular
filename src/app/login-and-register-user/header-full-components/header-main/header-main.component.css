@@ -1,0 +1,8 @@
+.container-img-zattini {
+  background-image: url(https://static.netshoes.com.br/vue-components/6.87.1/zattini/images/d0f072fdd29a249439767d25e25d1736.svg);
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 100%;
+  width: 100%;
+}
