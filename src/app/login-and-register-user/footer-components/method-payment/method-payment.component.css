@@ -1,0 +1,47 @@
+.icon-n-card,
+.icon-visa,
+.icon-master-card,
+.icon-american-express,
+.icon-seila,
+.icon-hyper-card,
+.icon-elo,
+.icon-seila-2 {
+  display: block;
+  width: 42px;
+  height: 25px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.icon-n-card {
+  background-image: url('https://static.netshoes.com.br/vue-components/6.87.1/zattini/images/dffdf1939a07df061c114970d32f30f0.svg');
+}
+
+.icon-visa {
+  background-image: url('https://static.netshoes.com.br/vue-components/6.87.1/zattini/images/1c2b271f549a43ff6e5c4a61dad02015.svg');
+}
+
+.icon-master-card {
+  background-image: url('https://static.netshoes.com.br/vue-components/6.87.1/zattini/images/e73f0829375ad1730ec8fa20ed8bd0e9.svg');
+}
+
+.icon-american-express {
+  background-image: url('https://static.netshoes.com.br/vue-components/6.87.1/zattini/images/540aac4f7cbb7f792fef1fe3e195a267.svg');
+}
+
+.icon-seila {
+  background-image: url('https://static.netshoes.com.br/vue-components/6.87.1/zattini/images/b397067c70ca303711159d234236d485.svg');
+}
+
+.icon-hyper-card {
+  background-image: url('https://static.netshoes.com.br/vue-components/6.87.1/zattini/images/87a214ec80166eeef5826221509224b9.svg');
+}
+
+.icon-elo {
+  background-image: url('https://static.netshoes.com.br/vue-components/6.87.1/zattini/images/122fbe6545745b9b41108ac9b82ec4e3.svg');
+}
+
+.icon-seila-2 {
+  background-image: url('https://static.netshoes.com.br/vue-components/6.87.1/zattini/images/59ed2388b2f311c7dc91a8c4e5893087.svg');
+}
