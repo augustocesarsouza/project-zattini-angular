@@ -5,9 +5,11 @@ import { LoginAndRegisterUserRoutingModule } from './login-and-register-user-rou
 import { LoginComponent } from './login/login.component';
 import { HeaderMainComponent } from './header-full-components/header-main/header-main.component';
 import { FormsModule } from '@angular/forms';
+import { AlreadyClientComponent } from './already-client/already-client.component';
+import { CreateAccountComponent } from './create-account/create-account.component';
 
 @NgModule({
-  declarations: [LoginComponent, HeaderMainComponent],
+  declarations: [LoginComponent, HeaderMainComponent, AlreadyClientComponent, CreateAccountComponent],
   imports: [CommonModule, LoginAndRegisterUserRoutingModule, FormsModule],
 })
 export class LoginAndRegisterUserModule {}

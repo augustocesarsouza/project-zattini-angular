@@ -3,30 +3,3 @@
   min-height: 285px;
   border-left: 1px solid #c5c5c5;
 }
-
-.container-eye-open,
-.container-eye-close {
-  background-repeat: no-repeat;
-  background-size: contain;
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  position: absolute;
-  right: 10px;
-  /* top: 20px; */
-  top: 10px;
-  display: none;
-  cursor: pointer;
-}
-
-.container-eye-open {
-  top: 20px;
-  display: flex;
-  background-image: url(https://static.netshoes.com.br/vue-components/6.87.1/zattini/images/5c74819e445e7803484c3244fbc4ea75.svg);
-}
-
-.container-eye-close {
-  top: 20px;
-  display: none;
-  background-image: url(https://static.netshoes.com.br/vue-components/6.87.1/zattini/images/c3e3a7f532ee90e82f758ac1e7696f89.svg);
-}
