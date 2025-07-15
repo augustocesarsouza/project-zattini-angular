@@ -1,0 +1,31 @@
+<div class="flex flex-col">
+  <h1 class="header-create-account text-[18px] font-semibold !mb-[10px]">Criar conta</h1>
+
+  <div class="flex flex-col w-[364px] !mb-[20px]">
+    <div class="text-[14px] flex w-full relative">
+      <input
+        type="text"
+        placeholder=""
+        class="input-email w-full outline-none !px-[10px] !py-[18px] border-[1px] border-[#00000018] rounded-sm"
+        #inputEmail
+        (focus)="onInputEmailFocus(spanEmail, inputEmail, spanErrorInputEmail)"
+        (blur)="onInputEmailBlur(spanEmail, inputEmail, spanErrorInputEmail)"
+        (input)="onInputEmail(inputEmail, spanErrorInputEmail, spanEmail)"
+      />
+      <span
+        class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+        #spanEmail
+        >Informe seu e-mail</span
+      >
+    </div>
+    <span class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]" #spanErrorInputEmail
+      >O campo "Informe seu e-mail" é inválido.</span
+    >
+  </div>
+
+  <button
+    class="button-continue text-[16px] font-semibold !px-[2px] !py-[14px] bg-[#f4546a] text-[#fff] cursor-pointer uppercase"
+  >
+    Prosseguir
+  </button>
+</div>
