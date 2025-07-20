@@ -1,0 +1,38 @@
+<app-header-main></app-header-main>
+
+<div class="flex gap-[10px] mt-[10px] !mx-[40px]">
+  <div class="flex flex-col relative w-[761px]">
+    <div class="flex">
+      <div
+        class="flex z-[10] !p-[12px] border-[1px] border-[#00000018] border-b-[#fff] rounded-tl-sm rounded-tr-sm !mr-[7px] cursor-pointer text-[#000]"
+        #containerIndividual
+        (click)="onClickIndividual(containerIndividual, containerLegalEntity)"
+      >
+        <span class="text-[16px] font-semibold leading-[16px]">Pessoa Física</span>
+      </div>
+      <div
+        class="flex bg-[#f7f7f7] !p-[12px] border-[1px] border-[#00000018] border-b-[#fff] rounded-tl-sm rounded-tr-sm cursor-pointer text-[#00c7c7]"
+        #containerLegalEntity
+        (click)="onClickLegalEntity(containerLegalEntity, containerIndividual)"
+      >
+        <span class="text-[16px] font-semibold leading-[16px]">Pessoa Jurídica</span>
+      </div>
+    </div>
+
+    <router-outlet></router-outlet>
+  </div>
+  <div class="flex flex-col w-[543px]">
+    <div class="flex">
+      <div
+        class="flex z-[10] !p-[12px] border-[1px] border-[#00000018] border-b-0 border-b-[#fff] rounded-tl-sm rounded-tr-sm cursor-pointer text-[#000]"
+        #containerIndividual
+        (click)="onClickIndividual(containerIndividual, containerLegalEntity)"
+      >
+        <span class="text-[16px] font-semibold leading-[16px]">Sobre sua conta</span>
+      </div>
+      <div class="flex-grow border-b-[1px] border-[#00000018] border-b-[#00000018]"></div>
+    </div>
+
+    <app-about-your-account></app-about-your-account>
+  </div>
+</div>

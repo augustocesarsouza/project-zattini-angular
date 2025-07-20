@@ -1,0 +1,137 @@
+<div
+  class="flex flex-col border-[1px] border-[#00000018] border-t-0 !px-[22px] !py-[21px] z-[5] w-[100%]"
+>
+  <div class="flex">
+    <div class="flex flex-col w-[221px] !mb-[20px] !mr-[5px]">
+      <div class="text-[14px] flex w-full relative">
+        <input
+          type="text"
+          placeholder=""
+          class="input-email w-full outline-none !px-[10px] !py-[18px] border-[1px] border-[#00000018] rounded-sm"
+          #inputEmail
+          (focus)="onInputEmailFocus(spanEmail, inputEmail, spanErrorInputEmail)"
+          (blur)="onInputEmailBlur(spanEmail, inputEmail, spanErrorInputEmail)"
+          (input)="onInputEmail(inputEmail, spanErrorInputEmail, spanEmail)"
+        />
+        <span
+          class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+          #spanEmail
+          >* Seu e-mail</span
+        >
+      </div>
+      <span class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]" #spanErrorInputEmail
+        >O campo “Seu e-mail“ é inválido.</span
+      >
+    </div>
+    <div class="flex w-[221px]">
+      <span class="text-[10px] text-[black] leading-[12px]"
+        >A confirmação e o acompanhamento de seu pedido serão enviados ao seu e-mail</span
+      >
+    </div>
+  </div>
+
+  <div class="flex flex-col w-[221px] !mb-[20px]">
+    <div class="text-[14px] flex w-full relative">
+      <input
+        type="password"
+        placeholder=""
+        #inputPassword
+        (focus)="onInputPasswordFocus(spanPassword, inputPassword, spanFieldPasswordRequired)"
+        (blur)="onInputPasswordBlur(spanPassword, inputPassword, spanFieldPasswordRequired)"
+        (input)="
+          onInputPassword(
+            inputPassword,
+            spanPassword,
+            spanFieldPasswordRequired,
+            spanFieldPasswordRequired6Caracteres
+          )
+        "
+        class="input-password text-[12px] w-full outline-none !px-[10px] !py-[18px] border-[1px] border-[#00000018] rounded-sm"
+      />
+      <span
+        class="span-password absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+        #spanPassword
+        >Senha</span
+      >
+      <div
+        class="container-eye-open"
+        #containerEyeOpen
+        (click)="onClickEyeOpen(inputPassword, containerEyeOpen, containerEyeClose)"
+      ></div>
+      <div
+        class="container-eye-close"
+        #containerEyeClose
+        (click)="onClickEyeClose(inputPassword, containerEyeOpen, containerEyeClose)"
+      ></div>
+    </div>
+
+    <span
+      class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+      #spanFieldPasswordRequired
+      >O campo “Senha“ é obrigatório</span
+    >
+
+    <span
+      class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+      #spanFieldPasswordRequired6Caracteres
+      >O campo “Senha“ precisa ter pelo menos 6 caracteres.</span
+    >
+  </div>
+
+  <div
+    class="space-y-4 text-[14px] text-black w-[460px] border-b-[1px] border-[#00000018] border-b-[#00000018] !pb-[20px] !mb-[20px]"
+  >
+    <!-- Email -->
+    <label class="flex items-center gap-2 cursor-pointer leading-[16px]">
+      <input type="checkbox" class="!mt-[0px] w-[18px] h-[18px] accent-black" />
+      <span>
+        Quero receber <strong>ofertas e novidades</strong> das lojas Zattini e Magazine Luiza por
+        <strong>e-mail</strong>
+      </span>
+    </label>
+
+    <!-- WhatsApp - Ofertas -->
+    <label class="flex items-center gap-2 cursor-pointer leading-[16px]">
+      <input type="checkbox" class="accent-black !mt-[3px] w-[18px] h-[18px]" checked />
+      <span class="flex items-center flex-wrap gap-1">
+        Quero receber <strong>ofertas e novidades</strong> por
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+          alt="WhatsApp"
+          class="w-5 h-5"
+        />
+        <span class="font-semibold">WhatsApp</span>
+      </span>
+    </label>
+
+    <!-- WhatsApp - Notificações -->
+    <label class="flex items-center gap-2 cursor-pointer leading-[16px]">
+      <input type="checkbox" class="accent-black !mt-[3px] w-[18px] h-[18px]" checked />
+      <span class="flex items-center flex-wrap gap-1">
+        Quero receber <strong>notificações sobre os meus pedidos</strong> por
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+          alt="WhatsApp"
+          class="w-5 h-5"
+        />
+        <span class="font-semibold">WhatsApp</span>
+      </span>
+    </label>
+  </div>
+
+  <div class="space-y-4 text-[14px] text-black w-full !mb-[50px]">
+    <label class="flex items-center text-[14px] gap-2 cursor-pointer leading-[16px]">
+      <input type="checkbox" class="!mt-[0px] w-[24px] h-[24px] accent-black" />
+      <span
+        >Concordo com o uso dos meus dados para compra e experiência no site conforme a
+        <span class="text-[#0000EE]">Política de Privacidade</span></span
+      >
+    </label>
+  </div>
+
+  <button
+    class="button-access-account w-[190px] text-[16px] border-[1px] border-[#00000018] font-semibold !px-[2px] !py-[14px] bg-[#fff] text-[#999] cursor-pointer uppercase"
+  >
+    CONTINUAR
+  </button>
+</div>

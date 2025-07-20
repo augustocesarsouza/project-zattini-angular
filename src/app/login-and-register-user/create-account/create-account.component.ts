@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-account',
@@ -7,8 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './create-account.component.css',
 })
 export class CreateAccountComponent {
-  firstClickedInputEmail = false;
+  constructor(private router: Router) {}
 
+  firstClickedInputEmail = false;
   onInputEmailFocus(
     spanEmail: HTMLSpanElement,
     inputEmail: HTMLInputElement,
@@ -66,6 +68,16 @@ export class CreateAccountComponent {
       spanEmail.style.fontWeight = '700';
       spanErrorEmail.style.display = 'none';
       this.canLoginEmailCorrect = true;
+    }
+  }
+
+  onClickContinue(inputEmail: HTMLInputElement) {
+    const value = inputEmail.value;
+
+    if (value.includes('@gmail.com')) {
+      this.router.navigate(['/auth/register/natural'], {
+        queryParams: { email: value },
+      });
     }
   }
 }

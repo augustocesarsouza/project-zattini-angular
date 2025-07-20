@@ -1,0 +1,452 @@
+<div
+  class="border-[1px] border-[#00000018] flex flex-col !px-[22px] !py-[21px] z-[5] w-[100%] absolute left-[0px] top-[41px] h-[580px]"
+>
+  <span class="text-[14px] leading-[16px] !mb-[20px]">* Campos obrigatórios.</span>
+
+  <div class="flex flex-col">
+    <div class="flex !mb-[15px]">
+      <div class="flex gap-[10px] !mr-[10px]">
+        <div class="flex flex-col w-[215px]">
+          <div class="text-[14px] flex w-full relative h-[100%]">
+            <app-input-generic
+              [onInputFocus]="onInputFocus"
+              [onInputBlur]="onInputBlur"
+              [onInput]="onInput"
+              [whichIs]="'name'"
+            ></app-input-generic>
+            <span
+              #spanNameRef
+              class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+              >* Nome</span
+            >
+          </div>
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanErrorNameRequiredRef
+            >O campo “Nome“ é obrigatório</span
+          >
+
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanErrorNameAtLeast3CharactersRef
+            >O campo “Nome“ precisa ter pelo menos 3 caracteres.</span
+          >
+        </div>
+
+        <div class="flex flex-col w-[215px]">
+          <div class="text-[14px] flex w-full relative">
+            <app-input-generic
+              [onInputFocus]="onInputFocus"
+              [onInputBlur]="onInputBlur"
+              [onInput]="onInput"
+              [whichIs]="'lastName'"
+            ></app-input-generic>
+            <span
+              #spanLastNameRef
+              class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+              >* Sobrenome</span
+            >
+          </div>
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanErrorLastNameRequiredRef
+            >O campo “Sobrenome“ é obrigatório</span
+          >
+
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanErrorLastNameAtLeast3CharactersRef
+            >O campo “Sobrenome“ precisa ter pelo menos 3 caracteres.</span
+          >
+        </div>
+      </div>
+      <div class="flex flex-col">
+        <span class="text-[12px] text-[#000] font-semibold">* Sexo</span>
+
+        <div class="flex gap-[10px] leading-[16px] select-none">
+          <label
+            #labelFemale
+            class="label-gender-female cursor-pointer flex text-[14px] relative"
+            for="female"
+            (click)="onClickLabelFemale()"
+            >Feminino</label
+          >
+          <label
+            #labelMale
+            class="label-gender-male cursor-pointer flex text-[14px] relative"
+            for="male"
+            (click)="onClickLabelMale()"
+            >Masculino</label
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col !mb-[15px]">
+      <span class="text-[14px] text-[#000] font-semibold !mb-[5px]">Data de nascimento</span>
+      <div class="flex justify-between gap-[10px]">
+        <div class="flex gap-[5px]">
+          <div class="flex flex-col w-[107px]">
+            <div class="select-wrapper" #selectWrapperFirst>
+              <select
+                class="custom-select"
+                name="day"
+                id="dayOfBirth"
+                #selectDayOfBirth
+                [(ngModel)]="selectedDay"
+                (change)="onInputSelectChange(selectDayOfBirth, selectWrapperFirst, 'day')"
+                (focus)="onInputSelectDayOfBirthFocus()"
+                (blur)="onInputSelectBlur(selectDayOfBirth, selectWrapperFirst, 'day')"
+              >
+                <option value="">* Dia</option>
+                <option *ngFor="let day of days" [value]="day">{{ day }}</option>
+              </select>
+            </div>
+            <!-- flex -->
+            <span
+              class="hidden text-[12px] text-[#db001c] font-bold leading-[14px]"
+              #spanErrorFieldDayRequired
+              >O campo “Dia“ é obrigatório</span
+            >
+          </div>
+
+          <div class="flex flex-col w-[107px]">
+            <div class="select-wrapper" #selectWrapperSecond>
+              <select
+                class="custom-select"
+                name="month"
+                id="monthOfBirth"
+                #selectMonthOfBirth
+                [(ngModel)]="selectedMonth"
+                (change)="onInputSelectChange(selectMonthOfBirth, selectWrapperSecond, 'month')"
+                (blur)="onInputSelectBlur(selectMonthOfBirth, selectWrapperSecond, 'month')"
+              >
+                <option value="">* Mês</option>
+                <option *ngFor="let month of months" [value]="month.value">{{ month.name }}</option>
+              </select>
+            </div>
+            <span
+              class="hidden text-[12px] text-[#db001c] font-bold leading-[14px]"
+              #spanErrorFieldMonthRequired
+              >O campo “Mês“ é obrigatório</span
+            >
+          </div>
+
+          <div class="flex flex-col w-[107px]">
+            <div class="select-wrapper" #selectWrapperThird>
+              <select
+                class="custom-select"
+                name="year"
+                id="yearOfBirth"
+                #selectYear
+                [(ngModel)]="selectedYear"
+                (change)="onInputSelectChange(selectYear, selectWrapperThird, 'year')"
+                (blur)="onInputSelectBlur(selectYear, selectWrapperThird, 'year')"
+              >
+                <option value="">* Ano</option>
+                <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+              </select>
+            </div>
+            <span
+              class="hidden text-[12px] text-[#db001c] font-bold leading-[14px]"
+              #spanErrorFieldYearRequired
+              >O campo “Ano“ é obrigatório</span
+            >
+          </div>
+        </div>
+
+        <div class="flex flex-col w-[100%] !mr-[5px]">
+          <div class="text-[14px] flex w-full relative h-[100%]">
+            <app-input-generic
+              [onInputFocus]="onInputCpfFocus"
+              [onInputBlur]="onInputCpfBlur"
+              [onInput]="onInputCpf"
+              [whichIs]="'cpf'"
+              (keydown)="onKeyDownInputCpf($event)"
+            ></app-input-generic>
+            <span
+              #spanCpfRef
+              class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+              >* Cpf</span
+            >
+          </div>
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanErrorCpfRequiredRef
+            >O campo “CPF“ é obrigatório</span
+          >
+
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanErrorCpfMustBe11CharactersRef
+            >O campo “CPF“ precisa ter pelo menos 11 caracteres.</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-between gap-[10px] !mb-[15px]">
+      <div class="flex flex-col w-[330px]">
+        <div class="text-[14px] flex w-full relative h-[100%]">
+          <app-input-generic
+            [onInputFocus]="onInputCellPhoneFocus"
+            [onInputBlur]="onInputCellPhoneBlur"
+            [onInput]="onInputCellPhone"
+            [whichIs]="''"
+            (keydown)="onKeyDownInputCellPhone($event)"
+          ></app-input-generic>
+          <span
+            #spanCellPhoneRef
+            class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+            >* DDD e número de celular</span
+          >
+        </div>
+        <span
+          class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+          #spanErrorCellPhoneRequiredRef
+          >O campo “DDD e número de celular“ é obrigatório</span
+        >
+
+        <span
+          class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+          #spanErrorCellPhoneMustBe11CharactersRef
+          >O campo “DDD e número de celular“ precisa ter pelo menos 11 caracteres.</span
+        >
+      </div>
+    </div>
+
+    <div class="flex gap-[10px] !mb-[10px]">
+      <div class="flex gap-[10px]">
+        <div class="flex flex-col w-[160px]">
+          <div class="text-[14px] flex w-full relative h-[100%]">
+            <app-input-generic
+              [onInputFocus]="onInputCepFocus"
+              [onInputBlur]="onInputCepBlur"
+              [onInput]="onInputCep"
+              [whichIs]="''"
+              (keydown)="onKeyDownInputCep($event)"
+            ></app-input-generic>
+            <span
+              #spanCepRef
+              class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+              >* CEP</span
+            >
+          </div>
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanErrorCepRequiredRef
+            >O campo “CEP“ é obrigatório</span
+          >
+
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanErrorCepAtLeast9CharactersRef
+            >O campo “CEP“ precisa ter pelo menos 9 caracteres.</span
+          >
+        </div>
+
+        <div class="flex flex-col w-[160px] relative">
+          <div class="select-wrapper" #selectWrapperTypeOfAddressSecond>
+            <select
+              class="custom-select"
+              name="type-of-address"
+              id="typeOfAddress"
+              #selectTypeOfAddress
+              [(ngModel)]="selectedTypeOfAddress"
+              (change)="
+                onInputSelectTypeOfAddressChange(
+                  selectTypeOfAddress,
+                  selectWrapperTypeOfAddressSecond,
+                  spanTypeOfAddressRef,
+                  ''
+                )
+              "
+              (blur)="
+                onInputSelectTypeOfAddressBlur(
+                  selectTypeOfAddress,
+                  selectWrapperTypeOfAddressSecond,
+                  ''
+                )
+              "
+            >
+              <option value="">* Tipo de Endereço</option>
+              <option *ngFor="let address of typeOfAddress" [value]="address.value">
+                {{ address.name }}
+              </option>
+            </select>
+            <span
+              #spanTypeOfAddressRef
+              class="hidden text-[12px] absolute left-[10px] top-[8px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+              >* Tipo de Endereço</span
+            >
+          </div>
+          <span
+            class="hidden text-[12px] text-[#db001c] font-bold leading-[14px]"
+            #spanErrorFieldTypeOfAddressRequired
+            >O campo “Tipo de Endereço“ é obrigatório</span
+          >
+        </div>
+      </div>
+
+      <div class="flex-grow flex-col">
+        <div class="text-[14px] flex w-full relative h-[100%]">
+          <app-input-generic
+            [onInputFocus]="onInputAddressFocus"
+            [onInputBlur]="onInputAddressBlur"
+            [onInput]="onInputAddress"
+            [whichIs]="''"
+            (keydown)="onKeyDownInputAddress($event)"
+          ></app-input-generic>
+          <span
+            #spanAddressRef
+            class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+            >* Endereço</span
+          >
+        </div>
+        <span
+          class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+          #spanErrorAddressRequiredRef
+          >O campo “Endereço“ é obrigatório</span
+        >
+      </div>
+    </div>
+    <span class="text-[14px] !mb-[10px] underline">Não sei meu CEP</span>
+
+    <div class="flex gap-[10px] !mb-[15px]">
+      <div class="flex gap-[10px]">
+        <div class="flex flex-col w-[160px]">
+          <div class="text-[14px] flex w-full relative h-[100%]">
+            <app-input-generic
+              [onInputFocus]="onInputNumberFocus"
+              [onInputBlur]="onInputNumberBlur"
+              [onInput]="onInputNumber"
+              [whichIs]="''"
+              (keydown)="onKeyDownInputNumber($event)"
+            ></app-input-generic>
+            <span
+              #spanNumberRef
+              class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+              >* Número</span
+            >
+          </div>
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanErrorNumberRequiredRef
+            >O campo “Número“ é obrigatório</span
+          >
+        </div>
+
+        <div class="flex flex-col w-[160px]">
+          <div class="text-[13px] flex w-full relative h-[100%]">
+            <app-input-generic
+              [onInputFocus]="onInputComplementFocus"
+              [onInputBlur]="onInputComplementBlur"
+              [onInput]="onInputComplement"
+              [whichIs]="''"
+              (keydown)="onKeyDownInputComplement($event)"
+            ></app-input-generic>
+            <span
+              #spanComplementRef
+              class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+              >Complemento (opcional)</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-grow flex-col">
+        <div class="text-[14px] flex w-full relative h-[100%]">
+          <app-input-generic
+            [onInputFocus]="onInputNeighborhoodFocus"
+            [onInputBlur]="onInputNeighborhoodBlur"
+            [onInput]="onInputNeighborhood"
+            [whichIs]="''"
+            (keydown)="onKeyDownInputNeighborhood($event)"
+          ></app-input-generic>
+          <span
+            #spanNeighborhoodRef
+            class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+            >* Bairro</span
+          >
+        </div>
+        <span
+          class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+          #spanErrorNeighborhoodRequiredRef
+          >O campo “Bairro“ é obrigatório</span
+        >
+      </div>
+    </div>
+
+    <div class="flex gap-[10px]">
+      <div class="flex flex-col w-[160px] relative">
+        <div class="select-wrapper" #selectWrapperStateSecond>
+          <select
+            class="custom-select"
+            name="state"
+            id="State"
+            #selectState
+            [(ngModel)]="selectedState"
+            (change)="
+              onInputSelectStateChange(selectState, selectWrapperStateSecond, spanStateRef, '')
+            "
+            (blur)="onInputSelectStateBlur(selectState, selectWrapperStateSecond, '')"
+          >
+            <option value="">* Estado</option>
+            <option *ngFor="let state of states" [value]="state.value">
+              {{ state.name }}
+            </option>
+          </select>
+        </div>
+        <span
+          #spanStateRef
+          class="hidden text-[12px] absolute left-[10px] top-[8px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+          >* Estado</span
+        >
+        <span
+          class="hidden text-[11px] text-[#db001c] font-bold leading-[14px]"
+          #spanErrorFieldStateRequired
+          >O campo “Estado“ é obrigatório</span
+        >
+      </div>
+
+      <div class="flex flex-col w-[272px]">
+        <div class="text-[14px] flex w-full relative h-[100%]">
+          <app-input-generic
+            [onInputFocus]="onInputCityFocus"
+            [onInputBlur]="onInputCityBlur"
+            [onInput]="onInputCity"
+            [whichIs]="''"
+            (keydown)="onKeyDownInputCity($event)"
+          ></app-input-generic>
+          <span
+            #spanCityRef
+            class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+            >* Cidade</span
+          >
+        </div>
+        <span
+          class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+          #spanErrorCityRequiredRef
+          >O campo “Cidade“ é obrigatório</span
+        >
+      </div>
+
+      <div class="flex-grow flex-col">
+        <div class="text-[13px] flex w-full relative h-[100%]">
+          <app-input-generic
+            [onInputFocus]="onInputReferencePointFocus"
+            [onInputBlur]="onInputReferencePointBlur"
+            [onInput]="onInputReferencePoint"
+            [whichIs]="''"
+            (keydown)="onKeyDownInputReferencePoint($event)"
+          ></app-input-generic>
+          <span
+            #spanReferencePointRef
+            class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+            >Ponto de Referência (opcional)</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
