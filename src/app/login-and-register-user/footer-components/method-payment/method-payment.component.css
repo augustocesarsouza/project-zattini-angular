@@ -1,3 +1,8 @@
+:host {
+  display: flex;
+  justify-content: center;
+}
+
 .icon-n-card,
 .icon-visa,
 .icon-master-card,

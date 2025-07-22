@@ -78,8 +78,9 @@
     >
   </div>
 
+  <!-- w-[460px] -->
   <div
-    class="space-y-4 text-[14px] text-black w-[460px] border-b-[1px] border-[#00000018] border-b-[#00000018] !pb-[20px] !mb-[20px]"
+    class="space-y-4 text-[14px] text-black border-b-[1px] border-[#00000018] border-b-[#00000018] !pb-[20px] !mb-[20px]"
   >
     <!-- Email -->
     <label class="flex items-center gap-2 cursor-pointer leading-[16px]">
@@ -120,8 +121,13 @@
   </div>
 
   <div class="space-y-4 text-[14px] text-black w-full !mb-[50px]">
-    <label class="flex items-center text-[14px] gap-2 cursor-pointer leading-[16px]">
-      <input type="checkbox" class="!mt-[0px] w-[24px] h-[24px] accent-black" />
+    <label class="flex items-center text-[14px] gap-2 cursor-pointer leading-[16px] select-none">
+      <input
+        type="checkbox"
+        class="!mt-[0px] w-[24px] h-[24px] accent-black"
+        (change)="onChangeCheckbox($event, buttonContinue)"
+        #inputCheckboxAgreeUseMyData
+      />
       <span
         >Concordo com o uso dos meus dados para compra e experiência no site conforme a
         <span class="text-[#0000EE]">Política de Privacidade</span></span
@@ -130,7 +136,9 @@
   </div>
 
   <button
-    class="button-access-account w-[190px] text-[16px] border-[1px] border-[#00000018] font-semibold !px-[2px] !py-[14px] bg-[#fff] text-[#999] cursor-pointer uppercase"
+    class="button-access-account w-[190px] text-[16px] border-[1px] border-[#00000018] font-semibold !px-[2px] !py-[14px] bg-[#fff] text-[#999] uppercase"
+    #buttonContinue
+    (click)="onClickContinueCreate()"
   >
     CONTINUAR
   </button>

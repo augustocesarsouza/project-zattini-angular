@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { WidthCreateAccountIsLessThan1035Service } from '../../../service-dispatch/user-register/width-create-account-is-less-than-1035.service';
 
 @Component({
   selector: 'app-register-natural',
@@ -7,8 +8,25 @@ import { Router } from '@angular/router';
   templateUrl: './register-natural.component.html',
   styleUrl: './register-natural.component.css',
 })
-export class RegisterNaturalComponent {
-  constructor(private router: Router) {}
+export class RegisterNaturalComponent implements OnInit {
+  @ViewChild('containerLegalEntity') containerLegalEntity!: ElementRef<HTMLDivElement>;
+  @ViewChild('containerIndividual') containerIndividual!: ElementRef<HTMLDivElement>;
+
+  constructor(
+    private router: Router,
+    private widthCreateAccountIsLessThan1035Service: WidthCreateAccountIsLessThan1035Service,
+    private cdRef: ChangeDetectorRef
+  ) {}
+
+  canShowFormIndividualMediaSmaller = false;
+
+  ngOnInit(): void {
+    this.widthCreateAccountIsLessThan1035Service.value$.subscribe((value) => {
+      this.canShowFormIndividualMediaSmaller = value;
+
+      this.cdRef.detectChanges();
+    });
+  }
 
   onClickIndividual(containerIndividual: HTMLDivElement, containerLegalEntity: HTMLDivElement) {
     containerLegalEntity.style.zIndex = '0';

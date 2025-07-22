@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { RegisterNaturalComponent } from './register-natural-components/register-natural/register-natural.component';
-import { FormIndividualComponent } from './register-natural-components/form-individual/form-individual.component';
+import { FormIndividualComponent } from './register-natural-components/form-individual-components/form-individual/form-individual.component';
 import { FormLegalEntityComponent } from './register-natural-components/form-legal-entity/form-legal-entity.component';
 
 const routes: Routes = [

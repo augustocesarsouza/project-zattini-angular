@@ -1,8 +1,11 @@
 <app-header-main></app-header-main>
 
-<div class="flex gap-[10px] mt-[10px] !mx-[40px]">
-  <div class="flex flex-col relative w-[761px]">
-    <div class="flex">
+<div class="flex justify-center gap-[10px] mt-[10px] !mx-[20px] min-h-[643px]">
+  <div
+    class="flex flex-col relative"
+    [ngClass]="canShowFormIndividualMediaSmaller ? 'w-[950px]' : 'w-[761px]'"
+  >
+    <div class="flex" *ngIf="!canShowFormIndividualMediaSmaller">
       <div
         class="flex z-[10] !p-[12px] border-[1px] border-[#00000018] border-b-[#fff] rounded-tl-sm rounded-tr-sm !mr-[7px] cursor-pointer text-[#000]"
         #containerIndividual
@@ -21,12 +24,14 @@
 
     <router-outlet></router-outlet>
   </div>
-  <div class="flex flex-col w-[543px]">
+  <div
+    class="container-main-about-your-account flex flex-col w-[543px]"
+    *ngIf="!canShowFormIndividualMediaSmaller"
+  >
     <div class="flex">
       <div
         class="flex z-[10] !p-[12px] border-[1px] border-[#00000018] border-b-0 border-b-[#fff] rounded-tl-sm rounded-tr-sm cursor-pointer text-[#000]"
-        #containerIndividual
-        (click)="onClickIndividual(containerIndividual, containerLegalEntity)"
+        #containerAboutYourAccount
       >
         <span class="text-[16px] font-semibold leading-[16px]">Sobre sua conta</span>
       </div>
@@ -36,3 +41,7 @@
     <app-about-your-account></app-about-your-account>
   </div>
 </div>
+
+<app-method-payment></app-method-payment>
+
+<app-copyright></app-copyright>

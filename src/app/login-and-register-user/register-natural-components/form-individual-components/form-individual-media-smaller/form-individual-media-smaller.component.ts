@@ -1,13 +1,14 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { SendClickedButtonContinueRegisterService } from '../../../../service-dispatch/user-register/send-clicked-button-continue-register.service';
 
 @Component({
-  selector: 'app-form-individual',
+  selector: 'app-form-individual-media-smaller',
   standalone: false,
-  templateUrl: './form-individual.component.html',
-  styleUrl: './form-individual.component.css',
+  templateUrl: './form-individual-media-smaller.component.html',
+  styleUrl: './form-individual-media-smaller.component.css',
 })
-export class FormIndividualComponent implements OnInit, AfterViewInit {
+export class FormIndividualMediaSmallerComponent {
   @ViewChild('spanNameRef') spanNameRef!: ElementRef<HTMLSpanElement>;
   @ViewChild('spanErrorNameRequiredRef') spanErrorNameRequiredRef!: ElementRef<HTMLSpanElement>;
   @ViewChild('spanErrorNameAtLeast3CharactersRef')
@@ -21,7 +22,25 @@ export class FormIndividualComponent implements OnInit, AfterViewInit {
 
   firstClickedInputName = false;
 
-  constructor(private route: ActivatedRoute) {}
+  inputName!: HTMLInputElement;
+  inputLastName!: HTMLInputElement;
+  @ViewChild('selectDayOfBirth') selectDayOfBirth!: ElementRef<HTMLInputElement>;
+  @ViewChild('selectMonthOfBirth') selectMonthOfBirth!: ElementRef<HTMLInputElement>;
+  @ViewChild('selectYear') selectYear!: ElementRef<HTMLInputElement>;
+  inputCpf!: HTMLInputElement;
+  inputCellPhone!: HTMLInputElement;
+  inputCep!: HTMLInputElement;
+  @ViewChild('selectTypeOfAddress') selectTypeOfAddress!: ElementRef<HTMLInputElement>;
+  inputAddress!: HTMLInputElement;
+  inputNumber!: HTMLInputElement;
+  inputNeighborhood!: HTMLInputElement;
+  @ViewChild('selectState') selectState!: ElementRef<HTMLInputElement>;
+  inputCity!: HTMLInputElement;
+
+  constructor(
+    private route: ActivatedRoute,
+    private sendClickedButtonContinueRegisterService: SendClickedButtonContinueRegisterService
+  ) {}
 
   ngOnInit(): void {
     this.loadYears();
@@ -62,13 +81,44 @@ export class FormIndividualComponent implements OnInit, AfterViewInit {
     this.onInputCityBlur = this.onInputCityBlur.bind(this);
     this.onInputCity = this.onInputCity.bind(this);
 
+    this.getInputName = this.getInputName.bind(this);
+    this.getInputLastName = this.getInputLastName.bind(this);
+    this.getInputCpf = this.getInputCpf.bind(this);
+    this.getInputCellPhone = this.getInputCellPhone.bind(this);
+    this.getInputCep = this.getInputCep.bind(this);
+    this.getInputAddress = this.getInputAddress.bind(this);
+    this.getInputNumber = this.getInputNumber.bind(this);
+    this.getInputNeighborhood = this.getInputNeighborhood.bind(this);
+    this.getInputCity = this.getInputCity.bind(this);
+  }
+
+  @ViewChild('inputEmail') inputEmailRef!: ElementRef<HTMLInputElement>;
+  @ViewChild('spanEmail') spanEmailRef!: ElementRef<HTMLSpanElement>;
+  timeoutRef: any = null;
+
+  ngAfterViewInit() {
     this.route.queryParams.subscribe((params) => {
       if (params['email']) {
-        const emailUser = params['email'];
+        const emailUser: string = params['email'];
+
+        if (this.timeoutRef) {
+          clearTimeout(this.timeoutRef);
+        }
+
+        this.timeoutRef = setTimeout(() => {
+          const inputEmail = this.inputEmailRef.nativeElement;
+          inputEmail.value = emailUser;
+
+          const spanEmail = this.spanEmailRef.nativeElement;
+
+          spanEmail.style.top = '-7px';
+          spanEmail.style.left = '6px';
+          spanEmail.style.padding = '0px 5px';
+        }, 20);
 
         // Se quiser limpar os params:
         // this.router.navigate([], {
-        //   queryParams: { changePassword: null },
+        //   queryParams: { changePassword: null },aa
         //   queryParamsHandling: 'merge',
         //   replaceUrl: true,
         // });
@@ -76,7 +126,63 @@ export class FormIndividualComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {}
+  errorInputsVerifify(
+    input: HTMLInputElement,
+    span: HTMLSpanElement | null,
+    spanError: HTMLSpanElement
+  ) {
+    const inputNameValue = input.value;
+
+    if (inputNameValue.length <= 0) {
+      if (span) {
+        span.style.color = 'red';
+        span.style.fontWeight = '700';
+      }
+      input.style.border = 'solid 1px red';
+      input.style.color = 'red';
+      spanError.style.display = 'flex';
+
+      return true;
+    }
+
+    return false;
+  }
+
+  getInputName(input: HTMLInputElement) {
+    this.inputName = input;
+  }
+
+  getInputLastName(input: HTMLInputElement) {
+    this.inputLastName = input;
+  }
+
+  getInputCpf(input: HTMLInputElement) {
+    this.inputCpf = input;
+  }
+
+  getInputCellPhone(input: HTMLInputElement) {
+    this.inputCellPhone = input;
+  }
+
+  getInputCep(input: HTMLInputElement) {
+    this.inputCep = input;
+  }
+
+  getInputAddress(input: HTMLInputElement) {
+    this.inputAddress = input;
+  }
+
+  getInputNumber(input: HTMLInputElement) {
+    this.inputNumber = input;
+  }
+
+  getInputNeighborhood(input: HTMLInputElement) {
+    this.inputNeighborhood = input;
+  }
+
+  getInputCity(input: HTMLInputElement) {
+    this.inputCity = input;
+  }
 
   onInputFocus(inputName: HTMLInputElement, whichIs: 'name' | 'lastName' | 'cpf' | '') {
     const value = inputName.value;
@@ -158,6 +264,7 @@ export class FormIndividualComponent implements OnInit, AfterViewInit {
         return;
       }
       input.style.border = 'solid 1px rgba(0, 0, 0, 0.094)';
+      input.style.color = 'black';
       span.style.color = 'black';
       span.style.fontWeight = '700';
       spanErrorAtLeast3Character.style.display = 'none';
@@ -283,8 +390,106 @@ export class FormIndividualComponent implements OnInit, AfterViewInit {
     labelMale.classList.add('active');
   }
 
-  onClickContinue(inputName: HTMLInputElement) {
-    const value = inputName.value;
+  verifyInputsToRegisterDatePersonalFields() {
+    const value1 = this.errorInputsVerifify(
+      this.inputName,
+      this.spanNameRef.nativeElement,
+      this.spanErrorNameRequiredRef.nativeElement
+    );
+
+    const value2 = this.errorInputsVerifify(
+      this.inputLastName,
+      this.spanLastNameRef.nativeElement,
+      this.spanErrorLastNameRequiredRef.nativeElement
+    );
+
+    const value3 = this.errorInputsVerifify(
+      this.selectDayOfBirth.nativeElement,
+      null,
+      this.spanErrorFieldDayRequired.nativeElement
+    );
+
+    const value4 = this.errorInputsVerifify(
+      this.selectMonthOfBirth.nativeElement,
+      null,
+      this.spanErrorFieldMonthRequired.nativeElement
+    );
+
+    const value5 = this.errorInputsVerifify(
+      this.selectYear.nativeElement,
+      null,
+      this.spanErrorFieldYearRequired.nativeElement
+    );
+
+    const value6 = this.errorInputsVerifify(
+      this.inputCpf,
+      this.spanCpfRef.nativeElement,
+      this.spanErrorCpfRequiredRef.nativeElement
+    );
+
+    const value7 = this.errorInputsVerifify(
+      this.inputCellPhone,
+      this.spanCellPhoneRef.nativeElement,
+      this.spanErrorCellPhoneRequiredRef.nativeElement
+    );
+
+    if (value1 || value2 || value3 || value4 || value5 || value6 || value7) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  verifyInputsToRegisterAddressFields() {
+    const value8 = this.errorInputsVerifify(
+      this.inputCep,
+      this.spanCepRef.nativeElement,
+      this.spanErrorCepRequiredRef.nativeElement
+    );
+
+    const value9 = this.errorInputsVerifify(
+      this.selectTypeOfAddress.nativeElement,
+      null,
+      this.spanErrorFieldTypeOfAddressRequired.nativeElement
+    );
+
+    const value10 = this.errorInputsVerifify(
+      this.inputAddress,
+      this.spanAddressRef.nativeElement,
+      this.spanErrorAddressRequiredRef.nativeElement
+    );
+
+    const value11 = this.errorInputsVerifify(
+      this.inputNumber,
+      this.spanNumberRef.nativeElement,
+      this.spanErrorNumberRequiredRef.nativeElement
+    );
+
+    const value12 = this.errorInputsVerifify(
+      this.inputNeighborhood,
+      this.spanNeighborhoodRef.nativeElement,
+      this.spanErrorNeighborhoodRequiredRef.nativeElement
+    );
+
+    const value13 = this.errorInputsVerifify(
+      this.selectState.nativeElement,
+      null,
+      this.spanErrorFieldStateRequired.nativeElement
+    );
+
+    const value14 = this.errorInputsVerifify(
+      this.inputCity,
+      this.spanCityRef.nativeElement,
+      this.spanErrorCityRequiredRef.nativeElement
+    );
+
+    if (value8 || value9 || value10 || value11 || value12 || value13 || value14) {
+      console.log('algum erro');
+      return true;
+    } else {
+      console.log('nao tem erro');
+      return false;
+    }
   }
 
   @ViewChild('spanErrorFieldDayRequired') spanErrorFieldDayRequired!: ElementRef<HTMLSpanElement>;
@@ -307,6 +512,7 @@ export class FormIndividualComponent implements OnInit, AfterViewInit {
     if (value.length > 0) {
       select.style.border = 'solid 1px #00000018';
       select.style.color = 'rgb(0, 0, 0)';
+      select.style.color = 'black';
       selectWrapper.classList.remove('error');
       span.style.display = 'none';
     } else {
@@ -454,6 +660,7 @@ export class FormIndividualComponent implements OnInit, AfterViewInit {
         return;
       }
       input.style.border = 'solid 1px rgba(0, 0, 0, 0.094)';
+      input.style.color = 'black';
       span.style.color = 'black';
       span.style.fontWeight = '700';
       spanErrorCpfMustBe11CharactersRef.style.display = 'none';
@@ -573,6 +780,7 @@ export class FormIndividualComponent implements OnInit, AfterViewInit {
         return;
       }
       input.style.border = 'solid 1px rgba(0, 0, 0, 0.094)';
+      input.style.color = 'black';
       span.style.color = 'black';
       span.style.fontWeight = '700';
       spanErrorCellPhoneMustBe11CharactersRef.style.display = 'none';
@@ -677,6 +885,7 @@ export class FormIndividualComponent implements OnInit, AfterViewInit {
         return;
       }
       input.style.border = 'solid 1px rgba(0, 0, 0, 0.094)';
+      input.style.color = 'black';
       span.style.color = 'black';
       span.style.fontWeight = '700';
       spanErrorCepAtLeast9CharactersRef.style.display = 'none';
@@ -696,15 +905,10 @@ export class FormIndividualComponent implements OnInit, AfterViewInit {
     const span = this.spanErrorFieldTypeOfAddressRequired.nativeElement;
     const value = select.value;
 
-    // const span = this.spanCepRef.nativeElement;
-    // span.style.top = '-7px';
-    // span.style.left = '6px';
-    // span.style.padding = '0px 5px';
-    console.log(value);
-
     if (value.length > 0) {
       select.style.border = 'solid 1px #00000018';
       select.style.color = 'rgb(0, 0, 0)';
+      select.style.color = 'black';
       selectWrapper.classList.remove('error');
       span.style.display = 'none';
 
@@ -816,6 +1020,7 @@ export class FormIndividualComponent implements OnInit, AfterViewInit {
 
     if (formatted.length > 0) {
       input.style.border = 'solid 1px rgba(0, 0, 0, 0.094)';
+      input.style.color = 'black';
       span.style.color = 'black';
       span.style.fontWeight = '700';
       spanErrorAddressRequiredRef.style.display = 'none';
@@ -901,6 +1106,7 @@ export class FormIndividualComponent implements OnInit, AfterViewInit {
 
     if (formatted.length > 0) {
       input.style.border = 'solid 1px rgba(0, 0, 0, 0.094)';
+      input.style.color = 'black';
       span.style.color = 'black';
       span.style.fontWeight = '700';
       spanErrorNumberRequiredRef.style.display = 'none';
@@ -1048,6 +1254,7 @@ export class FormIndividualComponent implements OnInit, AfterViewInit {
 
     if (formatted.length > 0) {
       input.style.border = 'solid 1px rgba(0, 0, 0, 0.094)';
+      input.style.color = 'black';
       span.style.color = 'black';
       span.style.fontWeight = '700';
       spanErrorNeighborhoodRequiredRef.style.display = 'none';
@@ -1185,6 +1392,7 @@ export class FormIndividualComponent implements OnInit, AfterViewInit {
 
     if (formatted.length > 0) {
       input.style.border = 'solid 1px rgba(0, 0, 0, 0.094)';
+      input.style.color = 'black';
       span.style.color = 'black';
       span.style.fontWeight = '700';
       spanErrorCityRequiredRef.style.display = 'none';
@@ -1259,5 +1467,302 @@ export class FormIndividualComponent implements OnInit, AfterViewInit {
     }
 
     input.value = formatted;
+  }
+
+  showModalAddress = false;
+
+  onClickContinueDatePersonal() {
+    // const value = inputName.value;
+    const value = this.verifyInputsToRegisterDatePersonalFields();
+    if (value) return;
+
+    this.showModalDatePersonal = !this.showModalDatePersonal;
+
+    this.rotateSvgArrowDatePersonal = this.showModalDatePersonal
+      ? 'rotate(0deg)'
+      : 'rotate(180deg)';
+
+    this.showModalAddress = true;
+    this.rotateSvgArrowAddress = 'rotate(0deg)';
+  }
+
+  showModalDatePersonal = true;
+  rotateSvgArrowDatePersonal = 'rotate(0deg)';
+
+  onClickDatePersonal() {
+    const value = this.verifyInputsToRegisterDatePersonalFields();
+    if (value) return;
+
+    this.showModalDatePersonal = !this.showModalDatePersonal;
+
+    this.rotateSvgArrowDatePersonal = this.showModalDatePersonal
+      ? 'rotate(0deg)'
+      : 'rotate(180deg)';
+
+    if (this.showModalAddress) {
+      this.rotateSvgArrowAddress = 'rotate(180deg)';
+      this.showModalAddress = false;
+    }
+
+    if (this.showModalAboutYourAccount) {
+      this.rotateSvgArrowAboutYourAccount = 'rotate(180deg)';
+      this.showModalAboutYourAccount = false;
+    }
+  }
+
+  onClickAddressFill() {
+    const value = this.verifyInputsToRegisterDatePersonalFields();
+    if (value) return;
+
+    if (this.showModalDatePersonal) {
+      this.rotateSvgArrowDatePersonal = 'rotate(180deg)';
+      this.showModalDatePersonal = false;
+    }
+
+    this.showModalAddress = !this.showModalAddress;
+
+    this.rotateSvgArrowAddress = this.showModalAddress ? 'rotate(0deg)' : 'rotate(180deg)';
+
+    this.rotateSvgArrowAboutYourAccount = 'rotate(180deg)';
+
+    if (this.showModalAboutYourAccount) {
+      this.showModalAboutYourAccount = false;
+    }
+  }
+
+  rotateSvgArrowAddress = 'rotate(180deg)';
+
+  onClickContinueAddress() {
+    const value = this.verifyInputsToRegisterAddressFields();
+    if (value) return;
+
+    this.showModalAddress = !this.showModalAddress;
+    this.rotateSvgArrowAddress = this.showModalAddress ? 'rotate(0deg)' : 'rotate(180deg)';
+
+    if (!this.showModalAddress) {
+      this.rotateSvgArrowAboutYourAccount = 'rotate(0deg)';
+    }
+
+    this.showModalAboutYourAccount = true;
+  }
+
+  rotateSvgArrowAboutYourAccount = 'rotate(180deg)';
+  showModalAboutYourAccount = false;
+
+  onClickAboutYourAccount() {
+    const valueDatePersonal = this.verifyInputsToRegisterDatePersonalFields();
+    if (valueDatePersonal) return;
+
+    const valueAddressFields = this.verifyInputsToRegisterAddressFields();
+    if (valueAddressFields) return;
+
+    if (this.showModalAddress) {
+      this.rotateSvgArrowAddress = 'rotate(180deg)';
+      this.showModalAddress = false;
+    }
+
+    if (this.showModalDatePersonal) {
+      this.rotateSvgArrowDatePersonal = 'rotate(180deg)';
+      this.showModalDatePersonal = false;
+    }
+
+    this.showModalAboutYourAccount = !this.showModalAboutYourAccount;
+    this.rotateSvgArrowAboutYourAccount = this.showModalAboutYourAccount
+      ? 'rotate(0deg)'
+      : 'rotate(180deg)';
+  }
+
+  firstClickedInputEmail = false;
+
+  onInputEmailFocus(
+    spanEmail: HTMLSpanElement,
+    inputEmail: HTMLInputElement,
+    spanErrorEmail: HTMLSpanElement
+  ) {
+    spanEmail.style.top = '-7px';
+    spanEmail.style.left = '6px';
+    spanEmail.style.padding = '0px 5px';
+
+    const value = inputEmail.value;
+
+    if (value.length <= 0 && this.firstClickedInputEmail) {
+      spanEmail.style.color = 'red';
+      spanEmail.style.fontWeight = '700';
+    }
+
+    this.firstClickedInputEmail = true;
+  }
+
+  onInputEmailBlur(
+    spanEmail: HTMLSpanElement,
+    inputEmail: HTMLInputElement,
+    spanErrorEmail: HTMLSpanElement
+  ) {
+    const value = inputEmail.value;
+
+    if (value.length <= 0) {
+      spanEmail.style.top = '20px';
+      inputEmail.style.border = 'solid 1px red';
+      spanEmail.style.color = 'red';
+      spanEmail.style.fontWeight = '500';
+      spanErrorEmail.style.display = 'flex';
+    }
+  }
+
+  canLoginEmailCorrect = false;
+
+  onInputEmail(
+    inputEmail: HTMLInputElement,
+    spanErrorEmail: HTMLSpanElement,
+    spanEmail: HTMLSpanElement
+  ) {
+    const value = inputEmail.value;
+
+    if (!value.includes('@gmail.com')) {
+      inputEmail.style.border = 'solid 1px red';
+      spanEmail.style.color = 'red';
+      spanEmail.style.fontWeight = '700';
+      spanErrorEmail.style.display = 'flex';
+
+      this.canLoginEmailCorrect = false;
+    } else {
+      inputEmail.style.border = 'solid 1px rgba(0, 0, 0, 0.094)';
+      spanEmail.style.color = 'black';
+      spanEmail.style.fontWeight = '700';
+      spanErrorEmail.style.display = 'none';
+      this.canLoginEmailCorrect = true;
+    }
+  }
+
+  firstClickedInputPassword = false;
+
+  onInputPasswordFocus(
+    spanPassword: HTMLSpanElement,
+    inputPassword: HTMLInputElement,
+    spanFieldPasswordRequired: HTMLSpanElement
+  ) {
+    spanPassword.style.top = '-7px';
+    spanPassword.style.left = '6px';
+    spanPassword.style.padding = '0px 5px';
+
+    const value = inputPassword.value;
+
+    if (value.length <= 0 && this.firstClickedInputPassword) {
+      inputPassword.style.border = 'solid 1px red';
+      spanPassword.style.color = 'red';
+      spanPassword.style.fontWeight = '700';
+      spanFieldPasswordRequired.style.display = 'flex';
+    }
+
+    this.firstClickedInputPassword = true;
+  }
+
+  onInputPasswordBlur(
+    spanPassword: HTMLSpanElement,
+    inputPassword: HTMLInputElement,
+    spanFieldPasswordRequired: HTMLSpanElement
+  ) {
+    const value = inputPassword.value;
+    spanPassword.style.top = '20px';
+
+    if (value.length > 0) {
+      spanPassword.style.top = '-7px';
+    }
+
+    if (value.length >= 6) {
+      inputPassword.style.border = 'solid 1px rgba(0, 0, 0, 0.094)';
+      spanPassword.style.color = 'black';
+      spanPassword.style.fontWeight = '700';
+      spanFieldPasswordRequired.style.display = 'none';
+    }
+  }
+
+  onInputPassword(
+    inputPassword: HTMLInputElement,
+    spanPassword: HTMLSpanElement,
+    spanFieldPasswordRequired: HTMLSpanElement,
+    spanFieldPasswordRequired3Caracteres: HTMLSpanElement
+  ) {
+    const value = inputPassword.value;
+
+    if (value.length <= 0) {
+      inputPassword.style.border = 'solid 1px red';
+      spanPassword.style.color = 'red';
+      spanFieldPasswordRequired.style.color = 'red';
+      spanFieldPasswordRequired.style.fontWeight = '700';
+      spanFieldPasswordRequired.style.display = 'flex';
+      spanFieldPasswordRequired3Caracteres.style.display = 'none';
+    }
+
+    if (value.length > 0 && value.length < 6) {
+      inputPassword.style.border = 'solid 1px red';
+      spanPassword.style.color = 'red';
+      spanFieldPasswordRequired3Caracteres.style.color = 'red';
+      spanFieldPasswordRequired3Caracteres.style.fontWeight = '700';
+      spanFieldPasswordRequired3Caracteres.style.display = 'flex';
+      spanFieldPasswordRequired.style.display = 'none';
+    }
+
+    if (value.length >= 6) {
+      spanPassword.style.color = 'black';
+      inputPassword.style.border = 'solid 1px rgba(0, 0, 0, 0.094)';
+      spanFieldPasswordRequired.style.color = 'black';
+      spanFieldPasswordRequired.style.fontWeight = '700';
+      spanFieldPasswordRequired.style.display = 'none';
+      spanFieldPasswordRequired3Caracteres.style.display = 'none';
+    }
+  }
+
+  onClickEyeOpen(
+    inputPassword: HTMLInputElement,
+    containerEyeOpen: HTMLDivElement,
+    containerEyeClose: HTMLDivElement
+  ) {
+    inputPassword.type = 'text';
+    containerEyeOpen.style.display = 'none';
+    containerEyeClose.style.display = 'flex';
+  }
+
+  onClickEyeClose(
+    inputPassword: HTMLInputElement,
+    containerEyeOpen: HTMLDivElement,
+    containerEyeClose: HTMLDivElement
+  ) {
+    inputPassword.type = 'password';
+    containerEyeClose.style.display = 'none';
+    containerEyeOpen.style.display = 'flex';
+  }
+
+  @ViewChild('inputCheckboxAgreeUseMyData')
+  inputCheckboxAgreeUseMyDataRef!: ElementRef<HTMLInputElement>;
+
+  onClickContinueCreate() {
+    const inputCheckboxAgreeUseMyData = this.inputCheckboxAgreeUseMyDataRef.nativeElement;
+
+    this.sendClickedButtonContinueRegisterService.updatevalueButton(
+      inputCheckboxAgreeUseMyData.checked
+    );
+
+    if (!inputCheckboxAgreeUseMyData.checked) return;
+  }
+
+  onChangeCheckbox(event: Event, buttonContinue: HTMLButtonElement) {
+    const input = event.target as HTMLInputElement;
+
+    if (input.checked) {
+      buttonContinue.style.backgroundColor = '#f4546a';
+      buttonContinue.style.color = '#fff';
+      buttonContinue.style.cursor = 'pointer';
+    } else {
+      buttonContinue.style.backgroundColor = '#fff';
+      buttonContinue.style.color = '#999';
+      buttonContinue.style.cursor = 'auto';
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.timeoutRef) {
+      clearTimeout(this.timeoutRef);
+    }
   }
 }

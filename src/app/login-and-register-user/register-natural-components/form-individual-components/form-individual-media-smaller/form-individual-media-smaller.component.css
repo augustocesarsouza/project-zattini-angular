@@ -101,3 +101,7 @@
 .select-wrapper.error::before {
   color: red;
 }
+
+.container-first-date-personal > app-arrow-svg {
+  width: 17px;
+}

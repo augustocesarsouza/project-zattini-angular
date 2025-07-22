@@ -1,0 +1,5 @@
+@media (max-width: 1140px) {
+  .container-main-about-your-account > app-about-your-account {
+    width: 400px;
+  }
+}
