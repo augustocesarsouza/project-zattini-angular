@@ -1,0 +1,99 @@
+.label-gender-female::before {
+  border-color: #000;
+  display: block;
+  content: '';
+  border: solid 1px #676d6f;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
+}
+
+.label-gender-female::after {
+  background: #000;
+
+  display: block;
+  content: '';
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  /* background: #edeff0; */
+  position: absolute;
+  left: 5px;
+  top: 5px;
+}
+
+.label-gender-male::before {
+  border-color: #000;
+  display: block;
+  content: '';
+  border: solid 1px #676d6f;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
+}
+
+.label-gender-male::after {
+  /* background: #000; */
+  display: block;
+  content: '';
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  background: #edeff0;
+  position: absolute;
+  left: 5px;
+  top: 5px;
+}
+
+.label-gender-female.active::after {
+  background: #000;
+}
+
+.label-gender-female.disable::after {
+  background: #edeff0;
+}
+
+.label-gender-male.active::after {
+  background: #000;
+}
+
+.label-gender-male.disable::after {
+  background: #edeff0;
+}
+
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.custom-select {
+  appearance: none; /* remove a seta nativa */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: transparent;
+  width: 100%;
+  padding: 16px 10px 16px 10px; /* espaço à esquerda para a seta */
+  font-size: 14px;
+  border: 1px solid #00000018;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+}
+
+/* seta personalizada à esquerda */
+.select-wrapper::before {
+  content: '▼'; /* ou use uma imagem SVG */
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  pointer-events: none;
+  color: #333;
+}
+
+.select-wrapper.error::before {
+  color: red;
+}

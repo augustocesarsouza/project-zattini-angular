@@ -1,0 +1,684 @@
+<div class="flex items-center flex-col w-full">
+  <div class="flex gap-[15px] leading-[16px] !p-[16px]">
+    <button
+      class="bg-[#00c7c7] text-[#fff] text-[13px] !py-[10px] !px-[13px] font-extrabold rounded-sm"
+    >
+      Pessoa Física
+    </button>
+    <button
+      class="bg-[#fff] text-[#00c7c7] border-[1px] border-[#00c7c7] text-[13px] !py-[10px] !px-[14px] font-extrabold rounded-sm"
+    >
+      Pessoa Jurídica
+    </button>
+  </div>
+
+  <div class="flex items-center flex-col w-full">
+    <!-- !mb-[7px] -->
+    <div
+      class="container-first-date-personal flex items-center justify-between w-full h-[50px] cursor-pointer !mb-[0px]"
+      (click)="onClickDatePersonal()"
+    >
+      <span class="text-[15px]">1. Dados Pessoais</span>
+
+      <app-arrow-svg [rotate]="rotateSvgArrowDatePersonal"></app-arrow-svg>
+    </div>
+    <div
+      class="flex flex-col w-[98%] overflow-hidden"
+      [ngClass]="
+        showModalDatePersonal ? 'h-[full] !pt-[10px] !mb-[10px]' : 'h-[0px] !pt-[0px] !mb-[0px]'
+      "
+    >
+      <div class="flex flex-col gap-[20px] !mr-[10px]">
+        <div class="flex flex-col">
+          <div class="text-[14px] flex w-full relative h-[100%]">
+            <app-input-generic
+              [handleFocus]="onInputFocus"
+              [handleBlur]="onInputBlur"
+              [handleInput]="onInput"
+              [getInput]="getInputName"
+              [whichIs]="'name'"
+            ></app-input-generic>
+            <span
+              #spanNameRef
+              class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+              >* Nome</span
+            >
+          </div>
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanErrorNameRequiredRef
+            >O campo “Nome“ é obrigatório</span
+          >
+
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanErrorNameAtLeast3CharactersRef
+            >O campo “Nome“ precisa ter pelo menos 3 caracteres.</span
+          >
+        </div>
+
+        <div class="flex flex-col">
+          <div class="text-[14px] flex w-full relative">
+            <app-input-generic
+              [handleFocus]="onInputFocus"
+              [handleBlur]="onInputBlur"
+              [handleInput]="onInput"
+              [getInput]="getInputLastName"
+              [whichIs]="'lastName'"
+            ></app-input-generic>
+            <span
+              #spanLastNameRef
+              class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+              >* Sobrenome</span
+            >
+          </div>
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanErrorLastNameRequiredRef
+            >O campo “Sobrenome“ é obrigatório</span
+          >
+
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanErrorLastNameAtLeast3CharactersRef
+            >O campo “Sobrenome“ precisa ter pelo menos 3 caracteres.</span
+          >
+        </div>
+
+        <div class="flex flex-col !pb-[10px]">
+          <span class="text-[12px] text-[#000] font-semibold">* Sexo</span>
+
+          <div class="flex gap-[10px] leading-[16px] select-none">
+            <label
+              #labelFemale
+              class="label-gender-female cursor-pointer flex text-[14px] relative"
+              for="female"
+              (click)="onClickLabelFemale()"
+              >Feminino</label
+            >
+            <label
+              #labelMale
+              class="label-gender-male cursor-pointer flex text-[14px] relative"
+              for="male"
+              (click)="onClickLabelMale()"
+              >Masculino</label
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col !mb-[15px]">
+        <span class="text-[14px] text-[#000] font-semibold !mb-[5px]">Data de nascimento</span>
+        <div class="flex flex-col justify-between gap-[20px]">
+          <div class="flex gap-[5px]">
+            <div class="flex flex-col w-full">
+              <div class="select-wrapper" #selectWrapperFirst>
+                <select
+                  class="custom-select"
+                  name="day"
+                  id="dayOfBirth"
+                  #selectDayOfBirth
+                  [(ngModel)]="selectedDay"
+                  (change)="onInputSelectChange(selectDayOfBirth, selectWrapperFirst, 'day')"
+                  (focus)="onInputSelectDayOfBirthFocus()"
+                  (blur)="onInputSelectBlur(selectDayOfBirth, selectWrapperFirst, 'day')"
+                >
+                  <option value="">* Dia</option>
+                  <option *ngFor="let day of days" [value]="day">{{ day }}</option>
+                </select>
+              </div>
+              <!-- flex -->
+              <span
+                class="hidden text-[12px] text-[#db001c] font-bold leading-[14px]"
+                #spanErrorFieldDayRequired
+                >O campo “Dia“ é obrigatório</span
+              >
+            </div>
+
+            <div class="flex flex-col w-full">
+              <div class="select-wrapper" #selectWrapperSecond>
+                <select
+                  class="custom-select"
+                  name="month"
+                  id="monthOfBirth"
+                  #selectMonthOfBirth
+                  [(ngModel)]="selectedMonth"
+                  (change)="onInputSelectChange(selectMonthOfBirth, selectWrapperSecond, 'month')"
+                  (blur)="onInputSelectBlur(selectMonthOfBirth, selectWrapperSecond, 'month')"
+                >
+                  <option value="">* Mês</option>
+                  <option *ngFor="let month of months" [value]="month.value">
+                    {{ month.name }}
+                  </option>
+                </select>
+              </div>
+              <span
+                class="hidden text-[12px] text-[#db001c] font-bold leading-[14px]"
+                #spanErrorFieldMonthRequired
+                >O campo “Mês“ é obrigatório</span
+              >
+            </div>
+
+            <div class="flex flex-col w-full">
+              <div class="select-wrapper" #selectWrapperThird>
+                <select
+                  class="custom-select"
+                  name="year"
+                  id="yearOfBirth"
+                  #selectYear
+                  [(ngModel)]="selectedYear"
+                  (change)="onInputSelectChange(selectYear, selectWrapperThird, 'year')"
+                  (blur)="onInputSelectBlur(selectYear, selectWrapperThird, 'year')"
+                >
+                  <option value="">* Ano</option>
+                  <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+                </select>
+              </div>
+              <span
+                class="hidden text-[12px] text-[#db001c] font-bold leading-[14px]"
+                #spanErrorFieldYearRequired
+                >O campo “Ano“ é obrigatório</span
+              >
+            </div>
+          </div>
+
+          <div class="flex flex-col w-[100%] !mr-[5px]">
+            <div class="text-[14px] flex w-full relative">
+              <app-input-generic
+                [handleFocus]="onInputCpfFocus"
+                [handleBlur]="onInputCpfBlur"
+                [handleInput]="onInputCpf"
+                [whichIs]="'cpf'"
+                [getInput]="getInputCpf"
+                (keydown)="onKeyDownInputCpf($event)"
+              ></app-input-generic>
+              <span
+                #spanCpfRef
+                class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+                >* CPF</span
+              >
+            </div>
+            <span
+              class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+              #spanErrorCpfRequiredRef
+              >O campo “CPF“ é obrigatório</span
+            >
+
+            <span
+              class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+              #spanErrorCpfMustBe11CharactersRef
+              >O campo “CPF“ precisa ter pelo menos 11 caracteres.</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-between gap-[10px] !mb-[15px]">
+        <div class="flex flex-col w-full">
+          <div class="text-[14px] flex w-full relative h-[100%]">
+            <app-input-generic
+              [handleFocus]="onInputCellPhoneFocus"
+              [handleBlur]="onInputCellPhoneBlur"
+              [handleInput]="onInputCellPhone"
+              [whichIs]="''"
+              [getInput]="getInputCellPhone"
+              (keydown)="onKeyDownInputCellPhone($event)"
+            ></app-input-generic>
+            <span
+              #spanCellPhoneRef
+              class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+              >* DDD e número de celular</span
+            >
+          </div>
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanErrorCellPhoneRequiredRef
+            >O campo “DDD e número de celular“ é obrigatório</span
+          >
+
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanErrorCellPhoneMustBe11CharactersRef
+            >O campo “DDD e número de celular“ precisa ter pelo menos 11 caracteres.</span
+          >
+        </div>
+      </div>
+
+      <button
+        class="cursor-pointer bg-[#F4546A] text-[#fff] uppercase text-[16px] !py-[10px] !px-[14px] font-extrabold"
+        (click)="onClickContinueDatePersonal()"
+      >
+        Continuar
+      </button>
+    </div>
+
+    <div
+      class="container-first-date-personal flex items-center justify-between w-full h-[50px] border-t border-[#e5e5e5] cursor-pointer"
+      [ngClass]="showModalAddress ? 'border-b-0' : 'border-b-0'"
+      (click)="onClickAddressFill()"
+    >
+      <span class="text-[15px]">2. Endereço</span>
+
+      <app-arrow-svg [rotate]="rotateSvgArrowAddress"></app-arrow-svg>
+      <!-- arrumar esse svg fazer rotate dele para baixo e só permitir clicar no 'Endereço' quando tudo tiver preenchido no de cima -->
+    </div>
+
+    <div
+      class="flex flex-col w-[98%] overflow-hidden"
+      [ngClass]="
+        showModalAddress ? 'h-[full] !pt-[10px] !mb-[10px]' : 'h-[0px] !pt-[0px] !mb-[0px]'
+      "
+    >
+      <div class="flex flex-col gap-[10px] !mb-[10px]">
+        <div class="flex flex-col w-full">
+          <div class="text-[14px] flex w-full relative">
+            <app-input-generic
+              [handleFocus]="onInputCepFocus"
+              [handleBlur]="onInputCepBlur"
+              [handleInput]="onInputCep"
+              [whichIs]="''"
+              [getInput]="getInputCep"
+              (keydown)="onKeyDownInputCep($event)"
+            ></app-input-generic>
+            <span
+              #spanCepRef
+              class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+              >* CEP</span
+            >
+          </div>
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanErrorCepRequiredRef
+            >O campo “CEP“ é obrigatório</span
+          >
+
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanErrorCepAtLeast9CharactersRef
+            >O campo “CEP“ precisa ter pelo menos 9 caracteres.</span
+          >
+        </div>
+
+        <span class="text-[14px] underline">Não sei meu CEP</span>
+
+        <div class="flex flex-col w-full relative">
+          <div class="select-wrapper" #selectWrapperTypeOfAddressSecond>
+            <select
+              class="custom-select"
+              name="type-of-address"
+              id="typeOfAddress"
+              #selectTypeOfAddress
+              [(ngModel)]="selectedTypeOfAddress"
+              (change)="
+                onInputSelectTypeOfAddressChange(
+                  selectTypeOfAddress,
+                  selectWrapperTypeOfAddressSecond,
+                  spanTypeOfAddressRef,
+                  ''
+                )
+              "
+              (blur)="
+                onInputSelectTypeOfAddressBlur(
+                  selectTypeOfAddress,
+                  selectWrapperTypeOfAddressSecond,
+                  ''
+                )
+              "
+            >
+              <option value="">* Tipo de Endereço</option>
+              <option *ngFor="let address of typeOfAddress" [value]="address.value">
+                {{ address.name }}
+              </option>
+            </select>
+            <span
+              #spanTypeOfAddressRef
+              class="hidden text-[12px] absolute left-[10px] top-[8px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+              >* Tipo de Endereço</span
+            >
+          </div>
+          <span
+            class="hidden text-[12px] text-[#db001c] font-bold leading-[14px]"
+            #spanErrorFieldTypeOfAddressRequired
+            >O campo “Tipo de Endereço“ é obrigatório</span
+          >
+        </div>
+
+        <div class="flex flex-col w-full">
+          <div class="text-[14px] flex w-full relative">
+            <app-input-generic
+              [handleFocus]="onInputAddressFocus"
+              [handleBlur]="onInputAddressBlur"
+              [handleInput]="onInputAddress"
+              [whichIs]="''"
+              [getInput]="getInputAddress"
+              (keydown)="onKeyDownInputAddress($event)"
+            ></app-input-generic>
+            <span
+              #spanAddressRef
+              class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+              >* Endereço</span
+            >
+          </div>
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanErrorAddressRequiredRef
+            >O campo “Endereço“ é obrigatório</span
+          >
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-[10px] !mb-[15px]">
+        <div class="flex flex-col w-full">
+          <div class="text-[14px] flex w-full relative">
+            <app-input-generic
+              [handleFocus]="onInputNumberFocus"
+              [handleBlur]="onInputNumberBlur"
+              [handleInput]="onInputNumber"
+              [whichIs]="''"
+              [getInput]="getInputNumber"
+              (keydown)="onKeyDownInputNumber($event)"
+            ></app-input-generic>
+            <span
+              #spanNumberRef
+              class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+              >* Número</span
+            >
+          </div>
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanErrorNumberRequiredRef
+            >O campo “Número“ é obrigatório</span
+          >
+        </div>
+
+        <div class="flex flex-col w-full">
+          <div class="text-[13px] flex w-full relative">
+            <app-input-generic
+              [handleFocus]="onInputComplementFocus"
+              [handleBlur]="onInputComplementBlur"
+              [handleInput]="onInputComplement"
+              [whichIs]="''"
+              (keydown)="onKeyDownInputComplement($event)"
+            ></app-input-generic>
+            <span
+              #spanComplementRef
+              class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+              >Complemento (opcional)</span
+            >
+          </div>
+        </div>
+
+        <div class="flex flex-col w-full">
+          <div class="text-[14px] flex w-full relative">
+            <app-input-generic
+              [handleFocus]="onInputNeighborhoodFocus"
+              [handleBlur]="onInputNeighborhoodBlur"
+              [handleInput]="onInputNeighborhood"
+              [whichIs]="''"
+              [getInput]="getInputNeighborhood"
+              (keydown)="onKeyDownInputNeighborhood($event)"
+            ></app-input-generic>
+            <span
+              #spanNeighborhoodRef
+              class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+              >* Bairro</span
+            >
+          </div>
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanErrorNeighborhoodRequiredRef
+            >O campo “Bairro“ é obrigatório</span
+          >
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-[10px]">
+        <div class="flex flex-col w-full relative">
+          <div class="select-wrapper" #selectWrapperStateSecond>
+            <select
+              class="custom-select"
+              name="state"
+              id="State"
+              #selectState
+              [(ngModel)]="selectedState"
+              (change)="
+                onInputSelectStateChange(selectState, selectWrapperStateSecond, spanStateRef, '')
+              "
+              (blur)="onInputSelectStateBlur(selectState, selectWrapperStateSecond, '')"
+            >
+              <option value="">* Estado</option>
+              <option *ngFor="let state of states" [value]="state.value">
+                {{ state.name }}
+              </option>
+            </select>
+          </div>
+          <span
+            #spanStateRef
+            class="hidden text-[12px] absolute left-[10px] top-[8px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+            >* Estado</span
+          >
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[14px]"
+            #spanErrorFieldStateRequired
+            >O campo “Estado“ é obrigatório</span
+          >
+        </div>
+
+        <div class="flex flex-col w-full">
+          <div class="text-[14px] flex w-full relative h-[100%]">
+            <app-input-generic
+              [handleFocus]="onInputCityFocus"
+              [handleBlur]="onInputCityBlur"
+              [handleInput]="onInputCity"
+              [whichIs]="''"
+              [getInput]="getInputCity"
+              (keydown)="onKeyDownInputCity($event)"
+            ></app-input-generic>
+            <span
+              #spanCityRef
+              class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+              >* Cidade</span
+            >
+          </div>
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanErrorCityRequiredRef
+            >O campo “Cidade“ é obrigatório</span
+          >
+        </div>
+
+        <div class="flex flex-col w-full">
+          <div class="text-[13px] flex w-full relative h-[100%]">
+            <app-input-generic
+              [handleFocus]="onInputReferencePointFocus"
+              [handleBlur]="onInputReferencePointBlur"
+              [handleInput]="onInputReferencePoint"
+              [whichIs]="''"
+              (keydown)="onKeyDownInputReferencePoint($event)"
+            ></app-input-generic>
+            <span
+              #spanReferencePointRef
+              class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+              >Ponto de Referência (opcional)</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <button
+        class="cursor-pointer !mt-[15px] bg-[#F4546A] text-[#fff] uppercase text-[16px] !py-[10px] !px-[14px] font-extrabold"
+        (click)="onClickContinueAddress()"
+      >
+        Continuar
+      </button>
+    </div>
+
+    <div
+      class="container-first-date-personal flex items-center justify-between w-full h-[50px] border-t border-[#e5e5e5] cursor-pointer"
+      (click)="onClickAboutYourAccount()"
+    >
+      <span class="text-[15px]">3. Sobre sua conta</span>
+
+      <app-arrow-svg [rotate]="rotateSvgArrowAboutYourAccount"></app-arrow-svg>
+    </div>
+
+    <div
+      class="flex flex-col w-[98%] overflow-hidden"
+      [ngClass]="
+        showModalAboutYourAccount ? 'h-[full] !pt-[10px] !mb-[10px]' : 'h-[0px] !pt-[0px] !mb-[0px]'
+      "
+    >
+      <div class="flex">
+        <div class="flex flex-col w-full !mb-[0px] !mr-[5px]">
+          <div class="text-[14px] flex w-full relative">
+            <input
+              type="text"
+              placeholder=""
+              class="input-email w-full outline-none !px-[10px] !py-[18px] border-[1px] border-[#00000018] rounded-sm"
+              #inputEmail
+              (focus)="onInputEmailFocus(spanEmail, inputEmail, spanErrorInputEmail)"
+              (blur)="onInputEmailBlur(spanEmail, inputEmail, spanErrorInputEmail)"
+              (input)="onInputEmail(inputEmail, spanErrorInputEmail, spanEmail)"
+            />
+            <span
+              class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+              #spanEmail
+              >* Seu e-mail</span
+            >
+          </div>
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            #spanErrorInputEmail
+            >O campo “Seu e-mail“ é inválido.</span
+          >
+        </div>
+      </div>
+
+      <div class="flex !my-[15px]">
+        <span class="text-[10px] text-[black] leading-[12px]"
+          >A confirmação e o acompanhamento de seu pedido serão enviados ao seu e-mail</span
+        >
+      </div>
+
+      <div class="flex flex-col w-full !mb-[20px]">
+        <div class="text-[14px] flex w-full relative">
+          <input
+            type="password"
+            placeholder=""
+            #inputPassword
+            (focus)="onInputPasswordFocus(spanPassword, inputPassword, spanFieldPasswordRequired)"
+            (blur)="onInputPasswordBlur(spanPassword, inputPassword, spanFieldPasswordRequired)"
+            (input)="
+              onInputPassword(
+                inputPassword,
+                spanPassword,
+                spanFieldPasswordRequired,
+                spanFieldPasswordRequired6Caracteres
+              )
+            "
+            class="input-password text-[12px] w-full outline-none !px-[10px] !py-[18px] border-[1px] border-[#00000018] rounded-sm"
+          />
+          <span
+            class="span-password absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+            #spanPassword
+            >Senha</span
+          >
+          <div
+            class="container-eye-open"
+            #containerEyeOpen
+            (click)="onClickEyeOpen(inputPassword, containerEyeOpen, containerEyeClose)"
+          ></div>
+          <div
+            class="container-eye-close"
+            #containerEyeClose
+            (click)="onClickEyeClose(inputPassword, containerEyeOpen, containerEyeClose)"
+          ></div>
+        </div>
+
+        <span
+          class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+          #spanFieldPasswordRequired
+          >O campo “Senha“ é obrigatório</span
+        >
+
+        <span
+          class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+          #spanFieldPasswordRequired6Caracteres
+          >O campo “Senha“ precisa ter pelo menos 6 caracteres.</span
+        >
+      </div>
+
+      <!-- w-[460px] -->
+      <div
+        class="space-y-4 text-[14px] text-black border-b-[1px] border-[#00000018] border-b-[#00000018] !pb-[20px] !mb-[20px]"
+      >
+        <!-- Email -->
+        <label class="flex items-center gap-2 cursor-pointer leading-[16px]">
+          <input type="checkbox" class="!mt-[0px] w-[18px] h-[18px] accent-black" />
+          <span>
+            Quero receber <strong>ofertas e novidades</strong> das lojas Zattini e Magazine Luiza
+            por
+            <strong>e-mail</strong>
+          </span>
+        </label>
+
+        <!-- WhatsApp - Ofertas -->
+        <label class="flex items-center gap-2 cursor-pointer leading-[16px]">
+          <input type="checkbox" class="accent-black !mt-[3px] w-[18px] h-[18px]" checked />
+          <span class="flex items-center flex-wrap gap-1">
+            Quero receber <strong>ofertas e novidades</strong> por
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+              alt="WhatsApp"
+              class="w-5 h-5"
+            />
+            <span class="font-semibold">WhatsApp</span>
+          </span>
+        </label>
+
+        <!-- WhatsApp - Notificações -->
+        <label class="flex items-center gap-2 cursor-pointer leading-[16px]">
+          <input type="checkbox" class="accent-black !mt-[3px] w-[18px] h-[18px]" checked />
+          <span class="flex items-center flex-wrap gap-1">
+            Quero receber <strong>notificações sobre os meus pedidos</strong> por
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+              alt="WhatsApp"
+              class="w-5 h-5"
+            />
+            <span class="font-semibold">WhatsApp</span>
+          </span>
+        </label>
+      </div>
+
+      <div class="space-y-4 text-[14px] text-black w-full !mb-[35px]">
+        <label
+          class="flex items-center text-[14px] gap-2 cursor-pointer leading-[16px] select-none"
+        >
+          <input
+            type="checkbox"
+            class="!mt-[0px] w-[20px] h-[20px] accent-black"
+            (change)="onChangeCheckbox($event, buttonContinue)"
+            #inputCheckboxAgreeUseMyData
+          />
+          <span
+            >Concordo com o uso dos meus dados para compra e experiência no site conforme a
+            <span class="text-[#0000EE]">Política de Privacidade</span></span
+          >
+        </label>
+      </div>
+
+      <button
+        class="button-access-account w-full text-[16px] border-[2px] border-[#00000056] font-semibold !px-[2px] !py-[12px] bg-[#fff] text-[#999] uppercase"
+        #buttonContinue
+        (click)="onClickContinueCreate()"
+      >
+        CADASTRAR
+      </button>
+    </div>
+  </div>
+
+  <app-method-payment></app-method-payment>
+
+  <app-copyright></app-copyright>
+</div>
