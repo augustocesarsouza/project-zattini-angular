@@ -7,15 +7,15 @@ import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } fro
   styleUrl: './input-generic.component.css',
 })
 export class InputGenericComponent implements AfterViewInit, OnDestroy {
-  @Input() onInputFocus!: (
+  @Input() handleFocus!: (
     inputName: HTMLInputElement,
     whichIs: 'name' | 'lastName' | 'cpf' | ''
   ) => void;
-  @Input() onInputBlur!: (
+  @Input() handleBlur!: (
     inputName: HTMLInputElement,
     whichIs: 'name' | 'lastName' | 'cpf' | ''
   ) => void;
-  @Input() onInput!: (
+  @Input() handleInput!: (
     inputName: HTMLInputElement,
     whichIs: 'name' | 'lastName' | 'cpf' | ''
   ) => void;

@@ -8,9 +8,8 @@ describe('InputGenericComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [InputGenericComponent]
-    })
-    .compileComponents();
+      declarations: [InputGenericComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(InputGenericComponent);
     component = fixture.componentInstance;
@@ -19,5 +18,10 @@ describe('InputGenericComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should render input generic', () => {
+    const inputGeneric: HTMLInputElement = fixture.nativeElement.querySelector('.input-generic');
+    expect(inputGeneric).toBeTruthy();
   });
 });

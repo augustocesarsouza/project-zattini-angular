@@ -11,12 +11,21 @@ import { WidthCreateAccountIsLessThan1035Service } from '../../../service-dispat
 export class RegisterNaturalComponent implements OnInit {
   @ViewChild('containerLegalEntity') containerLegalEntity!: ElementRef<HTMLDivElement>;
   @ViewChild('containerIndividual') containerIndividual!: ElementRef<HTMLDivElement>;
+  clickLegalEntity = false;
 
   constructor(
     private router: Router,
     private widthCreateAccountIsLessThan1035Service: WidthCreateAccountIsLessThan1035Service,
     private cdRef: ChangeDetectorRef
-  ) {}
+  ) {
+    if (this.router.url.includes('/auth/register/natural')) {
+      this.clickLegalEntity = false;
+    } else {
+      this.clickLegalEntity = true;
+    }
+
+    // tirar o cursor-pointer de quem for tiver clicado "clickLegalEntity"
+  }
 
   canShowFormIndividualMediaSmaller = false;
 
@@ -28,23 +37,13 @@ export class RegisterNaturalComponent implements OnInit {
     });
   }
 
-  onClickIndividual(containerIndividual: HTMLDivElement, containerLegalEntity: HTMLDivElement) {
-    containerLegalEntity.style.zIndex = '0';
-    containerLegalEntity.style.color = '#00c7c7';
-
-    containerIndividual.style.zIndex = '10';
-    containerIndividual.style.color = '#000';
-
+  onClickIndividual() {
+    this.clickLegalEntity = false;
     this.router.navigate(['/auth/register/natural']);
   }
 
-  onClickLegalEntity(containerLegalEntity: HTMLDivElement, containerIndividual: HTMLDivElement) {
-    containerIndividual.style.zIndex = '0';
-    containerIndividual.style.color = '#00c7c7';
-
-    containerLegalEntity.style.zIndex = '10';
-    containerLegalEntity.style.color = '#000';
-
+  onClickLegalEntity() {
+    this.clickLegalEntity = true;
     this.router.navigate(['/auth/register/legal-entity']);
   }
 }

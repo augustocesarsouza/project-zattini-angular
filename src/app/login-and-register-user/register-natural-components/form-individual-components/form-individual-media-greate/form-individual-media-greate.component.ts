@@ -42,7 +42,7 @@ export class FormIndividualMediaGreateComponent implements OnInit, AfterViewInit
   inputReferencePoint!: HTMLInputElement;
 
   constructor(
-    private route: ActivatedRoute,
+    // private route: ActivatedRoute,
     private sendClickedButtonContinueRegisterService: SendClickedButtonContinueRegisterService,
     private getDataUserRegisterService: GetDataUserRegisterService
   ) {}
@@ -214,7 +214,6 @@ export class FormIndividualMediaGreateComponent implements OnInit, AfterViewInit
         ) {
           // error
         } else {
-          // sem error;
           const objUser: UserCreateDTO = {
             name: this.inputName.value,
             lastName: this.inputLastName.value,

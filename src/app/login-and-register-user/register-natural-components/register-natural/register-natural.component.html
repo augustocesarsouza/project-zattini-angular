@@ -1,4 +1,4 @@
-<app-header-main></app-header-main>
+<app-header-main />
 
 <div class="flex justify-center gap-[10px] mt-[10px] !mx-[20px] min-h-[643px]">
   <div
@@ -7,18 +7,34 @@
   >
     <div class="flex" *ngIf="!canShowFormIndividualMediaSmaller">
       <div
-        class="flex z-[10] !p-[12px] border-[1px] border-[#00000018] border-b-[#fff] rounded-tl-sm rounded-tr-sm !mr-[7px] cursor-pointer text-[#000]"
+        class="flex !p-[12px] border-[1px] border-[#00000018] rounded-tl-sm rounded-tr-sm cursor-pointer"
+        [ngClass]="
+          !clickLegalEntity
+            ? 'border-b-[#f7f7f7] text-[#000]'
+            : 'border-b-[#00000018] text-[#00c7c7] bg-[#f7f7f7]'
+        "
         #containerIndividual
-        (click)="onClickIndividual(containerIndividual, containerLegalEntity)"
+        (click)="onClickIndividual()"
       >
         <span class="text-[16px] font-semibold leading-[16px]">Pessoa Física</span>
       </div>
+      <div class="w-[7px] !p-[0px] border-b border-b-[#00000018] cursor-pointer">
+        <span class="text-[16px] font-semibold leading-[16px]"></span>
+      </div>
       <div
-        class="flex bg-[#f7f7f7] !p-[12px] border-[1px] border-[#00000018] border-b-[#fff] rounded-tl-sm rounded-tr-sm cursor-pointer text-[#00c7c7]"
+        class="flex !p-[12px] border-[1px] border-[#00000018] rounded-tl-sm rounded-tr-sm cursor-pointer"
+        [ngClass]="
+          clickLegalEntity
+            ? 'border-b-[#f7f7f7] text-[#000]'
+            : 'border-b-[#00000018] text-[#00c7c7] bg-[#f7f7f7]'
+        "
         #containerLegalEntity
-        (click)="onClickLegalEntity(containerLegalEntity, containerIndividual)"
+        (click)="onClickLegalEntity()"
       >
         <span class="text-[16px] font-semibold leading-[16px]">Pessoa Jurídica</span>
+      </div>
+      <div class="flex-grow !p-[12px] border-b border-b-[#00000018] cursor-pointer">
+        <span class="text-[16px] font-semibold leading-[16px]"></span>
       </div>
     </div>
 
@@ -30,7 +46,7 @@
   >
     <div class="flex">
       <div
-        class="flex z-[10] !p-[12px] border-[1px] border-[#00000018] border-b-0 border-b-[#fff] rounded-tl-sm rounded-tr-sm cursor-pointer text-[#000]"
+        class="flex !p-[12px] border-[1px] border-[#00000018] border-b-0 border-b-[#fff] rounded-tl-sm rounded-tr-sm cursor-pointer text-[#000]"
         #containerAboutYourAccount
       >
         <span class="text-[16px] font-semibold leading-[16px]">Sobre sua conta</span>

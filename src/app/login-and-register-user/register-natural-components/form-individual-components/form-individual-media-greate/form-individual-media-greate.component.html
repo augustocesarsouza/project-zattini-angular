@@ -1,5 +1,5 @@
 <div
-  class="border-[1px] border-[#00000018] flex flex-col !px-[22px] !py-[21px] z-[5] w-[100%] absolute left-[0px] top-[41px] h-[580px]"
+  class="border-[1px] border-[#00000018] border-t-0 flex flex-col !px-[22px] !py-[21px] z-[5] w-[100%] absolute left-[0px] top-[41px] h-[580px]"
 >
   <span class="text-[14px] leading-[16px] !mb-[20px]">* Campos obrigatórios.</span>
 
@@ -7,11 +7,11 @@
     <div class="flex !mb-[15px]">
       <div class="flex gap-[10px] !mr-[10px]">
         <div class="flex flex-col">
-          <div class="text-[14px] flex w-full relative h-[100%]">
+          <div class="text-[14px] flex w-full relative h-[100%] container-input-name">
             <app-input-generic
-              [onInputFocus]="onInputFocus"
-              [onInputBlur]="onInputBlur"
-              [onInput]="onInput"
+              [handleFocus]="onInputFocus"
+              [handleBlur]="onInputBlur"
+              [handleInput]="onInput"
               [getInput]="getInputName"
               [whichIs]="'name'"
             ></app-input-generic>
@@ -23,6 +23,7 @@
           </div>
           <span
             class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            data-testid="error-name-required"
             #spanErrorNameRequiredRef
             >O campo “Nome“ é obrigatório</span
           >
@@ -37,9 +38,9 @@
         <div class="flex flex-col">
           <div class="text-[14px] flex w-full relative">
             <app-input-generic
-              [onInputFocus]="onInputFocus"
-              [onInputBlur]="onInputBlur"
-              [onInput]="onInput"
+              [handleFocus]="onInputFocus"
+              [handleBlur]="onInputBlur"
+              [handleInput]="onInput"
               [getInput]="getInputLastName"
               [whichIs]="'lastName'"
             ></app-input-generic>
@@ -160,9 +161,9 @@
         <div class="flex flex-col w-[100%] !mr-[5px]">
           <div class="text-[14px] flex w-full relative">
             <app-input-generic
-              [onInputFocus]="onInputCpfFocus"
-              [onInputBlur]="onInputCpfBlur"
-              [onInput]="onInputCpf"
+              [handleFocus]="onInputCpfFocus"
+              [handleBlur]="onInputCpfBlur"
+              [handleInput]="onInputCpf"
               [whichIs]="'cpf'"
               [getInput]="getInputCpf"
               (keydown)="onKeyDownInputCpf($event)"
@@ -192,9 +193,9 @@
       <div class="flex flex-col w-[330px]">
         <div class="text-[14px] flex w-full relative h-[100%]">
           <app-input-generic
-            [onInputFocus]="onInputCellPhoneFocus"
-            [onInputBlur]="onInputCellPhoneBlur"
-            [onInput]="onInputCellPhone"
+            [handleFocus]="onInputCellPhoneFocus"
+            [handleBlur]="onInputCellPhoneBlur"
+            [handleInput]="onInputCellPhone"
             [whichIs]="''"
             [getInput]="getInputCellPhone"
             (keydown)="onKeyDownInputCellPhone($event)"
@@ -224,9 +225,9 @@
         <div class="flex flex-col w-[160px]">
           <div class="text-[14px] flex w-full relative">
             <app-input-generic
-              [onInputFocus]="onInputCepFocus"
-              [onInputBlur]="onInputCepBlur"
-              [onInput]="onInputCep"
+              [handleFocus]="onInputCepFocus"
+              [handleBlur]="onInputCepBlur"
+              [handleInput]="onInputCep"
               [whichIs]="''"
               [getInput]="getInputCep"
               (keydown)="onKeyDownInputCep($event)"
@@ -296,9 +297,9 @@
       <div class="flex flex-col w-full">
         <div class="text-[14px] flex w-full relative">
           <app-input-generic
-            [onInputFocus]="onInputAddressFocus"
-            [onInputBlur]="onInputAddressBlur"
-            [onInput]="onInputAddress"
+            [handleFocus]="onInputAddressFocus"
+            [handleBlur]="onInputAddressBlur"
+            [handleInput]="onInputAddress"
             [whichIs]="''"
             [getInput]="getInputAddress"
             (keydown)="onKeyDownInputAddress($event)"
@@ -323,9 +324,9 @@
         <div class="flex flex-col w-[160px]">
           <div class="text-[14px] flex w-full relative">
             <app-input-generic
-              [onInputFocus]="onInputNumberFocus"
-              [onInputBlur]="onInputNumberBlur"
-              [onInput]="onInputNumber"
+              [handleFocus]="onInputNumberFocus"
+              [handleBlur]="onInputNumberBlur"
+              [handleInput]="onInputNumber"
               [whichIs]="''"
               [getInput]="getInputNumber"
               (keydown)="onKeyDownInputNumber($event)"
@@ -346,9 +347,9 @@
         <div class="flex flex-col w-[160px]">
           <div class="text-[13px] flex w-full relative">
             <app-input-generic
-              [onInputFocus]="onInputComplementFocus"
-              [onInputBlur]="onInputComplementBlur"
-              [onInput]="onInputComplement"
+              [handleFocus]="onInputComplementFocus"
+              [handleBlur]="onInputComplementBlur"
+              [handleInput]="onInputComplement"
               [whichIs]="''"
               [getInput]="getComplement"
               (keydown)="onKeyDownInputComplement($event)"
@@ -365,9 +366,9 @@
       <div class="flex flex-col w-full">
         <div class="text-[14px] flex w-full relative">
           <app-input-generic
-            [onInputFocus]="onInputNeighborhoodFocus"
-            [onInputBlur]="onInputNeighborhoodBlur"
-            [onInput]="onInputNeighborhood"
+            [handleFocus]="onInputNeighborhoodFocus"
+            [handleBlur]="onInputNeighborhoodBlur"
+            [handleInput]="onInputNeighborhood"
             [whichIs]="''"
             [getInput]="getInputNeighborhood"
             (keydown)="onKeyDownInputNeighborhood($event)"
@@ -421,9 +422,9 @@
       <div class="flex flex-col w-[272px]">
         <div class="text-[14px] flex w-full relative h-[100%]">
           <app-input-generic
-            [onInputFocus]="onInputCityFocus"
-            [onInputBlur]="onInputCityBlur"
-            [onInput]="onInputCity"
+            [handleFocus]="onInputCityFocus"
+            [handleBlur]="onInputCityBlur"
+            [handleInput]="onInputCity"
             [whichIs]="''"
             [getInput]="getInputCity"
             (keydown)="onKeyDownInputCity($event)"
@@ -444,9 +445,9 @@
       <div class="flex flex-col w-full">
         <div class="text-[13px] flex w-full relative h-[100%]">
           <app-input-generic
-            [onInputFocus]="onInputReferencePointFocus"
-            [onInputBlur]="onInputReferencePointBlur"
-            [onInput]="onInputReferencePoint"
+            [handleFocus]="onInputReferencePointFocus"
+            [handleBlur]="onInputReferencePointBlur"
+            [handleInput]="onInputReferencePoint"
             [whichIs]="''"
             [getInput]="getInputReferencePoint"
             (keydown)="onKeyDownInputReferencePoint($event)"

@@ -1,5 +1,13 @@
 <app-header-main></app-header-main>
-<div class="flex flex-col items-center">
+
+<div
+  class="flex justify-center !mt-[20px] text-red-600 font-semibold"
+  *ngIf="erroWhenCreateAccount"
+>
+  <h1>Erro ao Criar a Conta!</h1>
+</div>
+
+<div class="flex flex-col items-center" (click)="onClickContainerAlreadyClientAndCreateAccount()">
   <div class="flex gap-[100px] !my-[42px]">
     <app-already-client></app-already-client>
     <div class="container-border-between"></div>

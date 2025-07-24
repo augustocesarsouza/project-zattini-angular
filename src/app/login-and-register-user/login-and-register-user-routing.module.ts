@@ -12,6 +12,7 @@ const routes: Routes = [
     path: 'register',
     component: RegisterNaturalComponent,
     children: [
+      // { path: '', redirectTo: 'natural', pathMatch: 'full' },
       { path: 'natural', component: FormIndividualComponent },
       { path: 'legal-entity', component: FormLegalEntityComponent },
     ],

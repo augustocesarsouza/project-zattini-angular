@@ -4,6 +4,7 @@ import { SendClickedButtonContinueRegisterService } from '../../../service-dispa
 import { GetDataUserRegisterService } from '../../../service-dispatch/user-register/get-data-user-register.service';
 import { UserCreateDTO } from '../../../interface/dto/UserCreateDTO';
 import { UserService } from '../../../service/user-service/user.service';
+import { SetUserLocalStorage } from '../../../user-function/get-user-local-storage/user-local-storage';
 
 @Component({
   selector: 'app-about-your-account',
@@ -238,6 +239,8 @@ export class AboutYourAccountComponent implements OnInit, AfterViewInit, OnDestr
   @ViewChild('spanFieldPasswordRequired')
   spanFieldPasswordRequiredRef!: ElementRef<HTMLSpanElement>;
 
+  isLoadingCreation = false;
+
   onClickContinueCreate() {
     const inputCheckboxAgreeUseMyData = this.inputCheckboxAgreeUseMyDataRef.nativeElement;
 
@@ -275,28 +278,36 @@ export class AboutYourAccountComponent implements OnInit, AfterViewInit, OnDestr
       this.userCreateDTO.email = inputEmail.value;
       this.userCreateDTO.password = inputPasswordValue;
 
-      this.userService.createAccount(this.userCreateDTO).subscribe({
-        next: (success) => {
-          // this.userObjState = success.data;
+      this.isLoadingCreation = true;
 
-          if (!success.data) return;
+      setTimeout(() => {
+        this.isLoadingCreation = false;
 
-          const createUserDTO = success.data;
-          console.log(createUserDTO);
+        this.userService.createAccount(this.userCreateDTO).subscribe({
+          next: (success) => {
+            if (!success.data) return;
 
-          // this.router.navigate(['/']);
-        },
-        error: (error) => {
-          if (error.status === 400) {
-            console.log(error);
-          }
+            const createUserDTO = success.data.userDTO;
+            const resultUser = SetUserLocalStorage(createUserDTO);
 
-          if (error.status !== 400) {
-            localStorage.removeItem('user');
-            this.router.navigate(['/login'], { queryParams: { changePassword: false } });
-          }
-        },
-      });
+            if (resultUser.isSetUserOk) {
+              this.router.navigate(['/']);
+            } else {
+              this.router.navigate(['/login'], { queryParams: { erroWhenCreateAccount: true } });
+            }
+          },
+          error: (error) => {
+            if (error.status === 400) {
+              console.log(error);
+            }
+
+            if (error.status !== 400) {
+              localStorage.removeItem('user');
+              this.router.navigate(['/login'], { queryParams: { erroWhenCreateAccount: false } });
+            }
+          },
+        });
+      }, 3000);
     }
   }
 

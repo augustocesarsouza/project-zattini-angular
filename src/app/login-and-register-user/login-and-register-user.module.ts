@@ -36,6 +36,7 @@ import { CopyrightComponent } from './footer-components/copyright/copyright.comp
     FormIndividualMediaGreateComponent,
     CopyrightComponent,
   ],
+  exports: [],
   imports: [CommonModule, LoginAndRegisterUserRoutingModule, FormsModule, AllSvgModule],
 })
 export class LoginAndRegisterUserModule {}

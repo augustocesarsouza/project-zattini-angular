@@ -1,6 +1,8 @@
 import CryptoJS from 'crypto-js';
-import { ResultGetUserFromLocalStorage } from '../../interface/result-get-user-from-local-storage';
+import { ResultGetUserFromLocalStorage } from '../../interface/user-local-storage/result-get-user-from-local-storage';
 import { environment } from '../../../environments/environment';
+import { User } from '../../interface/user';
+import { ResultSetUserInLocalStorage } from '../../interface/user-local-storage/result-set-user-in-local-storage';
 
 export const UserLocalStorage = (): ResultGetUserFromLocalStorage => {
   const ResultGetUserFromLocalStorage: ResultGetUserFromLocalStorage = {
@@ -34,5 +36,27 @@ export const UserLocalStorage = (): ResultGetUserFromLocalStorage => {
   } else {
     ResultGetUserFromLocalStorage.isNullUserLocalStorage = true;
     return ResultGetUserFromLocalStorage;
+  }
+};
+
+export const SetUserLocalStorage = (data: User): ResultSetUserInLocalStorage => {
+  const objResult: ResultSetUserInLocalStorage = {
+    isSetUserOk: false,
+    encryptedUser: '',
+  };
+
+  try {
+    const secretKey = environment.KEY_USER ?? environment.KEY_USER;
+    const encrypted = CryptoJS.AES.encrypt(JSON.stringify(data), secretKey).toString();
+    localStorage.setItem('user', encrypted);
+
+    if (encrypted.length <= 0) return objResult;
+
+    objResult.encryptedUser = encrypted;
+    objResult.isSetUserOk = true;
+
+    return objResult;
+  } catch (error) {
+    return objResult;
   }
 };

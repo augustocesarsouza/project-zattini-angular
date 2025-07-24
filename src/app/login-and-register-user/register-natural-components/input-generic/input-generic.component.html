@@ -1,9 +1,9 @@
 <input
   type="text"
   placeholder=""
-  class="w-full outline-none !px-[10px] !py-[16px] border-[1px] border-[#00000018] rounded-sm"
+  class="input-generic w-full outline-none !px-[10px] !py-[16px] border-[1px] border-[#00000018] rounded-sm"
   #input
-  (focus)="onInputFocus(input, this.whichIs)"
-  (blur)="onInputBlur(input, this.whichIs)"
-  (input)="onInput(input, this.whichIs)"
+  (focus)="handleFocus(input, this.whichIs)"
+  (blur)="handleBlur(input, this.whichIs)"
+  (input)="handleInput(input, this.whichIs)"
 />
