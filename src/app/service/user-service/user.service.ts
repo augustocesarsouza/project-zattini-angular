@@ -11,19 +11,19 @@ export interface ReturnGetUser {
   isSuccess: boolean;
 }
 
-export interface ResultReturnGeneric {
+export interface ResultReturnCreate {
+  data: CreateUserDTO;
+  isSuccess: boolean;
+}
+
+export interface ResultReturnLogin {
   data: ILoginData;
   isSuccess: boolean;
 }
 
-interface ILoginData {
+export interface ILoginData {
   passwordIsCorrect: boolean;
   userDTO: User;
-}
-
-export interface ResultReturnCreate {
-  data: CreateUserDTO;
-  isSuccess: boolean;
 }
 
 @Injectable({
@@ -47,6 +47,16 @@ export class UserService {
 
     return this._http
       .get(`${this.baseUrl}/user/get-by-id-info-user/${userId}`, { headers })
+      .pipe(take(1));
+  }
+
+  login(email: string, password: string) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    return this._http
+      .get<ResultReturnLogin>(`${this.baseUrl}/public/user/login/${email}/${password}`, { headers })
       .pipe(take(1));
   }
 

@@ -24,3 +24,29 @@
   display: none;
   background-image: url(https://static.netshoes.com.br/vue-components/6.87.1/zattini/images/c3e3a7f532ee90e82f758ac1e7696f89.svg);
 }
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #fff;
+  border-bottom-color: #ff3d00;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+app-x-svg {
+  width: 16px;
+  margin-top: 1px;
+  margin-right: 7px;
+}

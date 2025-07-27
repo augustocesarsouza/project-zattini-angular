@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { ILoginData, UserService } from '../../service/user-service/user.service';
+import { SetUserLocalStorage } from '../../user-function/get-user-local-storage/user-local-storage';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-already-client',
@@ -8,6 +11,11 @@ import { Component } from '@angular/core';
 })
 export class AlreadyClientComponent {
   firstClickedInputEmail = false;
+
+  constructor(
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   onInputEmailFocus(
     spanEmailCpfCnpj: HTMLSpanElement,
@@ -60,6 +68,7 @@ export class AlreadyClientComponent {
     const value = inputEmailCpfCnpj.value;
 
     if (!value.includes('@gmail.com')) {
+      inputEmailCpfCnpj.style.color = 'red';
       inputEmailCpfCnpj.style.border = 'solid 1px red';
       spanEmailCpfCnpj.style.color = 'red';
       spanEmailCpfCnpj.style.fontWeight = '700';
@@ -67,6 +76,7 @@ export class AlreadyClientComponent {
 
       this.canLoginEmailCorrect = false;
     } else {
+      inputEmailCpfCnpj.style.color = 'black';
       inputEmailCpfCnpj.style.border = 'solid 1px rgba(0, 0, 0, 0.094)';
       spanEmailCpfCnpj.style.color = 'black';
       spanEmailCpfCnpj.style.fontWeight = '700';
@@ -201,6 +211,7 @@ export class AlreadyClientComponent {
     const value = inputPassword.value;
 
     if (value.length <= 0) {
+      inputPassword.style.color = 'red';
       inputPassword.style.border = 'solid 1px red';
       spanPassword.style.color = 'red';
       spanFieldPasswordRequired.style.color = 'red';
@@ -210,6 +221,7 @@ export class AlreadyClientComponent {
     }
 
     if (value.length > 0 && value.length < 3) {
+      inputPassword.style.color = 'red';
       inputPassword.style.border = 'solid 1px red';
       spanPassword.style.color = 'red';
       spanFieldPasswordRequired3Caracteres.style.color = 'red';
@@ -219,6 +231,7 @@ export class AlreadyClientComponent {
     }
 
     if (value.length >= 3) {
+      inputPassword.style.color = 'black';
       spanPassword.style.color = 'black';
       inputPassword.style.border = 'solid 1px rgba(0, 0, 0, 0.094)';
       spanFieldPasswordRequired.style.color = 'black';
@@ -246,5 +259,123 @@ export class AlreadyClientComponent {
     inputPassword.type = 'password';
     containerEyeClose.style.display = 'none';
     containerEyeOpen.style.display = 'flex';
+  }
+
+  isLoadingLogin = false;
+  timeoutRef: any = null;
+  userLoginDTO!: ILoginData;
+  errorLogin = false;
+
+  onClickLogin(
+    inputEmailCpfCnpj: HTMLInputElement,
+    spanEmailCpfCnpj: HTMLSpanElement,
+    spanErrorEmailCpfCnpj: HTMLSpanElement,
+    inputPassword: HTMLInputElement,
+    spanPassword: HTMLSpanElement,
+    spanFieldPasswordRequired: HTMLSpanElement
+  ) {
+    const valueInputEmail = inputEmailCpfCnpj.value;
+    const valueInputPassword = inputPassword.value;
+
+    var resultErrorEmail = this.errorInputsVerifify(
+      inputEmailCpfCnpj,
+      spanEmailCpfCnpj,
+      spanErrorEmailCpfCnpj
+    );
+    var resultErrorPassword = this.errorInputsVerifify(
+      inputPassword,
+      spanPassword,
+      spanFieldPasswordRequired
+    );
+
+    const errorEmailInvalid = this.errorEmailInvalidInput(valueInputEmail);
+    const errorPasswordInvalid = this.errorPasswordInvalidInput(valueInputPassword);
+
+    if (!resultErrorEmail && !resultErrorPassword && !errorEmailInvalid && !errorPasswordInvalid) {
+      // const objLogin = {
+      //   email: valueInputEmail,
+      //   password: valueInputPassword,
+      // };
+
+      this.isLoadingLogin = true;
+
+      this.userService.login(valueInputEmail, valueInputPassword).subscribe({
+        next: (success) => {
+          // console.log(success);
+
+          if (this.timeoutRef) {
+            clearTimeout(this.timeoutRef);
+          }
+
+          this.timeoutRef = setTimeout(() => {
+            this.isLoadingLogin = false;
+
+            const userLoginDTO = success.data;
+            this.errorLogin = !userLoginDTO.passwordIsCorrect;
+
+            console.log(userLoginDTO);
+            if (userLoginDTO.passwordIsCorrect) {
+              const resultUser = SetUserLocalStorage(userLoginDTO.userDTO);
+
+              if (resultUser.isSetUserOk) {
+                this.router.navigate(['/']);
+              } else {
+                this.router.navigate(['/login'], { queryParams: { erroWhenCreateAccount: true } });
+              }
+            }
+          }, 500);
+        },
+        error: (error) => {
+          if (error.status === 400) {
+            console.log(error);
+          }
+
+          if (error.status !== 400) {
+            localStorage.removeItem('user');
+            // this.router.navigate(['/login'], { queryParams: { erroWhenCreateAccount: false } });
+          }
+        },
+      });
+    }
+  }
+
+  errorInputsVerifify(
+    input: HTMLInputElement,
+    span: HTMLSpanElement | null,
+    spanError: HTMLSpanElement
+  ) {
+    const inputNameValue = input.value;
+
+    if (inputNameValue.length <= 0) {
+      if (span) {
+        span.style.color = 'red';
+        span.style.fontWeight = '700';
+      }
+      input.style.border = 'solid 1px red';
+      input.style.color = 'red';
+      spanError.style.display = 'flex';
+
+      return true;
+    }
+
+    return false;
+  }
+
+  errorEmailInvalidInput(value: string) {
+    if (!value.includes('@gmail.com')) {
+      return true;
+    }
+    return false;
+  }
+
+  errorPasswordInvalidInput(value: string) {
+    if (value.length < 3) {
+      return true;
+    }
+    return false;
+  }
+
+  onClickContainerAlreadyClient() {
+    this.errorLogin = false;
   }
 }

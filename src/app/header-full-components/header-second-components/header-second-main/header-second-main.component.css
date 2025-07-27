@@ -33,7 +33,8 @@
   display: none;
   min-width: 180px;
   position: absolute;
-  right: 31px;
+  /* right: 31px; */
+  /* 22px */
   bottom: 9px;
   transform: translateY(100%);
   z-index: 10;

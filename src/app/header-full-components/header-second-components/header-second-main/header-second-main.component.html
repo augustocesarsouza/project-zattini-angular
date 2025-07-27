@@ -15,14 +15,14 @@
       </div>
     </div>
 
-    <div class="flex justify-between w-[300px] h-[100%] relative">
+    <div class="flex justify-between min-w-[300px] h-[100%] relative">
       <div class="container-heart-svg-and-span flex gap-[5px] items-center">
         <app-heart-svg></app-heart-svg>
         <span class="text-[12px] font-semibold">Lista de Desejos</span>
       </div>
 
       <div
-        class="relative flex z-[10] items-center container-all-enter gap-[5px] cursor-pointer"
+        class="relative flex z-[10] items-center container-all-enter gap-[5px] cursor-pointer mx-[10px]"
         #containerAllEnter
         (mouseenter)="onMouseEnterLogin()"
         (mouseleave)="onMouseLeaveLogin()"
@@ -35,18 +35,28 @@
           />
         </div>
 
-        <span class="span-login-enter text-[12px] font-semibold">Entrar</span>
+        <span class="span-login-enter text-[12px] font-semibold" *ngIf="!user">Entrar</span>
+        <span class="span-login-enter text-[12px] font-semibold" *ngIf="user">{{ user.name }}</span>
       </div>
       <!-- login-and-register-user -->
       <div
         class="container-login-main-modal flex gap-[7px] flex-col !px-[15px] !py-[5px] cursor-pointer"
+        [ngClass]="user ? 'right-[22px]' : 'right-[42px]'"
         #containerLoginMainModal
         (mouseenter)="onMouseEnterLogin()"
         (mouseleave)="onMouseLeaveLogin()"
       >
-        <span class="text-[#000000] text-[13px] font-medium" (click)="onClickLogin()">Login</span>
+        <span class="text-[#000000] text-[13px] font-medium" (click)="onClickLogin()" *ngIf="!user"
+          >Login</span
+        >
         <span class="text-[#000000] text-[13px] font-medium">Meus Pedidos</span>
         <span class="text-[#000000] text-[13px] font-medium">Endereços</span>
+        <span
+          class="text-[#000000] text-[13px] font-medium"
+          (click)="onClickLoggingOut()"
+          *ngIf="user"
+          >Sair</span
+        >
       </div>
 
       <div
