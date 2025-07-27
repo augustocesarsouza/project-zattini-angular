@@ -184,7 +184,7 @@ export class FormIndividualMediaSmallerComponent {
     this.inputCity = input;
   }
 
-  onInputFocus(inputName: HTMLInputElement, whichIs: 'name' | 'lastName' | 'cpf' | '') {
+  onInputFocus(inputName: HTMLInputElement, whichIs: string) {
     const value = inputName.value;
 
     const spanMap: Record<string, ElementRef<HTMLSpanElement>> = {
@@ -551,7 +551,7 @@ export class FormIndividualMediaSmallerComponent {
   spanErrorCpfMustBe11CharactersRef!: ElementRef<HTMLSpanElement>;
   firstClickedInputCpf = false;
 
-  onInputCpfFocus(inputName: HTMLInputElement, whichIs: 'name' | 'lastName' | 'cpf' | '') {
+  onInputCpfFocus(inputName: HTMLInputElement, whichIs: string) {
     const value = inputName.value;
 
     if (whichIs === 'cpf') {
@@ -675,7 +675,7 @@ export class FormIndividualMediaSmallerComponent {
   spanErrorCellPhoneMustBe11CharactersRef!: ElementRef<HTMLSpanElement>;
   firstClickedInputCellPhone = false;
 
-  onInputCellPhoneFocus(inputName: HTMLInputElement, whichIs: 'name' | 'lastName' | 'cpf' | '') {
+  onInputCellPhoneFocus(inputName: HTMLInputElement, whichIs: string) {
     const value = inputName.value;
 
     const span = this.spanCellPhoneRef.nativeElement;
@@ -795,7 +795,7 @@ export class FormIndividualMediaSmallerComponent {
   spanErrorCepAtLeast9CharactersRef!: ElementRef<HTMLSpanElement>;
   firstClickedInputCep = false;
 
-  onInputCepFocus(inputName: HTMLInputElement, whichIs: 'name' | 'lastName' | 'cpf' | '') {
+  onInputCepFocus(inputName: HTMLInputElement, whichIs: string) {
     const value = inputName.value;
 
     const span = this.spanCepRef.nativeElement;
@@ -951,7 +951,7 @@ export class FormIndividualMediaSmallerComponent {
   spanErrorAddressRequiredRef!: ElementRef<HTMLSpanElement>;
   firstClickedInputAddress = false;
 
-  onInputAddressFocus(inputName: HTMLInputElement, whichIs: 'name' | 'lastName' | 'cpf' | '') {
+  onInputAddressFocus(inputName: HTMLInputElement, whichIs: string) {
     const value = inputName.value;
 
     const span = this.spanAddressRef.nativeElement;
@@ -1037,7 +1037,7 @@ export class FormIndividualMediaSmallerComponent {
   spanErrorNumberRequiredRef!: ElementRef<HTMLSpanElement>;
   firstClickedInputNumber = false;
 
-  onInputNumberFocus(inputName: HTMLInputElement, whichIs: 'name' | 'lastName' | 'cpf' | '') {
+  onInputNumberFocus(inputName: HTMLInputElement, whichIs: string) {
     const value = inputName.value;
 
     const span = this.spanNumberRef.nativeElement;
@@ -1123,7 +1123,7 @@ export class FormIndividualMediaSmallerComponent {
   spanErrorComplementRequiredRef!: ElementRef<HTMLSpanElement>;
   firstClickedInputComplement = false;
 
-  onInputComplementFocus(inputName: HTMLInputElement, whichIs: 'name' | 'lastName' | 'cpf' | '') {
+  onInputComplementFocus(inputName: HTMLInputElement, whichIs: string) {
     const value = inputName.value;
 
     const span = this.spanComplementRef.nativeElement;
@@ -1185,7 +1185,7 @@ export class FormIndividualMediaSmallerComponent {
   spanErrorNeighborhoodRequiredRef!: ElementRef<HTMLSpanElement>;
   firstClickedInputNeighborhood = false;
 
-  onInputNeighborhoodFocus(inputName: HTMLInputElement, whichIs: 'name' | 'lastName' | 'cpf' | '') {
+  onInputNeighborhoodFocus(inputName: HTMLInputElement, whichIs: string) {
     const value = inputName.value;
 
     const span = this.spanNeighborhoodRef.nativeElement;
@@ -1323,7 +1323,7 @@ export class FormIndividualMediaSmallerComponent {
   spanErrorCityRequiredRef!: ElementRef<HTMLSpanElement>;
   firstClickedInputCity = false;
 
-  onInputCityFocus(inputName: HTMLInputElement, whichIs: 'name' | 'lastName' | 'cpf' | '') {
+  onInputCityFocus(inputName: HTMLInputElement, whichIs: string) {
     const value = inputName.value;
 
     const span = this.spanCityRef.nativeElement;
@@ -1409,10 +1409,7 @@ export class FormIndividualMediaSmallerComponent {
   spanErrorReferencePointRequiredRef!: ElementRef<HTMLSpanElement>;
   firstClickedInputReferencePoint = false;
 
-  onInputReferencePointFocus(
-    inputName: HTMLInputElement,
-    whichIs: 'name' | 'lastName' | 'cpf' | ''
-  ) {
+  onInputReferencePointFocus(inputName: HTMLInputElement, whichIs: string) {
     const value = inputName.value;
 
     const span = this.spanReferencePointRef.nativeElement;

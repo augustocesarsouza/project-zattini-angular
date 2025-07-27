@@ -1,6 +1,14 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { WidthCreateAccountIsLessThan1035Service } from '../../../service-dispatch/user-register/width-create-account-is-less-than-1035.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-register-natural',
@@ -8,10 +16,11 @@ import { WidthCreateAccountIsLessThan1035Service } from '../../../service-dispat
   templateUrl: './register-natural.component.html',
   styleUrl: './register-natural.component.css',
 })
-export class RegisterNaturalComponent implements OnInit {
+export class RegisterNaturalComponent implements OnInit, OnDestroy {
   @ViewChild('containerLegalEntity') containerLegalEntity!: ElementRef<HTMLDivElement>;
   @ViewChild('containerIndividual') containerIndividual!: ElementRef<HTMLDivElement>;
   clickLegalEntity = false;
+  private destroy$ = new Subject<void>();
 
   constructor(
     private router: Router,
@@ -28,13 +37,16 @@ export class RegisterNaturalComponent implements OnInit {
   }
 
   canShowFormIndividualMediaSmaller = false;
+  errorLegalEntityFields = false;
 
   ngOnInit(): void {
-    this.widthCreateAccountIsLessThan1035Service.value$.subscribe((value) => {
-      this.canShowFormIndividualMediaSmaller = value;
+    this.widthCreateAccountIsLessThan1035Service.value$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((value) => {
+        this.canShowFormIndividualMediaSmaller = value;
 
-      this.cdRef.detectChanges();
-    });
+        this.cdRef.detectChanges();
+      });
   }
 
   onClickIndividual() {
@@ -45,5 +57,10 @@ export class RegisterNaturalComponent implements OnInit {
   onClickLegalEntity() {
     this.clickLegalEntity = true;
     this.router.navigate(['/auth/register/legal-entity']);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
