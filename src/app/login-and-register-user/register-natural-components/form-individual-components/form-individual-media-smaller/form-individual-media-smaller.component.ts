@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SendClickedButtonContinueRegisterService } from '../../../../service-dispatch/user-register/send-clicked-button-continue-register.service';
 
@@ -8,7 +8,7 @@ import { SendClickedButtonContinueRegisterService } from '../../../../service-di
   templateUrl: './form-individual-media-smaller.component.html',
   styleUrl: './form-individual-media-smaller.component.css',
 })
-export class FormIndividualMediaSmallerComponent {
+export class FormIndividualMediaSmallerComponent implements AfterViewChecked, OnDestroy {
   @ViewChild('spanNameRef') spanNameRef!: ElementRef<HTMLSpanElement>;
   @ViewChild('spanErrorNameRequiredRef') spanErrorNameRequiredRef!: ElementRef<HTMLSpanElement>;
   @ViewChild('spanErrorNameAtLeast3CharactersRef')
@@ -42,7 +42,7 @@ export class FormIndividualMediaSmallerComponent {
     private sendClickedButtonContinueRegisterService: SendClickedButtonContinueRegisterService
   ) {}
 
-  ngOnInit(): void {
+  ngAfterViewChecked(): void {
     this.loadYears();
 
     this.onInputFocus = this.onInputFocus.bind(this);
@@ -1758,6 +1758,8 @@ export class FormIndividualMediaSmallerComponent {
   }
 
   ngOnDestroy(): void {
+    this.sendClickedButtonContinueRegisterService.updatevalueButton(false);
+
     if (this.timeoutRef) {
       clearTimeout(this.timeoutRef);
     }

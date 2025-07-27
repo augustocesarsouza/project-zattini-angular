@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SendClickedButtonContinueRegisterService } from '../../../service-dispatch/user-register/send-clicked-button-continue-register.service';
 import { GetDataLegalEntityRegisterService } from '../../../service-dispatch/user-register/get-data-legal-entity-register.service';
@@ -10,7 +10,7 @@ import { LegalEntityCreateDTO } from '../../../interface/dto/LegalEntityCreateDT
   templateUrl: './form-legal-entity.component.html',
   styleUrl: './form-legal-entity.component.css',
 })
-export class FormLegalEntityComponent implements OnInit, AfterViewInit {
+export class FormLegalEntityComponent implements AfterViewInit, OnDestroy {
   @ViewChild('spanCompanyNameRef') spanCompanyNameRef!: ElementRef<HTMLSpanElement>;
   @ViewChild('spanErrorCompanyNameRequiredRef')
   spanErrorCompanyNameRequiredRef!: ElementRef<HTMLSpanElement>;
@@ -46,7 +46,11 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
     private getDataLegalEntityRegisterService: GetDataLegalEntityRegisterService
   ) {}
 
-  ngOnInit(): void {
+  ngOnDestroy(): void {
+    this.sendClickedButtonContinueRegisterService.updatevalueButton(false);
+  }
+
+  ngAfterViewInit(): void {
     this.onInputFocus = this.onInputFocus.bind(this);
     this.onInputBlur = this.onInputBlur.bind(this);
     this.onInput = this.onInput.bind(this);
@@ -246,14 +250,12 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {}
-
   errorInputsVerifify(
     input: HTMLInputElement,
     span: HTMLSpanElement | null,
     spanError: HTMLSpanElement
   ) {
-    if (!input) return true;
+    if (!input) return false;
 
     const inputNameValue = input.value;
 

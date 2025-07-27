@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SendClickedButtonContinueRegisterService } from '../../../../service-dispatch/user-register/send-clicked-button-continue-register.service';
 import { UserCreateDTO } from '../../../../interface/dto/UserCreateDTO';
@@ -10,7 +10,7 @@ import { GetDataUserRegisterService } from '../../../../service-dispatch/user-re
   templateUrl: './form-individual-media-greate.component.html',
   styleUrl: './form-individual-media-greate.component.css',
 })
-export class FormIndividualMediaGreateComponent implements OnInit, AfterViewInit {
+export class FormIndividualMediaGreateComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('spanNameRef') spanNameRef!: ElementRef<HTMLSpanElement>;
   @ViewChild('spanErrorNameRequiredRef') spanErrorNameRequiredRef!: ElementRef<HTMLSpanElement>;
   @ViewChild('spanErrorNameAtLeast3CharactersRef')
@@ -46,6 +46,11 @@ export class FormIndividualMediaGreateComponent implements OnInit, AfterViewInit
     private sendClickedButtonContinueRegisterService: SendClickedButtonContinueRegisterService,
     private getDataUserRegisterService: GetDataUserRegisterService
   ) {}
+
+  ngOnDestroy(): void {
+    this.sendClickedButtonContinueRegisterService.updatevalueButton(false);
+    this.getDataUserRegisterService.updateValueGetData(null);
+  }
 
   ngOnInit(): void {}
 
@@ -253,7 +258,7 @@ export class FormIndividualMediaGreateComponent implements OnInit, AfterViewInit
     span: HTMLSpanElement | null,
     spanError: HTMLSpanElement
   ) {
-    if (!input) return true;
+    if (!input) return false;
 
     const inputNameValue = input.value;
 
