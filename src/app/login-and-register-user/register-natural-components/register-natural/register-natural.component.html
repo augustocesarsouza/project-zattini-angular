@@ -1,63 +1,67 @@
-<app-header-main />
+<div class="flex flex-col">
+  <app-header-main />
 
-<div class="flex justify-center gap-[10px] mt-[10px] !mx-[20px] min-h-[643px]">
-  <div
-    class="flex flex-col relative"
-    [ngClass]="canShowFormIndividualMediaSmaller ? 'w-[950px]' : 'w-[761px]'"
-  >
-    <div class="flex" *ngIf="!canShowFormIndividualMediaSmaller">
-      <div
-        class="flex !p-[12px] border-[1px] border-[#00000018] rounded-tl-sm rounded-tr-sm cursor-pointer"
-        [ngClass]="
-          !clickLegalEntity
-            ? 'border-b-[#f7f7f7] text-[#000]'
-            : 'border-b-[#00000018] text-[#00c7c7] bg-[#f7f7f7]'
-        "
-        #containerIndividual
-        (click)="onClickIndividual()"
-      >
-        <span class="text-[16px] font-semibold leading-[16px]">Pessoa Física</span>
+  <div class="flex justify-center gap-[10px] mt-[10px] !mx-[20px] min-h-[700px]">
+    <div
+      class="flex flex-col relative"
+      [ngClass]="canShowFormIndividualMediaSmaller ? 'w-[950px]' : 'w-[761px]'"
+    >
+      <div class="flex" *ngIf="!canShowFormIndividualMediaSmaller">
+        <div
+          class="flex !p-[12px] border-[1px] border-[#00000018] rounded-tl-sm rounded-tr-sm cursor-pointer"
+          [ngClass]="
+            !clickLegalEntity
+              ? 'border-b-[#f7f7f7] text-[#000]'
+              : 'border-b-[#00000018] text-[#00c7c7] bg-[#f7f7f7]'
+          "
+          #containerIndividual
+          (click)="onClickIndividual()"
+        >
+          <span class="text-[16px] font-semibold leading-[16px]">Pessoa Física</span>
+        </div>
+        <div class="w-[7px] !p-[0px] border-b border-b-[#00000018] cursor-pointer">
+          <span class="text-[16px] font-semibold leading-[16px]"></span>
+        </div>
+        <div
+          class="flex !p-[12px] border-[1px] border-[#00000018] rounded-tl-sm rounded-tr-sm cursor-pointer"
+          [ngClass]="
+            clickLegalEntity
+              ? 'border-b-[#f7f7f7] text-[#000]'
+              : 'border-b-[#00000018] text-[#00c7c7] bg-[#f7f7f7]'
+          "
+          #containerLegalEntity
+          (click)="onClickLegalEntity()"
+        >
+          <span class="text-[16px] font-semibold leading-[16px]">Pessoa Jurídica</span>
+        </div>
+        <div class="flex-grow !p-[12px] border-b border-b-[#00000018] cursor-pointer">
+          <span class="text-[16px] font-semibold leading-[16px]"></span>
+        </div>
       </div>
-      <div class="w-[7px] !p-[0px] border-b border-b-[#00000018] cursor-pointer">
-        <span class="text-[16px] font-semibold leading-[16px]"></span>
-      </div>
-      <div
-        class="flex !p-[12px] border-[1px] border-[#00000018] rounded-tl-sm rounded-tr-sm cursor-pointer"
-        [ngClass]="
-          clickLegalEntity
-            ? 'border-b-[#f7f7f7] text-[#000]'
-            : 'border-b-[#00000018] text-[#00c7c7] bg-[#f7f7f7]'
-        "
-        #containerLegalEntity
-        (click)="onClickLegalEntity()"
-      >
-        <span class="text-[16px] font-semibold leading-[16px]">Pessoa Jurídica</span>
-      </div>
-      <div class="flex-grow !p-[12px] border-b border-b-[#00000018] cursor-pointer">
-        <span class="text-[16px] font-semibold leading-[16px]"></span>
-      </div>
+
+      <router-outlet></router-outlet>
     </div>
-
-    <router-outlet></router-outlet>
-  </div>
-  <div
-    class="container-main-about-your-account flex flex-col w-[543px]"
-    *ngIf="!canShowFormIndividualMediaSmaller"
-  >
-    <div class="flex">
-      <div
-        class="flex !p-[12px] border-[1px] border-[#00000018] border-b-0 border-b-[#fff] rounded-tl-sm rounded-tr-sm cursor-pointer text-[#000]"
-        #containerAboutYourAccount
-      >
-        <span class="text-[16px] font-semibold leading-[16px]">Sobre sua conta</span>
+    <div
+      class="container-main-about-your-account flex flex-col w-[543px]"
+      *ngIf="!canShowFormIndividualMediaSmaller"
+    >
+      <div class="flex">
+        <div
+          class="flex !p-[12px] border-[1px] border-[#00000018] border-b-0 border-b-[#fff] rounded-tl-sm rounded-tr-sm cursor-pointer text-[#000]"
+          #containerAboutYourAccount
+        >
+          <span class="text-[16px] font-semibold leading-[16px]">Sobre sua conta</span>
+        </div>
+        <div class="flex-grow border-b-[1px] border-[#00000018] border-b-[#00000018]"></div>
       </div>
-      <div class="flex-grow border-b-[1px] border-[#00000018] border-b-[#00000018]"></div>
-    </div>
 
-    <app-about-your-account></app-about-your-account>
+      <app-about-your-account></app-about-your-account>
+    </div>
   </div>
 </div>
 
-<app-method-payment></app-method-payment>
+<div class="flex flex-col">
+  <app-method-payment></app-method-payment>
 
-<app-copyright></app-copyright>
+  <app-copyright></app-copyright>
+</div>

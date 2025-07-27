@@ -1,228 +1,209 @@
 <div
-  class="border-[1px] border-[#00000018] border-t-0 flex flex-col !px-[22px] !py-[21px] z-[5] w-[100%] absolute left-[0px] top-[41px] h-[580px]"
+  class="border-[1px] border-[#00000018] border-t-0 flex flex-col !px-[22px] !py-[21px] z-[5] w-[100%] absolute left-[0px] top-[41px]"
 >
   <span class="text-[14px] leading-[16px] !mb-[20px]">* Campos obrigatórios. Legal-Entity</span>
 
   <div class="flex flex-col">
-    <div class="flex !mb-[15px]">
-      <div class="flex gap-[10px] !mr-[10px]">
-        <div class="flex flex-col">
+    <div class="flex !mb-[15px] h-[73px]">
+      <div class="flex gap-[10px] w-full">
+        <div class="flex flex-col w-full">
           <div class="text-[14px] flex w-full relative h-[100%]">
             <app-input-generic
               [handleFocus]="onInputFocus"
               [handleBlur]="onInputBlur"
               [handleInput]="onInput"
-              [getInput]="getInputName"
-              [whichIs]="'name'"
+              [getInput]="getInputCompanyName"
+              [whichIs]="'companyName'"
             ></app-input-generic>
             <span
-              #spanNameRef
+              #spanCompanyNameRef
               class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
-              >* Nome</span
+              >* Razão Social</span
             >
           </div>
           <span
-            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
-            #spanErrorNameRequiredRef
-            >O campo “Nome“ é obrigatório</span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[13px]"
+            #spanErrorCompanyNameRequiredRef
+            >O campo "Razão Social" é obrigatório</span
           >
 
           <span
-            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
-            #spanErrorNameAtLeast3CharactersRef
-            >O campo “Nome“ precisa ter pelo menos 3 caracteres.</span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[13px]"
+            #spanErrorCompanyNameAtLeast3CharactersRef
+            >O campo “Razão Social“ precisa ter pelo menos 3 caracteres.</span
           >
         </div>
 
-        <div class="flex flex-col">
+        <div class="flex flex-col w-full">
           <div class="text-[14px] flex w-full relative">
             <app-input-generic
               [handleFocus]="onInputFocus"
               [handleBlur]="onInputBlur"
               [handleInput]="onInput"
-              [getInput]="getInputLastName"
-              [whichIs]="'lastName'"
+              [getInput]="getInputTradeName"
+              [whichIs]="'tradeName'"
             ></app-input-generic>
             <span
-              #spanLastNameRef
+              #spanTradeNameRef
               class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
-              >* Sobrenome</span
+              >* Nome Fantasia</span
             >
           </div>
           <span
-            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
-            #spanErrorLastNameRequiredRef
-            >O campo “Sobrenome“ é obrigatório</span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[13px]"
+            #spanErrorTradeNameRequiredRef
+            >O campo “Nome Fantasia“ é obrigatório</span
           >
 
           <span
-            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
-            #spanErrorLastNameAtLeast3CharactersRef
-            >O campo “Sobrenome“ precisa ter pelo menos 3 caracteres.</span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[13px]"
+            #spanErrorTradeNameAtLeast3CharactersRef
+            >O campo “Nome Fantasia“ precisa ter pelo menos 3 caracteres.</span
           >
         </div>
-      </div>
-      <div class="flex flex-col">
-        <span class="text-[12px] text-[#000] font-semibold">* Sexo</span>
 
-        <div class="flex gap-[10px] leading-[16px] select-none">
-          <label
-            #labelFemale
-            class="label-gender-female cursor-pointer flex text-[14px] relative"
-            for="female"
-            (click)="onClickLabelFemale()"
-            >Feminino</label
-          >
-          <label
-            #labelMale
-            class="label-gender-male cursor-pointer flex text-[14px] relative"
-            for="male"
-            (click)="onClickLabelMale()"
-            >Masculino</label
-          >
-        </div>
-      </div>
-    </div>
-
-    <div class="flex flex-col !mb-[15px]">
-      <span class="text-[14px] text-[#000] font-semibold !mb-[5px]">Data de nascimento</span>
-      <div class="flex justify-between gap-[10px]">
-        <div class="flex gap-[5px]">
-          <div class="flex flex-col w-[107px]">
-            <div class="select-wrapper" #selectWrapperFirst>
-              <select
-                class="custom-select"
-                name="day"
-                id="dayOfBirth"
-                #selectDayOfBirth
-                [(ngModel)]="selectedDay"
-                (change)="onInputSelectChange(selectDayOfBirth, selectWrapperFirst, 'day')"
-                (focus)="onInputSelectDayOfBirthFocus()"
-                (blur)="onInputSelectBlur(selectDayOfBirth, selectWrapperFirst, 'day')"
-              >
-                <option value="">* Dia</option>
-                <option *ngFor="let day of days" [value]="day">{{ day }}</option>
-              </select>
-            </div>
-            <!-- flex -->
-            <span
-              class="hidden text-[12px] text-[#db001c] font-bold leading-[14px]"
-              #spanErrorFieldDayRequired
-              >O campo “Dia“ é obrigatório</span
-            >
-          </div>
-
-          <div class="flex flex-col w-[107px]">
-            <div class="select-wrapper" #selectWrapperSecond>
-              <select
-                class="custom-select"
-                name="month"
-                id="monthOfBirth"
-                #selectMonthOfBirth
-                [(ngModel)]="selectedMonth"
-                (change)="onInputSelectChange(selectMonthOfBirth, selectWrapperSecond, 'month')"
-                (blur)="onInputSelectBlur(selectMonthOfBirth, selectWrapperSecond, 'month')"
-              >
-                <option value="">* Mês</option>
-                <option *ngFor="let month of months" [value]="month.value">{{ month.name }}</option>
-              </select>
-            </div>
-            <span
-              class="hidden text-[12px] text-[#db001c] font-bold leading-[14px]"
-              #spanErrorFieldMonthRequired
-              >O campo “Mês“ é obrigatório</span
-            >
-          </div>
-
-          <div class="flex flex-col w-[107px]">
-            <div class="select-wrapper" #selectWrapperThird>
-              <select
-                class="custom-select"
-                name="year"
-                id="yearOfBirth"
-                #selectYear
-                [(ngModel)]="selectedYear"
-                (change)="onInputSelectChange(selectYear, selectWrapperThird, 'year')"
-                (blur)="onInputSelectBlur(selectYear, selectWrapperThird, 'year')"
-              >
-                <option value="">* Ano</option>
-                <option *ngFor="let year of years" [value]="year">{{ year }}</option>
-              </select>
-            </div>
-            <span
-              class="hidden text-[12px] text-[#db001c] font-bold leading-[14px]"
-              #spanErrorFieldYearRequired
-              >O campo “Ano“ é obrigatório</span
-            >
-          </div>
-        </div>
-
-        <div class="flex flex-col w-[100%] !mr-[5px]">
+        <div class="flex flex-col w-full">
           <div class="text-[14px] flex w-full relative">
             <app-input-generic
-              [handleFocus]="onInputCpfFocus"
-              [handleBlur]="onInputCpfBlur"
-              [handleInput]="onInputCpf"
-              [whichIs]="'cpf'"
-              [getInput]="getInputCpf"
-              (keydown)="onKeyDownInputCpf($event)"
+              [handleFocus]="onInputCnpjFocus"
+              [handleBlur]="onInputCnpjBlur"
+              [handleInput]="onInputCnpj"
+              [whichIs]="''"
+              [getInput]="getInputCnpj"
+              (keydown)="onKeyDownInputCnpj($event)"
             ></app-input-generic>
             <span
-              #spanCpfRef
+              #spanCnpjRef
               class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
-              >* CPF</span
+              >* CNPJ</span
             >
           </div>
           <span
-            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
-            #spanErrorCpfRequiredRef
-            >O campo “CPF“ é obrigatório</span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[13px]"
+            #spanErrorCnpjRequiredRef
+            >O campo “CNPJ“ é obrigatório</span
           >
 
           <span
-            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
-            #spanErrorCpfMustBe11CharactersRef
-            >O campo “CPF“ precisa ter pelo menos 11 caracteres.</span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[13px]"
+            #spanErrorCnpjAtLeast14CharactersRef
+            >O campo “CNPJ“ precisa ter pelo menos 14 caracteres.</span
           >
         </div>
       </div>
     </div>
 
-    <div class="flex justify-between gap-[10px] !mb-[15px]">
-      <div class="flex flex-col w-[330px]">
-        <div class="text-[14px] flex w-full relative h-[100%]">
+    <div class="flex justify-between gap-[10px] !mb-[15px] h-[73px]">
+      <div class="flex flex-col">
+        <div class="text-[14px] flex w-[231.67px] relative h-[100%]">
           <app-input-generic
-            [handleFocus]="onInputCellPhoneFocus"
-            [handleBlur]="onInputCellPhoneBlur"
-            [handleInput]="onInputCellPhone"
+            [handleFocus]="onInputMunicipalRegistrationFocus"
+            [handleBlur]="onInputMunicipalRegistrationBlur"
+            [handleInput]="onInputMunicipalRegistration"
             [whichIs]="''"
-            [getInput]="getInputCellPhone"
-            (keydown)="onKeyDownInputCellPhone($event)"
+            [getInput]="getInputMunicipalRegistration"
+            (keydown)="onKeyDownInputMunicipalRegistration($event)"
           ></app-input-generic>
           <span
-            #spanCellPhoneRef
+            #spanMunicipalRegistrationRef
             class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
-            >* DDD e número de celular</span
+            >Inscrição Municipal</span
           >
         </div>
-        <span
-          class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
-          #spanErrorCellPhoneRequiredRef
-          >O campo “DDD e número de celular“ é obrigatório</span
-        >
+      </div>
 
-        <span
-          class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
-          #spanErrorCellPhoneMustBe11CharactersRef
-          >O campo “DDD e número de celular“ precisa ter pelo menos 11 caracteres.</span
+      <div class="flex w-[473px]">
+        <div class="flex flex-col w-full !mr-[10px]">
+          <div class="text-[14px] flex w-full relative h-[100%]">
+            <app-input-generic
+              [handleFocus]="onInputStateRegistrationFocus"
+              [handleBlur]="onInputStateRegistrationBlur"
+              [handleInput]="onInputStateRegistration"
+              [whichIs]="''"
+              [getInput]="getInputStateRegistration"
+              (keydown)="onKeyDownInputStateRegistration($event)"
+            ></app-input-generic>
+            <span
+              #spanStateRegistrationRef
+              class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+              >* Inscrição Estadual</span
+            >
+          </div>
+          <span
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[13px]"
+            #spanErrorStateRegistrationRequiredRef
+            >O campo “Inscrição Estadual“ é obrigatório</span
+          >
+        </div>
+
+        <label
+          class="flex items-start leading-[16px] text-[14px] w-[74px] select-none"
+          for="checkbox"
         >
+          <input
+            class="!mt-[3px] !mr-[5px]"
+            type="checkbox"
+            id="checkbox"
+            #inputCheckboxExempt
+            (click)="onClickLabelCheckboxExempt(inputCheckboxExempt, spanStateRegistrationRef)"
+          />
+          Isento
+        </label>
       </div>
     </div>
 
-    <div class="flex gap-[10px] !mb-[10px]">
+    <div class="flex justify-between gap-[10px] !mb-[15px] h-[73px]">
+      <div class="flex flex-col w-full">
+        <div class="text-[14px] flex w-full relative h-[100%]">
+          <app-input-generic
+            [handleFocus]="onInputCorporateCellPhoneNumberFocus"
+            [handleBlur]="onInputCorporateCellPhoneNumberBlur"
+            [handleInput]="onInputCorporateCellPhoneNumber"
+            [whichIs]="''"
+            [getInput]="getInputCorporateCellPhoneNumber"
+            (keydown)="onKeyDownInputCorporateCellPhoneNumber($event)"
+          ></app-input-generic>
+          <span
+            #spanCorporateCellPhoneNumberRef
+            class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+            >* DDD e número de celular corporativo</span
+          >
+        </div>
+        <span
+          class="hidden text-[11px] text-[#db001c] font-bold leading-[13px]"
+          #spanErrorCorporateCellPhoneNumberRequiredRef
+          >O campo “DDD e número de celular corporativo“ é obrigatório</span
+        >
+        <span
+          class="hidden text-[11px] text-[#db001c] font-bold leading-[13px]"
+          #spanErrorCorporateCellPhoneNumberAtLeast11CharactersRef
+          >O campo “DDD e número de celular corporativo“ precisa ter pelo menos 11 caracteres.</span
+        >
+      </div>
+
+      <div class="flex flex-col w-full">
+        <div class="text-[14px] flex w-full relative h-[100%]">
+          <app-input-generic
+            [handleFocus]="onInputDDDNumberCorporateLandlineFocus"
+            [handleBlur]="onInputDDDNumberCorporateLandlineBlur"
+            [handleInput]="onInputDDDNumberCorporateLandline"
+            [whichIs]="''"
+            [getInput]="getInputDDDNumberCorporateLandline"
+            (keydown)="onKeyDownInputDDDNumberCorporateLandline($event)"
+          ></app-input-generic>
+          <span
+            #spanDDDNumberCorporateLandlineRef
+            class="span-enter-your-email absolute left-[10px] top-[20px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+            >DDD e número de telefone fixo corporativo</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="flex gap-[10px] !mb-[10px] h-[73px]">
       <div class="flex gap-[10px]">
-        <div class="flex flex-col w-[160px]">
-          <div class="text-[14px] flex w-full relative">
+        <div class="flex flex-col w-[171px]">
+          <div class="text-[14px] flex w-full relative container-input-cep">
             <app-input-generic
               [handleFocus]="onInputCepFocus"
               [handleBlur]="onInputCepBlur"
@@ -238,19 +219,20 @@
             >
           </div>
           <span
-            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[13px]"
+            data-testid="error-field-cep-required"
             #spanErrorCepRequiredRef
             >O campo “CEP“ é obrigatório</span
           >
 
           <span
-            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[13px]"
             #spanErrorCepAtLeast9CharactersRef
             >O campo “CEP“ precisa ter pelo menos 9 caracteres.</span
           >
         </div>
 
-        <div class="flex flex-col w-[160px] relative">
+        <div class="flex flex-col w-[171px] relative">
           <div class="select-wrapper" #selectWrapperTypeOfAddressSecond>
             <select
               class="custom-select"
@@ -282,6 +264,7 @@
             <span
               #spanTypeOfAddressRef
               class="hidden text-[12px] absolute left-[10px] top-[8px] leading-[16px] pointer-events-none transition-all duration-300 bg-[#ffffff]"
+              data-testid="error-field-type-of-address-required"
               >* Tipo de Endereço</span
             >
           </div>
@@ -294,7 +277,7 @@
       </div>
 
       <div class="flex flex-col w-full">
-        <div class="text-[14px] flex w-full relative">
+        <div class="text-[14px] flex w-full relative container-address">
           <app-input-generic
             [handleFocus]="onInputAddressFocus"
             [handleBlur]="onInputAddressBlur"
@@ -311,17 +294,18 @@
         </div>
         <span
           class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+          data-testid="error-field-address-required"
           #spanErrorAddressRequiredRef
           >O campo “Endereço“ é obrigatório</span
         >
       </div>
     </div>
-    <span class="text-[14px] !mb-[10px] underline">Não sei meu CEP</span>
+    <span class="text-[14px] !mb-[10px] underline span-dont-know-my-cep">Não sei meu CEP</span>
 
-    <div class="flex gap-[10px] !mb-[15px]">
+    <div class="flex gap-[10px] !mb-[15px] h-[73px]">
       <div class="flex gap-[10px]">
         <div class="flex flex-col w-[160px]">
-          <div class="text-[14px] flex w-full relative">
+          <div class="text-[14px] flex w-full relative container-number">
             <app-input-generic
               [handleFocus]="onInputNumberFocus"
               [handleBlur]="onInputNumberBlur"
@@ -337,14 +321,15 @@
             >
           </div>
           <span
-            class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+            class="hidden text-[11px] text-[#db001c] font-bold leading-[13px]"
+            data-testid="error-field-number-required"
             #spanErrorNumberRequiredRef
             >O campo “Número“ é obrigatório</span
           >
         </div>
 
         <div class="flex flex-col w-[160px]">
-          <div class="text-[13px] flex w-full relative">
+          <div class="text-[13px] flex w-full relative container-complement">
             <app-input-generic
               [handleFocus]="onInputComplementFocus"
               [handleBlur]="onInputComplementBlur"
@@ -363,7 +348,7 @@
       </div>
 
       <div class="flex flex-col w-full">
-        <div class="text-[14px] flex w-full relative">
+        <div class="text-[14px] flex w-full relative container-neighborhood">
           <app-input-generic
             [handleFocus]="onInputNeighborhoodFocus"
             [handleBlur]="onInputNeighborhoodBlur"
@@ -379,15 +364,16 @@
           >
         </div>
         <span
-          class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+          class="hidden text-[11px] text-[#db001c] font-bold leading-[13px]"
+          data-testid="error-field-neighborhood-required"
           #spanErrorNeighborhoodRequiredRef
           >O campo “Bairro“ é obrigatório</span
         >
       </div>
     </div>
 
-    <div class="flex gap-[10px]">
-      <div class="flex flex-col w-[160px] relative">
+    <div class="flex gap-[10px] h-[73px]">
+      <div class="flex flex-col w-[160px] relative container-state">
         <div class="select-wrapper" #selectWrapperStateSecond>
           <select
             class="custom-select"
@@ -413,13 +399,14 @@
         >
         <span
           class="hidden text-[11px] text-[#db001c] font-bold leading-[14px]"
+          data-testid="error-field-state-required"
           #spanErrorFieldStateRequired
           >O campo “Estado“ é obrigatório</span
         >
       </div>
 
-      <div class="flex flex-col w-[272px]">
-        <div class="text-[14px] flex w-full relative h-[100%]">
+      <div class="flex flex-col w-[40%]">
+        <div class="text-[14px] flex w-full relative h-[100%] container-city">
           <app-input-generic
             [handleFocus]="onInputCityFocus"
             [handleBlur]="onInputCityBlur"
@@ -435,14 +422,15 @@
           >
         </div>
         <span
-          class="hidden text-[11px] text-[#db001c] font-bold leading-[16px]"
+          class="hidden text-[11px] text-[#db001c] font-bold leading-[13px]"
+          data-testid="error-field-city-required"
           #spanErrorCityRequiredRef
           >O campo “Cidade“ é obrigatório</span
         >
       </div>
 
-      <div class="flex flex-col w-full">
-        <div class="text-[13px] flex w-full relative h-[100%]">
+      <div class="flex-grow flex-col">
+        <div class="text-[13px] flex w-full relative h-[100%] container-reference-point">
           <app-input-generic
             [handleFocus]="onInputReferencePointFocus"
             [handleBlur]="onInputReferencePointBlur"

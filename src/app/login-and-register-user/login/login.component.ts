@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  erroWhenCreateAccount = true;
+  erroWhenCreateAccount = false;
 
   constructor(private route: ActivatedRoute) {}
 

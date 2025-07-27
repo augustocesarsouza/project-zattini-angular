@@ -5,6 +5,8 @@ import { GetDataUserRegisterService } from '../../../service-dispatch/user-regis
 import { UserCreateDTO } from '../../../interface/dto/UserCreateDTO';
 import { UserService } from '../../../service/user-service/user.service';
 import { SetUserLocalStorage } from '../../../user-function/get-user-local-storage/user-local-storage';
+import { GetDataLegalEntityRegisterService } from '../../../service-dispatch/user-register/get-data-legal-entity-register.service';
+import { LegalEntityCreateDTO } from '../../../interface/dto/LegalEntityCreateDTO';
 
 @Component({
   selector: 'app-about-your-account',
@@ -18,6 +20,7 @@ export class AboutYourAccountComponent implements OnInit, AfterViewInit, OnDestr
     private router: Router,
     private sendClickedButtonContinueRegisterService: SendClickedButtonContinueRegisterService,
     private getDataUserRegisterService: GetDataUserRegisterService,
+    private getDataLegalEntityRegisterService: GetDataLegalEntityRegisterService,
     private userService: UserService
   ) {}
 
@@ -25,11 +28,18 @@ export class AboutYourAccountComponent implements OnInit, AfterViewInit, OnDestr
   @ViewChild('spanEmail') spanEmailRef!: ElementRef<HTMLSpanElement>;
   timeoutRef: any = null;
   userCreateDTO!: UserCreateDTO;
+  legalEntityDTO!: LegalEntityCreateDTO;
 
   ngOnInit(): void {
     this.getDataUserRegisterService.valueGetData$.subscribe((value) => {
       if (value) {
         this.userCreateDTO = value;
+      }
+    });
+
+    this.getDataLegalEntityRegisterService.valueGetData$.subscribe((legalEntity) => {
+      if (legalEntity) {
+        this.legalEntityDTO = legalEntity;
       }
     });
   }
@@ -308,6 +318,13 @@ export class AboutYourAccountComponent implements OnInit, AfterViewInit, OnDestr
           },
         });
       }, 3000);
+    }
+
+    if (!value1 && value2 && this.legalEntityDTO) {
+      this.legalEntityDTO.email = inputEmail.value;
+      this.legalEntityDTO.password = inputPasswordValue;
+
+      console.log(this.legalEntityDTO);
     }
   }
 

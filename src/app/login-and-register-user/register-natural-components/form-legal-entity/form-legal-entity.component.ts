@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { UserCreateDTO } from '../../../interface/dto/UserCreateDTO';
 import { ActivatedRoute } from '@angular/router';
 import { SendClickedButtonContinueRegisterService } from '../../../service-dispatch/user-register/send-clicked-button-continue-register.service';
+import { GetDataLegalEntityRegisterService } from '../../../service-dispatch/user-register/get-data-legal-entity-register.service';
+import { LegalEntityCreateDTO } from '../../../interface/dto/LegalEntityCreateDTO';
 
 @Component({
   selector: 'app-form-legal-entity',
@@ -10,26 +11,25 @@ import { SendClickedButtonContinueRegisterService } from '../../../service-dispa
   styleUrl: './form-legal-entity.component.css',
 })
 export class FormLegalEntityComponent implements OnInit, AfterViewInit {
-  @ViewChild('spanNameRef') spanNameRef!: ElementRef<HTMLSpanElement>;
-  @ViewChild('spanErrorNameRequiredRef') spanErrorNameRequiredRef!: ElementRef<HTMLSpanElement>;
-  @ViewChild('spanErrorNameAtLeast3CharactersRef')
-  spanErrorNameAtLeast3CharactersRef!: ElementRef<HTMLSpanElement>;
+  @ViewChild('spanCompanyNameRef') spanCompanyNameRef!: ElementRef<HTMLSpanElement>;
+  @ViewChild('spanErrorCompanyNameRequiredRef')
+  spanErrorCompanyNameRequiredRef!: ElementRef<HTMLSpanElement>;
+  @ViewChild('spanErrorCompanyNameAtLeast3CharactersRef')
+  spanErrorCompanyNameAtLeast3CharactersRef!: ElementRef<HTMLSpanElement>;
 
-  @ViewChild('spanLastNameRef') spanLastNameRef!: ElementRef<HTMLSpanElement>;
-  @ViewChild('spanErrorLastNameRequiredRef')
-  spanErrorLastNameRequiredRef!: ElementRef<HTMLSpanElement>;
-  @ViewChild('spanErrorLastNameAtLeast3CharactersRef')
-  spanErrorLastNameAtLeast3CharactersRef!: ElementRef<HTMLSpanElement>;
+  @ViewChild('spanTradeNameRef') spanTradeNameRef!: ElementRef<HTMLSpanElement>;
+  @ViewChild('spanErrorTradeNameRequiredRef')
+  spanErrorTradeNameRequiredRef!: ElementRef<HTMLSpanElement>;
+  @ViewChild('spanErrorTradeNameAtLeast3CharactersRef')
+  spanErrorTradeNameAtLeast3CharactersRef!: ElementRef<HTMLSpanElement>;
 
-  firstClickedInputName = false;
-
-  inputName!: HTMLInputElement;
-  inputLastName!: HTMLInputElement;
-  @ViewChild('selectDayOfBirth') selectDayOfBirth!: ElementRef<HTMLInputElement>;
-  @ViewChild('selectMonthOfBirth') selectMonthOfBirth!: ElementRef<HTMLInputElement>;
-  @ViewChild('selectYear') selectYear!: ElementRef<HTMLInputElement>;
-  inputCpf!: HTMLInputElement;
-  inputCellPhone!: HTMLInputElement;
+  inputCompanyName!: HTMLInputElement;
+  inputTradeName!: HTMLInputElement;
+  inputCnpj!: HTMLInputElement;
+  inputMunicipalRegistration!: HTMLInputElement;
+  inputStateRegistration!: HTMLInputElement;
+  inputCorporateCellPhoneNumber!: HTMLInputElement;
+  inputDDDNumberCorporateLandline!: HTMLInputElement;
   inputCep!: HTMLInputElement;
   @ViewChild('selectTypeOfAddress') selectTypeOfAddress!: ElementRef<HTMLInputElement>;
   inputAddress!: HTMLInputElement;
@@ -42,23 +42,37 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
 
   constructor(
     private route: ActivatedRoute,
-    private sendClickedButtonContinueRegisterService: SendClickedButtonContinueRegisterService
+    private sendClickedButtonContinueRegisterService: SendClickedButtonContinueRegisterService,
+    private getDataLegalEntityRegisterService: GetDataLegalEntityRegisterService
   ) {}
 
   ngOnInit(): void {
-    this.loadYears();
-
     this.onInputFocus = this.onInputFocus.bind(this);
     this.onInputBlur = this.onInputBlur.bind(this);
     this.onInput = this.onInput.bind(this);
 
-    this.onInputCpfFocus = this.onInputCpfFocus.bind(this);
-    this.onInputCpfBlur = this.onInputCpfBlur.bind(this);
-    this.onInputCpf = this.onInputCpf.bind(this);
+    this.onInputCnpjFocus = this.onInputCnpjFocus.bind(this);
+    this.onInputCnpjBlur = this.onInputCnpjBlur.bind(this);
+    this.onInputCnpj = this.onInputCnpj.bind(this);
 
-    this.onInputCellPhoneFocus = this.onInputCellPhoneFocus.bind(this);
-    this.onInputCellPhoneBlur = this.onInputCellPhoneBlur.bind(this);
-    this.onInputCellPhone = this.onInputCellPhone.bind(this);
+    this.onInputMunicipalRegistrationFocus = this.onInputMunicipalRegistrationFocus.bind(this);
+    this.onInputMunicipalRegistrationBlur = this.onInputMunicipalRegistrationBlur.bind(this);
+    this.onInputMunicipalRegistration = this.onInputMunicipalRegistration.bind(this);
+
+    this.onInputStateRegistrationFocus = this.onInputStateRegistrationFocus.bind(this);
+    this.onInputStateRegistrationBlur = this.onInputStateRegistrationBlur.bind(this);
+    this.onInputStateRegistration = this.onInputStateRegistration.bind(this);
+
+    this.onInputCorporateCellPhoneNumberFocus =
+      this.onInputCorporateCellPhoneNumberFocus.bind(this);
+    this.onInputCorporateCellPhoneNumberBlur = this.onInputCorporateCellPhoneNumberBlur.bind(this);
+    this.onInputCorporateCellPhoneNumber = this.onInputCorporateCellPhoneNumber.bind(this);
+
+    this.onInputDDDNumberCorporateLandlineFocus =
+      this.onInputDDDNumberCorporateLandlineFocus.bind(this);
+    this.onInputDDDNumberCorporateLandlineBlur =
+      this.onInputDDDNumberCorporateLandlineBlur.bind(this);
+    this.onInputDDDNumberCorporateLandline = this.onInputDDDNumberCorporateLandline.bind(this);
 
     this.onInputCepFocus = this.onInputCepFocus.bind(this);
     this.onInputCepBlur = this.onInputCepBlur.bind(this);
@@ -84,10 +98,13 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
     this.onInputCityBlur = this.onInputCityBlur.bind(this);
     this.onInputCity = this.onInputCity.bind(this);
 
-    this.getInputName = this.getInputName.bind(this);
-    this.getInputLastName = this.getInputLastName.bind(this);
-    this.getInputCpf = this.getInputCpf.bind(this);
-    this.getInputCellPhone = this.getInputCellPhone.bind(this);
+    this.getInputCompanyName = this.getInputCompanyName.bind(this);
+    this.getInputTradeName = this.getInputTradeName.bind(this);
+    this.getInputCnpj = this.getInputCnpj.bind(this);
+    this.getInputMunicipalRegistration = this.getInputMunicipalRegistration.bind(this);
+    this.getInputStateRegistration = this.getInputStateRegistration.bind(this);
+    this.getInputCorporateCellPhoneNumber = this.getInputCorporateCellPhoneNumber.bind(this);
+    this.getInputDDDNumberCorporateLandline = this.getInputDDDNumberCorporateLandline.bind(this);
     this.getInputCep = this.getInputCep.bind(this);
     this.getInputAddress = this.getInputAddress.bind(this);
     this.getInputNumber = this.getInputNumber.bind(this);
@@ -98,55 +115,37 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
 
     this.sendClickedButtonContinueRegisterService.valueButton$.subscribe((value) => {
       if (value) {
-        const selectDayOfBirth = this.selectDayOfBirth.nativeElement;
-        const selectMonthOfBirth = this.selectMonthOfBirth.nativeElement;
-        const selectYear = this.selectYear.nativeElement;
-
-        const birthDate = `${selectDayOfBirth.value}/${selectMonthOfBirth.value}/${selectYear.value}`;
-
         const selectTypeOfAddress = this.selectTypeOfAddress.nativeElement;
         const selectState = this.selectState.nativeElement;
 
         const value1 = this.errorInputsVerifify(
-          this.inputName,
-          this.spanNameRef.nativeElement,
-          this.spanErrorNameRequiredRef.nativeElement
+          this.inputCompanyName,
+          this.spanCompanyNameRef.nativeElement,
+          this.spanErrorCompanyNameRequiredRef.nativeElement
         );
 
         const value2 = this.errorInputsVerifify(
-          this.inputLastName,
-          this.spanLastNameRef.nativeElement,
-          this.spanErrorLastNameRequiredRef.nativeElement
+          this.inputTradeName,
+          this.spanTradeNameRef.nativeElement,
+          this.spanErrorTradeNameRequiredRef.nativeElement
         );
 
         const value3 = this.errorInputsVerifify(
-          selectDayOfBirth,
-          null,
-          this.spanErrorFieldDayRequired.nativeElement
+          this.inputCnpj,
+          this.spanCnpjRef.nativeElement,
+          this.spanErrorCnpjRequiredRef.nativeElement
         );
 
         const value4 = this.errorInputsVerifify(
-          selectMonthOfBirth,
-          null,
-          this.spanErrorFieldMonthRequired.nativeElement
+          this.inputStateRegistration,
+          this.spanStateRegistrationRef.nativeElement,
+          this.spanErrorStateRegistrationRequiredRef.nativeElement
         );
 
         const value5 = this.errorInputsVerifify(
-          selectYear,
-          null,
-          this.spanErrorFieldYearRequired.nativeElement
-        );
-
-        const value6 = this.errorInputsVerifify(
-          this.inputCpf,
-          this.spanCpfRef.nativeElement,
-          this.spanErrorCpfRequiredRef.nativeElement
-        );
-
-        const value7 = this.errorInputsVerifify(
-          this.inputCellPhone,
-          this.spanCellPhoneRef.nativeElement,
-          this.spanErrorCellPhoneRequiredRef.nativeElement
+          this.inputCorporateCellPhoneNumber,
+          this.spanCorporateCellPhoneNumberRef.nativeElement,
+          this.spanErrorCorporateCellPhoneNumberRequiredRef.nativeElement
         );
 
         const value8 = this.errorInputsVerifify(
@@ -200,8 +199,6 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
           value3 ||
           value4 ||
           value5 ||
-          value6 ||
-          value7 ||
           value8 ||
           value9 ||
           value10 ||
@@ -212,14 +209,19 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
         ) {
           // error
         } else {
-          const objUser: UserCreateDTO = {
-            name: this.inputName.value,
-            lastName: this.inputLastName.value,
-            gender: this.gender,
+          const inputCheckboxExempt = this.inputCheckboxExempt.nativeElement;
+          const ischecked = inputCheckboxExempt.checked;
+
+          const objUser: LegalEntityCreateDTO = {
+            companyName: this.inputCompanyName.value,
+            tradeName: this.inputTradeName.value,
+            cnpj: this.inputCnpj.value,
+            municipalRegistration: this.inputMunicipalRegistration.value,
+            stateRegistration: this.inputStateRegistration.value,
+            exempt: ischecked,
             email: '',
-            birthDate: birthDate,
-            cpf: this.inputCpf.value,
-            cellPhone: this.inputCellPhone.value,
+            corporateCellPhoneNumber: this.inputCorporateCellPhoneNumber.value,
+            numberCorporateLandline: this.inputDDDNumberCorporateLandline.value,
             password: '',
             userImageBase64: '',
             userAddressDTO: {
@@ -237,6 +239,8 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
               userDTO: null,
             },
           };
+
+          this.getDataLegalEntityRegisterService.updateValueGetData(objUser);
         }
       }
     });
@@ -268,20 +272,32 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
     return false;
   }
 
-  getInputName(input: HTMLInputElement) {
-    this.inputName = input;
+  getInputCompanyName(input: HTMLInputElement) {
+    this.inputCompanyName = input;
   }
 
-  getInputLastName(input: HTMLInputElement) {
-    this.inputLastName = input;
+  getInputTradeName(input: HTMLInputElement) {
+    this.inputTradeName = input;
   }
 
-  getInputCpf(input: HTMLInputElement) {
-    this.inputCpf = input;
+  getInputCnpj(input: HTMLInputElement) {
+    this.inputCnpj = input;
   }
 
-  getInputCellPhone(input: HTMLInputElement) {
-    this.inputCellPhone = input;
+  getInputMunicipalRegistration(input: HTMLInputElement) {
+    this.inputMunicipalRegistration = input;
+  }
+
+  getInputStateRegistration(input: HTMLInputElement) {
+    this.inputStateRegistration = input;
+  }
+
+  getInputCorporateCellPhoneNumber(input: HTMLInputElement) {
+    this.inputCorporateCellPhoneNumber = input;
+  }
+
+  getInputDDDNumberCorporateLandline(input: HTMLInputElement) {
+    this.inputDDDNumberCorporateLandline = input;
   }
 
   getInputCep(input: HTMLInputElement) {
@@ -312,12 +328,14 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
     this.inputReferencePoint = input;
   }
 
-  onInputFocus(inputName: HTMLInputElement, whichIs: 'name' | 'lastName' | 'cpf' | '') {
+  firstClickedInputName = false;
+
+  onInputFocus(inputName: HTMLInputElement, whichIs: string) {
     const value = inputName.value;
 
     const spanMap: Record<string, ElementRef<HTMLSpanElement>> = {
-      name: this.spanNameRef,
-      lastName: this.spanLastNameRef,
+      companyName: this.spanCompanyNameRef,
+      tradeName: this.spanTradeNameRef,
     };
 
     const spanRef = spanMap[whichIs];
@@ -339,8 +357,8 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
     const value = inputName.value;
 
     const spansMap: Record<string, ElementRef<HTMLSpanElement>[]> = {
-      name: [this.spanNameRef, this.spanErrorNameRequiredRef],
-      lastName: [this.spanLastNameRef, this.spanErrorLastNameRequiredRef],
+      companyName: [this.spanCompanyNameRef, this.spanErrorCompanyNameRequiredRef],
+      tradeName: [this.spanTradeNameRef, this.spanErrorTradeNameRequiredRef],
     };
 
     const span = spansMap[whichIs][0].nativeElement;
@@ -361,15 +379,15 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
     const value = input.value;
 
     const spansMap: Record<string, ElementRef<HTMLSpanElement>[]> = {
-      name: [
-        this.spanNameRef,
-        this.spanErrorNameAtLeast3CharactersRef,
-        this.spanErrorNameRequiredRef,
+      companyName: [
+        this.spanCompanyNameRef,
+        this.spanErrorCompanyNameAtLeast3CharactersRef,
+        this.spanErrorCompanyNameRequiredRef,
       ],
-      lastName: [
-        this.spanLastNameRef,
-        this.spanErrorLastNameAtLeast3CharactersRef,
-        this.spanErrorLastNameRequiredRef,
+      tradeName: [
+        this.spanTradeNameRef,
+        this.spanErrorTradeNameAtLeast3CharactersRef,
+        this.spanErrorTradeNameRequiredRef,
       ],
     };
 
@@ -400,28 +418,6 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
     }
   }
 
-  @ViewChild('labelFemale') labelFemale!: ElementRef<HTMLLabelElement>;
-  @ViewChild('labelMale') labelMale!: ElementRef<HTMLLabelElement>;
-
-  selectedDay: string = '';
-  selectedMonth: string = '';
-  selectedYear: string = '';
-  days: string[] = [];
-  months = [
-    { value: '01', name: 'Janeiro' },
-    { value: '02', name: 'Fevereiro' },
-    { value: '03', name: 'Março' },
-    { value: '04', name: 'Abril' },
-    { value: '05', name: 'Maio' },
-    { value: '06', name: 'Junho' },
-    { value: '07', name: 'Julho' },
-    { value: '08', name: 'Agosto' },
-    { value: '09', name: 'Setembro' },
-    { value: '10', name: 'Outubro' },
-    { value: '11', name: 'Novembro' },
-    { value: '12', name: 'Dezembro' },
-  ];
-  years: string[] = [];
   typeOfAddress = [
     { value: 'Avenida', name: 'Avenida' },
     { value: 'Rua', name: 'Rua' },
@@ -469,297 +465,351 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
   selectedState: string = '';
   selectedTypeOfAddress: string = '';
 
-  loadYears() {
-    const currentYear = new Date().getFullYear();
-    for (let year = currentYear; year >= 1903; year--) {
-      this.years.push(String(year));
-    }
-  }
-
-  updateDays() {
-    if (this.selectedMonth && this.selectedYear) {
-      const year = parseInt(this.selectedYear, 10);
-      const month = parseInt(this.selectedMonth, 10);
-
-      const daysInMonth = new Date(year, month, 0).getDate();
-
-      this.days = [];
-
-      for (let i = 1; i <= daysInMonth; i++) {
-        this.days.push(i.toString().padStart(2, '0'));
-      }
-
-      // Reseta o dia se o selecionado não existe mais
-      if (parseInt(this.selectedDay, 10) > daysInMonth) {
-        this.selectedDay = '';
-      }
-    } else {
-      this.days = [];
-    }
-  }
-
-  gender = 'male';
-
-  onClickLabelFemale() {
-    const labelFemale = this.labelFemale.nativeElement;
-    labelFemale.classList.remove('disable');
-    labelFemale.classList.add('active');
-
-    const labelMale = this.labelMale.nativeElement;
-    labelFemale.classList.remove('active');
-    labelMale.classList.add('disable');
-
-    this.gender = 'female';
-  }
-
-  onClickLabelMale() {
-    const labelFemale = this.labelFemale.nativeElement;
-    labelFemale.classList.remove('active');
-    labelFemale.classList.add('disable');
-
-    const labelMale = this.labelMale.nativeElement;
-    labelMale.classList.remove('disable');
-    labelMale.classList.add('active');
-
-    this.gender = 'male';
-  }
-
   onClickContinue(inputName: HTMLInputElement) {
     const value = inputName.value;
   }
 
-  @ViewChild('spanErrorFieldDayRequired') spanErrorFieldDayRequired!: ElementRef<HTMLSpanElement>;
-  @ViewChild('spanErrorFieldMonthRequired')
-  spanErrorFieldMonthRequired!: ElementRef<HTMLSpanElement>;
-  @ViewChild('spanErrorFieldYearRequired') spanErrorFieldYearRequired!: ElementRef<HTMLSpanElement>;
+  @ViewChild('spanCnpjRef')
+  spanCnpjRef!: ElementRef<HTMLSpanElement>;
+  @ViewChild('spanErrorCnpjRequiredRef')
+  spanErrorCnpjRequiredRef!: ElementRef<HTMLSpanElement>;
+  @ViewChild('spanErrorCnpjAtLeast14CharactersRef')
+  spanErrorCnpjAtLeast14CharactersRef!: ElementRef<HTMLSpanElement>;
+  firstClickedInputCnpj = false;
 
-  onInputSelectChange(select: HTMLSelectElement, selectWrapper: HTMLDivElement, whichIs: string) {
-    this.updateDays();
-
-    const spansMap: Record<string, ElementRef<HTMLSpanElement>[]> = {
-      day: [this.spanErrorFieldDayRequired],
-      month: [this.spanErrorFieldMonthRequired],
-      year: [this.spanErrorFieldYearRequired],
-    };
-
-    const span = spansMap[whichIs][0].nativeElement;
-    const value = select.value;
-
-    if (value.length > 0) {
-      select.style.border = 'solid 1px #00000018';
-      select.style.color = 'rgb(0, 0, 0)';
-      select.style.color = 'black';
-      selectWrapper.classList.remove('error');
-      span.style.display = 'none';
-    } else {
-      select.style.border = 'solid 1px red';
-      select.style.color = 'red';
-      selectWrapper.classList.remove('error');
-      selectWrapper.classList.add('error');
-      span.style.display = 'flex';
-    }
-  }
-
-  onInputSelectDayOfBirthFocus() {}
-
-  onInputSelectBlur(select: HTMLSelectElement, selectWrapper: HTMLDivElement, whichIs: string) {
-    const spansMap: Record<string, ElementRef<HTMLSpanElement>[]> = {
-      day: [this.spanErrorFieldDayRequired],
-      month: [this.spanErrorFieldMonthRequired],
-      year: [this.spanErrorFieldYearRequired],
-    };
-
-    const span = spansMap[whichIs][0].nativeElement;
-    const value = select.value;
-
-    if (value.length <= 0) {
-      select.style.border = 'solid 1px red';
-      select.style.color = 'red';
-      selectWrapper.classList.remove('error');
-      selectWrapper.classList.add('error');
-      span.style.display = 'flex';
-    }
-  }
-
-  @ViewChild('spanCpfRef') spanCpfRef!: ElementRef<HTMLSpanElement>;
-  @ViewChild('spanErrorCpfRequiredRef') spanErrorCpfRequiredRef!: ElementRef<HTMLSpanElement>;
-  @ViewChild('spanErrorCpfMustBe11CharactersRef')
-  spanErrorCpfMustBe11CharactersRef!: ElementRef<HTMLSpanElement>;
-  firstClickedInputCpf = false;
-
-  onInputCpfFocus(inputName: HTMLInputElement, whichIs: 'name' | 'lastName' | 'cpf' | '') {
+  onInputCnpjFocus(inputName: HTMLInputElement, whichIs: string) {
     const value = inputName.value;
 
-    if (whichIs === 'cpf') {
-      const span = this.spanCpfRef.nativeElement;
-      span.style.top = '-7px';
-      span.style.left = '6px';
-      span.style.padding = '0px 5px';
+    const span = this.spanCnpjRef.nativeElement;
+    span.style.top = '-7px';
+    span.style.left = '6px';
+    span.style.padding = '0px 5px';
 
-      if (value.length <= 0 && this.firstClickedInputName) {
-        span.style.color = 'red';
-        span.style.fontWeight = '700';
-      }
-
-      this.firstClickedInputName = true;
+    if (value.length <= 0 && this.firstClickedInputCnpj) {
+      span.style.color = 'red';
+      span.style.fontWeight = '700';
     }
+
+    this.firstClickedInputCnpj = true;
   }
 
-  onInputCpfBlur(inputName: HTMLInputElement, whichIs: string) {
+  onInputCnpjBlur(inputName: HTMLInputElement, whichIs: string) {
     const value = inputName.value;
 
-    const span = this.spanCpfRef.nativeElement;
-    const spanErrorCpfRequired = this.spanErrorCpfRequiredRef.nativeElement;
+    const span = this.spanCnpjRef.nativeElement;
+    const spanErrorCnpjRequiredRef = this.spanErrorCnpjRequiredRef.nativeElement;
 
     if (value.length <= 0) {
       inputName.style.border = 'solid 1px red';
       span.style.top = '20px';
       span.style.color = 'red';
       span.style.fontWeight = '500';
-      spanErrorCpfRequired.style.display = 'flex';
+      spanErrorCnpjRequiredRef.style.display = 'flex';
     }
   }
 
-  keyPressed: string = '';
+  keyPressedCnpj: string = '';
 
-  onKeyDownInputCpf(event: KeyboardEvent) {
-    this.keyPressed = event.key;
+  onKeyDownInputCnpj(event: KeyboardEvent) {
+    this.keyPressedCnpj = event.key;
   }
 
-  onInputCpf(input: HTMLInputElement, whichIs: string) {
+  onInputCnpj(input: HTMLInputElement, whichIs: string) {
     let value = input.value;
 
-    const span = this.spanCpfRef.nativeElement;
-    const spanErrorCpfRequired = this.spanErrorCpfRequiredRef.nativeElement;
-    const spanErrorCpfMustBe11CharactersRef = this.spanErrorCpfMustBe11CharactersRef.nativeElement;
+    const span = this.spanCnpjRef.nativeElement;
+    const spanErrorCnpjRequiredRef = this.spanErrorCnpjRequiredRef.nativeElement;
+    const spanErrorCnpjAtLeast14CharactersRef =
+      this.spanErrorCnpjAtLeast14CharactersRef.nativeElement;
 
     value = value.replace(/\D/g, '');
 
-    let thereIsLetter = false;
+    if (value.length > 14) {
+      value = value.slice(0, 14);
+    }
+
+    let formatted = '';
 
     for (let i = 0; i < value.length; i++) {
-      const element = value[i];
+      const digit = value[i];
 
-      if (element !== '.' && element !== '-') {
-        if (isNaN(Number(element))) {
-          //tem letra
-          thereIsLetter = true;
-        }
+      formatted += digit;
+
+      if (i === 1 || i === 4) {
+        formatted += '.';
+      }
+
+      if (i === 7) {
+        formatted += '/';
+      }
+
+      if (i === 11) {
+        formatted += '-';
       }
     }
 
-    let newValue = value.replace(/\./g, '').replace(/\-/g, '').replace(/\//g, '');
+    const arrayRemove = ['.', '/', '-'];
 
-    let whichCpfString = '';
-    if (!thereIsLetter && newValue.length < 13) {
-      // 212.121.221-12
-      for (let i = 0; i < newValue.length; i++) {
-        const element = newValue[i];
-        whichCpfString += element;
-
-        if (i === 2 || i === 5) {
-          whichCpfString += '.';
-        }
-
-        if (i === 8) {
-          whichCpfString += '-';
-        }
-      }
-    } else {
-      whichCpfString = value;
-    }
-
-    if (this.keyPressed === 'Backspace') {
-      const valueCaracter = whichCpfString[whichCpfString.length - 1];
-      if (valueCaracter === '.' || valueCaracter === '-') {
-        whichCpfString = whichCpfString.slice(0, whichCpfString.length - 1);
+    if (this.keyPressedCnpj === 'Backspace') {
+      while (formatted.length > 0 && arrayRemove.includes(formatted[formatted.length - 1])) {
+        formatted = formatted.slice(0, formatted.length - 1);
       }
     }
 
-    input.value = whichCpfString.slice(0, 14);
+    input.value = formatted;
 
-    if (whichCpfString.length > 0 && whichCpfString.length < 14) {
+    if (formatted.length > 0 && value.length < 14) {
       input.style.border = 'solid 1px red';
       span.style.color = 'red';
       span.style.fontWeight = '700';
-      spanErrorCpfRequired.style.display = 'none';
-      spanErrorCpfMustBe11CharactersRef.style.display = 'flex';
-
-      // this.canLoginNameCorrect = false;
+      spanErrorCnpjRequiredRef.style.display = 'none';
+      spanErrorCnpjAtLeast14CharactersRef.style.display = 'flex';
     } else {
-      if (whichCpfString.length <= 0) {
-        spanErrorCpfRequired.style.display = 'flex';
+      if (formatted.length <= 0) {
+        spanErrorCnpjRequiredRef.style.display = 'flex';
         input.style.border = 'solid 1px red';
         span.style.color = 'red';
         span.style.fontWeight = '700';
-        spanErrorCpfMustBe11CharactersRef.style.display = 'none';
+        spanErrorCnpjAtLeast14CharactersRef.style.display = 'none';
         return;
       }
       input.style.border = 'solid 1px rgba(0, 0, 0, 0.094)';
       input.style.color = 'black';
       span.style.color = 'black';
       span.style.fontWeight = '700';
-      spanErrorCpfMustBe11CharactersRef.style.display = 'none';
-      // this.canLoginNameCorrect = true;
+      spanErrorCnpjAtLeast14CharactersRef.style.display = 'none';
     }
   }
 
-  @ViewChild('spanCellPhoneRef') spanCellPhoneRef!: ElementRef<HTMLSpanElement>;
-  @ViewChild('spanErrorCellPhoneRequiredRef')
-  spanErrorCellPhoneRequiredRef!: ElementRef<HTMLSpanElement>;
-  @ViewChild('spanErrorCellPhoneMustBe11CharactersRef')
-  spanErrorCellPhoneMustBe11CharactersRef!: ElementRef<HTMLSpanElement>;
-  firstClickedInputCellPhone = false;
+  @ViewChild('spanMunicipalRegistrationRef')
+  spanMunicipalRegistrationRef!: ElementRef<HTMLSpanElement>;
+  firstClickedInputMunicipalRegistration = false;
 
-  onInputCellPhoneFocus(inputName: HTMLInputElement, whichIs: 'name' | 'lastName' | 'cpf' | '') {
+  onInputMunicipalRegistrationFocus(inputName: HTMLInputElement, whichIs: string) {
     const value = inputName.value;
 
-    const span = this.spanCellPhoneRef.nativeElement;
+    const span = this.spanMunicipalRegistrationRef.nativeElement;
     span.style.top = '-7px';
     span.style.left = '6px';
     span.style.padding = '0px 5px';
 
-    if (value.length <= 0 && this.firstClickedInputName) {
+    this.firstClickedInputMunicipalRegistration = true;
+  }
+
+  onInputMunicipalRegistrationBlur(inputName: HTMLInputElement, whichIs: string) {
+    const value = inputName.value;
+
+    const span = this.spanMunicipalRegistrationRef.nativeElement;
+
+    if (value.length <= 0) {
+      span.style.top = '20px';
+    }
+  }
+
+  keyPressedMunicipalRegistration: string = '';
+
+  onKeyDownInputMunicipalRegistration(event: KeyboardEvent) {
+    this.keyPressedMunicipalRegistration = event.key;
+  }
+
+  onInputMunicipalRegistration(input: HTMLInputElement, whichIs: string) {
+    let value = input.value;
+
+    let formatted = '';
+
+    for (let i = 0; i < value.length; i++) {
+      const digit = value[i];
+
+      formatted += digit;
+    }
+
+    // if (this.keyPressedMunicipalRegistration === 'Backspace') {
+    //   while (formatted.length > 0 && formatted[formatted.length - 1] === '-') {
+    //     formatted = formatted.slice(0, formatted.length - 1);
+    //   }
+    // }
+
+    input.value = formatted;
+  }
+
+  @ViewChild('spanStateRegistrationRef')
+  spanStateRegistrationRef!: ElementRef<HTMLSpanElement>;
+  @ViewChild('spanErrorStateRegistrationRequiredRef')
+  spanErrorStateRegistrationRequiredRef!: ElementRef<HTMLSpanElement>;
+  @ViewChild('inputCheckboxExempt')
+  inputCheckboxExempt!: ElementRef<HTMLInputElement>;
+  firstClickedInputStateRegistration = false;
+
+  onInputStateRegistrationFocus(inputName: HTMLInputElement, whichIs: string) {
+    const value = inputName.value;
+    const inputCheckboxExempt = this.inputCheckboxExempt.nativeElement;
+    const ischecked = inputCheckboxExempt.checked;
+    if (ischecked) return;
+
+    const span = this.spanStateRegistrationRef.nativeElement;
+    span.style.top = '-7px';
+    span.style.left = '6px';
+    span.style.padding = '0px 5px';
+
+    if (value.length <= 0 && this.firstClickedInputStateRegistration) {
       span.style.color = 'red';
       span.style.fontWeight = '700';
     }
 
-    this.firstClickedInputName = true;
+    this.firstClickedInputStateRegistration = true;
   }
 
-  onInputCellPhoneBlur(inputName: HTMLInputElement, whichIs: string) {
+  onInputStateRegistrationBlur(inputName: HTMLInputElement, whichIs: string) {
     const value = inputName.value;
+    const inputCheckboxExempt = this.inputCheckboxExempt.nativeElement;
+    const ischecked = inputCheckboxExempt.checked;
+    if (ischecked) return;
 
-    const span = this.spanCellPhoneRef.nativeElement;
-    const spanErrorCellPhoneRequired = this.spanErrorCellPhoneRequiredRef.nativeElement;
+    const span = this.spanStateRegistrationRef.nativeElement;
+    const spanErrorStateRegistrationRequiredRef =
+      this.spanErrorStateRegistrationRequiredRef.nativeElement;
 
     if (value.length <= 0) {
       inputName.style.border = 'solid 1px red';
       span.style.top = '20px';
       span.style.color = 'red';
       span.style.fontWeight = '500';
-      spanErrorCellPhoneRequired.style.display = 'flex';
+      spanErrorStateRegistrationRequiredRef.style.display = 'flex';
     }
   }
 
-  keyPressedCellPhone: string = '';
+  keyPressedStateRegistration: string = '';
 
-  onKeyDownInputCellPhone(event: KeyboardEvent) {
-    this.keyPressedCellPhone = event.key;
+  onKeyDownInputStateRegistration(event: KeyboardEvent) {
+    this.keyPressedStateRegistration = event.key;
   }
 
-  onInputCellPhone(input: HTMLInputElement, whichIs: string) {
+  onInputStateRegistration(input: HTMLInputElement, whichIs: string) {
     let value = input.value;
 
-    const span = this.spanCellPhoneRef.nativeElement;
-    const spanErrorCellPhoneRequiredRef = this.spanErrorCellPhoneRequiredRef.nativeElement;
-    const spanErrorCellPhoneMustBe11CharactersRef =
-      this.spanErrorCellPhoneMustBe11CharactersRef.nativeElement;
+    const span = this.spanStateRegistrationRef.nativeElement;
+    const spanErrorStateRegistrationRequiredRef =
+      this.spanErrorStateRegistrationRequiredRef.nativeElement;
 
-    // Remove tudo que não é número
     value = value.replace(/\D/g, '');
 
-    // Limita a 11 dígitos
+    let formatted = '';
+
+    for (let i = 0; i < value.length; i++) {
+      const digit = value[i];
+
+      formatted += digit;
+    }
+
+    input.value = formatted;
+
+    if (value.length < 9) {
+      input.style.border = 'solid 1px red';
+      span.style.color = 'red';
+      span.style.fontWeight = '700';
+      spanErrorStateRegistrationRequiredRef.style.display = 'flex';
+    } else {
+      input.style.border = 'solid 1px rgba(0, 0, 0, 0.094)';
+      input.style.color = 'black';
+      span.style.color = 'black';
+      span.style.fontWeight = '700';
+      spanErrorStateRegistrationRequiredRef.style.display = 'none';
+    }
+  }
+
+  onClickLabelCheckboxExempt(
+    inputCheckboxExempt: HTMLInputElement,
+    spanStateRegistrationRef: HTMLSpanElement
+  ) {
+    const ischecked = inputCheckboxExempt.checked;
+    const inputStateRegistration = this.inputStateRegistration;
+    const spanErrorStateRegistrationRequiredRef =
+      this.spanErrorStateRegistrationRequiredRef.nativeElement;
+    const span = this.spanStateRegistrationRef.nativeElement;
+
+    if (ischecked) {
+      inputStateRegistration.style.backgroundColor = '#f0f0f0';
+      inputStateRegistration.disabled = true;
+      spanStateRegistrationRef.style.top = '5px';
+      spanStateRegistrationRef.style.left = '6px';
+      spanStateRegistrationRef.style.backgroundColor = '#f0f0f0';
+      spanStateRegistrationRef.style.color = 'black';
+      spanStateRegistrationRef.style.fontWeight = '600';
+      span.style.color = 'black';
+      inputStateRegistration.style.border = 'solid 1px rgba(0, 0, 0, 0.094)';
+      inputStateRegistration.value = '';
+      spanErrorStateRegistrationRequiredRef.style.display = 'none';
+    } else {
+      inputStateRegistration.style.backgroundColor = '#fff';
+      inputStateRegistration.disabled = false;
+      spanStateRegistrationRef.style.top = '20px';
+      spanStateRegistrationRef.style.left = '10px';
+      spanStateRegistrationRef.style.backgroundColor = '#fff';
+      spanStateRegistrationRef.style.color = 'black';
+      spanStateRegistrationRef.style.fontWeight = '400';
+      span.style.color = 'red';
+      inputStateRegistration.style.border = 'solid 1px red';
+      spanErrorStateRegistrationRequiredRef.style.display = 'flex';
+    }
+  }
+
+  @ViewChild('spanCorporateCellPhoneNumberRef')
+  spanCorporateCellPhoneNumberRef!: ElementRef<HTMLSpanElement>;
+  @ViewChild('spanErrorCorporateCellPhoneNumberRequiredRef')
+  spanErrorCorporateCellPhoneNumberRequiredRef!: ElementRef<HTMLSpanElement>;
+  @ViewChild('spanErrorCorporateCellPhoneNumberAtLeast11CharactersRef')
+  spanErrorCorporateCellPhoneNumberAtLeast11CharactersRef!: ElementRef<HTMLSpanElement>;
+  firstClickedInputCorporateCellPhoneNumber = false;
+
+  onInputCorporateCellPhoneNumberFocus(inputName: HTMLInputElement, whichIs: string) {
+    const value = inputName.value;
+
+    const span = this.spanCorporateCellPhoneNumberRef.nativeElement;
+    span.style.top = '-7px';
+    span.style.left = '6px';
+    span.style.padding = '0px 5px';
+
+    if (value.length <= 0 && this.firstClickedInputCorporateCellPhoneNumber) {
+      span.style.color = 'red';
+      span.style.fontWeight = '700';
+    }
+
+    this.firstClickedInputCorporateCellPhoneNumber = true;
+  }
+
+  onInputCorporateCellPhoneNumberBlur(inputName: HTMLInputElement, whichIs: string) {
+    const value = inputName.value;
+
+    const span = this.spanCorporateCellPhoneNumberRef.nativeElement;
+    const spanErrorCorporateCellPhoneNumberRequiredRef =
+      this.spanErrorCorporateCellPhoneNumberRequiredRef.nativeElement;
+
+    if (value.length <= 0) {
+      inputName.style.border = 'solid 1px red';
+      span.style.top = '20px';
+      span.style.color = 'red';
+      span.style.fontWeight = '500';
+      spanErrorCorporateCellPhoneNumberRequiredRef.style.display = 'flex';
+    }
+  }
+
+  keyPressedCorporateCellPhoneNumber: string = '';
+
+  onKeyDownInputCorporateCellPhoneNumber(event: KeyboardEvent) {
+    this.keyPressedCorporateCellPhoneNumber = event.key;
+  }
+
+  onInputCorporateCellPhoneNumber(input: HTMLInputElement, whichIs: string) {
+    let value = input.value;
+
+    const span = this.spanCorporateCellPhoneNumberRef.nativeElement;
+    const spanErrorCorporateCellPhoneNumberRequiredRef =
+      this.spanErrorCorporateCellPhoneNumberRequiredRef.nativeElement;
+    const spanErrorCorporateCellPhoneNumberAtLeast11CharactersRef =
+      this.spanErrorCorporateCellPhoneNumberAtLeast11CharactersRef.nativeElement;
+
+    value = value.replace(/\D/g, '');
+
     if (value.length > 11) {
       value = value.slice(0, 11);
     }
@@ -776,7 +826,8 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
       formatted += digit;
 
       if (i === 1) {
-        formatted += ') ';
+        formatted += ')';
+        formatted += ' ';
       }
 
       if (i === 6) {
@@ -784,44 +835,70 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
       }
     }
 
-    if (this.keyPressedCellPhone === 'Backspace') {
-      while (
-        formatted.length > 0 &&
-        (formatted[formatted.length - 1] === '(' ||
-          formatted[formatted.length - 1] === ')' ||
-          formatted[formatted.length - 1] === '-' ||
-          formatted[formatted.length - 1] === ' ')
-      ) {
+    const arrayRemove = ['-', ' ', '(', ')'];
+
+    if (this.keyPressedCorporateCellPhoneNumber === 'Backspace') {
+      while (formatted.length > 0 && arrayRemove.includes(formatted[formatted.length - 1])) {
         formatted = formatted.slice(0, formatted.length - 1);
       }
     }
 
     input.value = formatted;
 
-    if (formatted.length > 0 && formatted.length < 15) {
+    if (formatted.length > 0 && value.length < 11) {
       input.style.border = 'solid 1px red';
       span.style.color = 'red';
       span.style.fontWeight = '700';
-      spanErrorCellPhoneRequiredRef.style.display = 'none';
-      spanErrorCellPhoneMustBe11CharactersRef.style.display = 'flex';
-
-      // this.canLoginNameCorrect = false;
+      spanErrorCorporateCellPhoneNumberRequiredRef.style.display = 'none';
+      spanErrorCorporateCellPhoneNumberAtLeast11CharactersRef.style.display = 'flex';
     } else {
       if (formatted.length <= 0) {
-        spanErrorCellPhoneRequiredRef.style.display = 'flex';
+        spanErrorCorporateCellPhoneNumberRequiredRef.style.display = 'flex';
         input.style.border = 'solid 1px red';
         span.style.color = 'red';
         span.style.fontWeight = '700';
-        spanErrorCellPhoneMustBe11CharactersRef.style.display = 'none';
+        spanErrorCorporateCellPhoneNumberAtLeast11CharactersRef.style.display = 'none';
         return;
       }
       input.style.border = 'solid 1px rgba(0, 0, 0, 0.094)';
       input.style.color = 'black';
       span.style.color = 'black';
       span.style.fontWeight = '700';
-      spanErrorCellPhoneMustBe11CharactersRef.style.display = 'none';
-      // this.canLoginNameCorrect = true;
+      spanErrorCorporateCellPhoneNumberAtLeast11CharactersRef.style.display = 'none';
     }
+  }
+
+  @ViewChild('spanDDDNumberCorporateLandlineRef')
+  spanDDDNumberCorporateLandlineRef!: ElementRef<HTMLSpanElement>;
+  firstClickedInputDDDNumberCorporateLandline = false;
+
+  onInputDDDNumberCorporateLandlineFocus(inputName: HTMLInputElement, whichIs: string) {
+    const span = this.spanDDDNumberCorporateLandlineRef.nativeElement;
+    span.style.top = '-7px';
+    span.style.left = '6px';
+    span.style.padding = '0px 5px';
+
+    this.firstClickedInputDDDNumberCorporateLandline = true;
+  }
+
+  onInputDDDNumberCorporateLandlineBlur(inputName: HTMLInputElement, whichIs: string) {
+    const value = inputName.value;
+
+    const span = this.spanDDDNumberCorporateLandlineRef.nativeElement;
+
+    if (value.length <= 0) {
+      span.style.top = '20px';
+    }
+  }
+
+  keyPressedDDDNumberCorporateLandline: string = '';
+
+  onKeyDownInputDDDNumberCorporateLandline(event: KeyboardEvent) {
+    this.keyPressedDDDNumberCorporateLandline = event.key;
+  }
+
+  onInputDDDNumberCorporateLandline(input: HTMLInputElement, whichIs: string) {
+    let value = input.value;
   }
 
   @ViewChild('spanCepRef') spanCepRef!: ElementRef<HTMLSpanElement>;
@@ -831,7 +908,7 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
   spanErrorCepAtLeast9CharactersRef!: ElementRef<HTMLSpanElement>;
   firstClickedInputCep = false;
 
-  onInputCepFocus(inputName: HTMLInputElement, whichIs: 'name' | 'lastName' | 'cpf' | '') {
+  onInputCepFocus(inputName: HTMLInputElement, whichIs: string) {
     const value = inputName.value;
 
     const span = this.spanCepRef.nativeElement;
@@ -987,7 +1064,7 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
   spanErrorAddressRequiredRef!: ElementRef<HTMLSpanElement>;
   firstClickedInputAddress = false;
 
-  onInputAddressFocus(inputName: HTMLInputElement, whichIs: 'name' | 'lastName' | 'cpf' | '') {
+  onInputAddressFocus(inputName: HTMLInputElement, whichIs: string) {
     const value = inputName.value;
 
     const span = this.spanAddressRef.nativeElement;
@@ -1030,14 +1107,6 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
     const span = this.spanAddressRef.nativeElement;
     const spanErrorAddressRequiredRef = this.spanErrorAddressRequiredRef.nativeElement;
 
-    // Remove tudo que não é número
-    // value = value.replace(/\D/g, '');
-
-    // Limita a 11 dígitos
-    // if (value.length > 8) {
-    //   value = value.slice(0, 8);
-    // }
-
     let formatted = '';
 
     for (let i = 0; i < value.length; i++) {
@@ -1073,7 +1142,7 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
   spanErrorNumberRequiredRef!: ElementRef<HTMLSpanElement>;
   firstClickedInputNumber = false;
 
-  onInputNumberFocus(inputName: HTMLInputElement, whichIs: 'name' | 'lastName' | 'cpf' | '') {
+  onInputNumberFocus(inputName: HTMLInputElement, whichIs: string) {
     const value = inputName.value;
 
     const span = this.spanNumberRef.nativeElement;
@@ -1116,14 +1185,6 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
     const span = this.spanNumberRef.nativeElement;
     const spanErrorNumberRequiredRef = this.spanErrorNumberRequiredRef.nativeElement;
 
-    // Remove tudo que não é número
-    // value = value.replace(/\D/g, '');
-
-    // Limita a 11 dígitos
-    // if (value.length > 8) {
-    //   value = value.slice(0, 8);
-    // }
-
     let formatted = '';
 
     for (let i = 0; i < value.length; i++) {
@@ -1155,11 +1216,9 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
   }
 
   @ViewChild('spanComplementRef') spanComplementRef!: ElementRef<HTMLSpanElement>;
-  @ViewChild('spanErrorComplementRequiredRef')
-  spanErrorComplementRequiredRef!: ElementRef<HTMLSpanElement>;
   firstClickedInputComplement = false;
 
-  onInputComplementFocus(inputName: HTMLInputElement, whichIs: 'name' | 'lastName' | 'cpf' | '') {
+  onInputComplementFocus(inputName: HTMLInputElement, whichIs: string) {
     const value = inputName.value;
 
     const span = this.spanComplementRef.nativeElement;
@@ -1189,16 +1248,6 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
   onInputComplement(input: HTMLInputElement, whichIs: string) {
     let value = input.value;
 
-    const span = this.spanComplementRef.nativeElement;
-
-    // Remove tudo que não é número
-    // value = value.replace(/\D/g, '');
-
-    // Limita a 11 dígitos
-    // if (value.length > 8) {
-    //   value = value.slice(0, 8);
-    // }
-
     let formatted = '';
 
     for (let i = 0; i < value.length; i++) {
@@ -1221,7 +1270,7 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
   spanErrorNeighborhoodRequiredRef!: ElementRef<HTMLSpanElement>;
   firstClickedInputNeighborhood = false;
 
-  onInputNeighborhoodFocus(inputName: HTMLInputElement, whichIs: 'name' | 'lastName' | 'cpf' | '') {
+  onInputNeighborhoodFocus(inputName: HTMLInputElement, whichIs: string) {
     const value = inputName.value;
 
     const span = this.spanNeighborhoodRef.nativeElement;
@@ -1263,14 +1312,6 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
 
     const span = this.spanNeighborhoodRef.nativeElement;
     const spanErrorNeighborhoodRequiredRef = this.spanErrorNeighborhoodRequiredRef.nativeElement;
-
-    // Remove tudo que não é número
-    // value = value.replace(/\D/g, '');
-
-    // Limita a 11 dígitos
-    // if (value.length > 8) {
-    //   value = value.slice(0, 8);
-    // }
 
     let formatted = '';
 
@@ -1359,7 +1400,7 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
   spanErrorCityRequiredRef!: ElementRef<HTMLSpanElement>;
   firstClickedInputCity = false;
 
-  onInputCityFocus(inputName: HTMLInputElement, whichIs: 'name' | 'lastName' | 'cpf' | '') {
+  onInputCityFocus(inputName: HTMLInputElement, whichIs: string) {
     const value = inputName.value;
 
     const span = this.spanCityRef.nativeElement;
@@ -1402,14 +1443,6 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
     const span = this.spanCityRef.nativeElement;
     const spanErrorCityRequiredRef = this.spanErrorCityRequiredRef.nativeElement;
 
-    // Remove tudo que não é número
-    // value = value.replace(/\D/g, '');
-
-    // Limita a 11 dígitos
-    // if (value.length > 8) {
-    //   value = value.slice(0, 8);
-    // }
-
     let formatted = '';
 
     for (let i = 0; i < value.length; i++) {
@@ -1445,10 +1478,7 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
   spanErrorReferencePointRequiredRef!: ElementRef<HTMLSpanElement>;
   firstClickedInputReferencePoint = false;
 
-  onInputReferencePointFocus(
-    inputName: HTMLInputElement,
-    whichIs: 'name' | 'lastName' | 'cpf' | ''
-  ) {
+  onInputReferencePointFocus(inputName: HTMLInputElement, whichIs: string) {
     const value = inputName.value;
 
     const span = this.spanReferencePointRef.nativeElement;
@@ -1477,16 +1507,6 @@ export class FormLegalEntityComponent implements OnInit, AfterViewInit {
 
   onInputReferencePoint(input: HTMLInputElement, whichIs: string) {
     let value = input.value;
-
-    const span = this.spanReferencePointRef.nativeElement;
-
-    // Remove tudo que não é número
-    // value = value.replace(/\D/g, '');
-
-    // Limita a 11 dígitos
-    // if (value.length > 8) {
-    //   value = value.slice(0, 8);
-    // }
 
     let formatted = '';
 
