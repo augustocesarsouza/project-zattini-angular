@@ -1,0 +1,109 @@
+<app-header-full-main></app-header-full-main>
+
+<div class="flex flex-col mx-[55px] mt-[20px]">
+  <div class="flex gap-[5px] text-[12px] mb-[15px]">
+    <span class="text-[#333] font-semibold">Home</span>
+    <span>/</span>
+    <span>{{ title }}</span>
+  </div>
+  <div class="flex justify-between !mb-[500px]">
+    <app-filter-sidebar *ngIf="user" [title]="title" [user]="user"></app-filter-sidebar>
+    <div class="flex flex-column flex-fill pt-3 pl-7">
+      <h1 class="fs-4 text-uppercase">{{ title }}</h1>
+
+      <div class="flex flex-col">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="d-flex">
+            <span class="span-displaying-results">Exibindo: 1 - 42 de 1.077 resultados</span>
+          </div>
+          <div class="d-flex">
+            <div class="d-flex align-items-center gap-2 container-order-by">
+              <label for="ordenar" class="form-label mb-0">Ordenar por:</label>
+              <select id="ordenar" class="form-select" style="width: auto">
+                <option>Mais Populares</option>
+                <option>Mais Vendidos</option>
+                <option>Lançamentos</option>
+                <option>Ofertas</option>
+                <option>Melhor Avaliados</option>
+                <option>Maior Preço</option>
+                <option>Menor Preço</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex container-main-all-product">
+        <!-- product-card.component.html -->
+        <div
+          class="card shadow-sm border-0 cursor-pointer"
+          (mouseenter)="onMouseEnterContainerMainProduct(headerTitleProduct)"
+          (mouseleave)="onMouseLeaveContainerMainProduct(headerTitleProduct)"
+          style="width: 18rem"
+          *ngFor="let el of products; let i = index"
+        >
+          <div
+            class="position-relative"
+            (mouseenter)="onMouseEnter(el)"
+            (mouseleave)="onMouseLeave()"
+          >
+            <img
+              src="{{
+                imagemQueVaiAparecer.length > 0 && whichImgMouseOver?.idProduct === el.id
+                  ? imagemQueVaiAparecer
+                  : el.productColorDTOs[0].imagens[0]
+              }}"
+              class="card-img-top"
+              alt="Moletom Chicago"
+            />
+
+            <!-- Botão favorito -->
+            <button
+              class="btn btn-light btn-sm rounded-circle position-absolute top-0 end-0 m-2 shadow-sm"
+            >
+              <i class="bi bi-heart"></i>
+            </button>
+          </div>
+
+          <div class="card-body container-card-body">
+            <!-- Desconto -->
+            <span class="badge w-100 mb-2 span-percentage-discount"
+              >-{{ el.percentageDiscount }}% OFF</span
+            >
+
+            <!-- Título -->
+            <h6 class="card-title header-title-product" #headerTitleProduct>{{ el.title }}</h6>
+
+            <!-- Avaliação -->
+            <div class="container-rate-avaliation-and-stars">
+              <div class="container-star-quantity">
+                <div
+                  class="container-star-main"
+                  *ngFor="let el of quantityStarRender; let i = index"
+                >
+                  <!-- estrela vazia sempre aparece -->
+                  <div class="container-star-img"></div>
+
+                  <!-- estrela cheia por cima (controlada no TS) -->
+                  <div class="container-star" #containerStar>
+                    <div class="container-star-img-full"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Preços -->
+            <div class="container-paragraph-and-header-price">
+              <p class="mb-0 text-muted text-decoration-line-through paragraph-size-price-original">
+                R$ {{ el.price.toString().replace('.', ',') }}
+              </p>
+              <h5 class="text-dark fw-bold header-5-size-in-pix">
+                R$ {{ getDiscountPriceProduct(el) }}
+                <small class="text-muted small-pix-size">no Pix</small>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

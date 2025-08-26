@@ -11,6 +11,13 @@ const routes: Routes = [
         (m) => m.LoginAndRegisterUserModule
       ),
   },
+  {
+    path: 'sportstyle',
+    loadChildren: () =>
+      import('./product-sportstyle/product-sportstyle.module').then(
+        (m) => m.ProductSportstyleModule
+      ),
+  },
 ];
 
 @NgModule({

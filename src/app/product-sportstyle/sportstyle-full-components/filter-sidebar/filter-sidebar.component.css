@@ -1,0 +1,199 @@
+.span-brand-dash {
+  cursor: pointer;
+  display: inline-block;
+  font-size: 20px;
+  font-weight: 400;
+  padding: 0;
+  user-select: none;
+}
+
+.container-input-search {
+  display: flex;
+  border: 1px solid #00000018;
+  position: relative;
+  height: 42px;
+  border-radius: 7px;
+}
+
+.container-magnifying-glass {
+  display: flex;
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  right: 7px;
+  top: 10px;
+}
+
+.container-main-checkbox {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+  height: 130px;
+  overflow-y: scroll;
+  margin-top: 12px;
+}
+
+/* Remove setas e deixa só o track */
+.container-main-checkbox::-webkit-scrollbar-button {
+  display: none; /* esconde os botões de cima/baixo */
+}
+
+/* largura da barra */
+.container-main-checkbox::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* cor do track (fundo) */
+.container-main-checkbox::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* cor do thumb (parte que se move) */
+.container-main-checkbox::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+/* cor ao passar o mouse */
+.container-main-checkbox::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Remove setas e deixa só o track */
+.container-main-size::-webkit-scrollbar-button {
+  display: none; /* esconde os botões de cima/baixo */
+}
+
+/* largura da barra */
+.container-main-size::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* cor do track (fundo) */
+.container-main-size::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* cor do thumb (parte que se move) */
+.container-main-size::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+/* cor ao passar o mouse */
+.container-main-size::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.form-check-label {
+  margin-top: 2px;
+}
+
+.form-check-input:checked {
+  background-color: #00c4b4; /* cor do fundo */
+  border-color: #00c4b4; /* cor da borda */
+}
+
+/* Para manter o check branco */
+.form-check-input:checked[type='checkbox'] {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+}
+
+.form-check-input:focus {
+  box-shadow: none; /* remove o brilho/sombra */
+  outline: none; /* remove o contorno */
+}
+
+.small-label {
+  font-size: 14px;
+}
+
+.container-size {
+  font-size: 14px;
+  min-height: 40px;
+  min-width: 40px;
+}
+
+.border-gray-custom {
+  border-color: #999 !important;
+}
+
+.container-main-size {
+  /* display: grid;
+  grid-template-columns: repeat(4, 1fr); */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  max-height: 130px;
+  overflow-y: auto;
+  margin-top: 12px;
+}
+
+.container-main-size > div {
+  margin: 0; /* Remove margens entre os itens */
+  padding: 0; /* Se quiser remover espaçamento interno também */
+}
+
+.container-size {
+  width: 45px; /* largura fixa */
+  height: 45px; /* altura fixa */
+}
+
+.span-size {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.container-color-main-and-bottom-part {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 12px 9px;
+}
+
+.container-color-main {
+  display: flex;
+  flex-direction: column;
+  height: 0px;
+  max-height: 190px;
+  overflow: hidden; /* esconde conteúdo quando fechar */
+  transition: height 0.3s ease; /* efeito suave ao mudar a height */
+}
+
+.container-color-height-adjust {
+  max-height: 190px;
+  overflow-y: auto; /* ativa scroll vertical se passar */
+  overflow-x: hidden; /* evita barra horizontal */
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.container-check-color {
+  height: 23px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 7px;
+}
+
+.container-input-search-main-color {
+  display: flex;
+  border: 1px solid #00000018;
+  position: relative;
+  height: 42px;
+  border-radius: 7px;
+  margin-bottom: 10px;
+}
+
+.span-minus-color-main {
+  display: none;
+}

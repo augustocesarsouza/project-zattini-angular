@@ -313,7 +313,6 @@ export class AlreadyClientComponent {
             const userLoginDTO = success.data;
             this.errorLogin = !userLoginDTO.passwordIsCorrect;
 
-            console.log(userLoginDTO);
             if (userLoginDTO.passwordIsCorrect) {
               const resultUser = SetUserLocalStorage(userLoginDTO.userDTO);
 
