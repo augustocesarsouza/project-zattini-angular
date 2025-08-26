@@ -4,9 +4,10 @@ import { HeaderFullMainComponent } from './header-full-main/header-full-main.com
 import { HeaderMainComponent } from './header-components/header-main/header-main.component';
 import { HeaderSecondMainComponent } from './header-second-components/header-second-main/header-second-main.component';
 import { AllSvgModule } from '../all-svg/all-svg.module';
+import { HeaderThirdComponent } from './header-third/header-third.component';
 
 @NgModule({
-  declarations: [HeaderFullMainComponent, HeaderMainComponent, HeaderSecondMainComponent],
+  declarations: [HeaderFullMainComponent, HeaderMainComponent, HeaderSecondMainComponent, HeaderThirdComponent],
   exports: [HeaderFullMainComponent],
   imports: [CommonModule, AllSvgModule],
 })

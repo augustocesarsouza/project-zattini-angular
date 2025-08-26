@@ -6,6 +6,7 @@ import { ShoppingCardSvgComponent } from './shopping-card-svg/shopping-card-svg.
 import { GoogleSvgComponent } from './google-svg/google-svg.component';
 import { ArrowSvgComponent } from './arrow-svg/arrow-svg.component';
 import { XSvgComponent } from './x-svg/x-svg.component';
+import { MagnifyingGlassBrandSvgComponent } from './magnifying-glass-brand-svg/magnifying-glass-brand-svg.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { XSvgComponent } from './x-svg/x-svg.component';
     GoogleSvgComponent,
     ArrowSvgComponent,
     XSvgComponent,
+    MagnifyingGlassBrandSvgComponent,
   ],
   exports: [
     MagnifyingGlassComponent,
@@ -23,6 +25,7 @@ import { XSvgComponent } from './x-svg/x-svg.component';
     GoogleSvgComponent,
     ArrowSvgComponent,
     XSvgComponent,
+    MagnifyingGlassBrandSvgComponent,
   ],
   imports: [CommonModule],
 })

@@ -8,22 +8,27 @@ import { CreateUserDTO } from '../../interface/dto/CreateUserDTO';
 
 export interface ReturnGetUser {
   data: User;
-  isSuccess: boolean;
+  isSucess: boolean;
 }
 
 export interface ResultReturnCreate {
   data: CreateUserDTO;
-  isSuccess: boolean;
+  isSucess: boolean;
 }
 
 export interface ResultReturnLogin {
   data: ILoginData;
-  isSuccess: boolean;
+  isSucess: boolean;
 }
 
 export interface ILoginData {
   passwordIsCorrect: boolean;
   userDTO: User;
+}
+
+export interface ReturnErroCatch {
+  isSucess: boolean;
+  message: string;
 }
 
 @Injectable({

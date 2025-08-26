@@ -1,3 +1,28 @@
 <app-header-full-main></app-header-full-main>
 
+<div class="relative">
+  <div class="flex overflow-hidden cursor-pointer" #containerOverflowImgsRef>
+    <img
+      *ngFor="let el of arrayObjImgsMainPage; let i = index"
+      [src]="el.src"
+      [alt]="el.alt"
+      class="w-full h-full object-cover"
+      (click)="i === 0 && onClickImgSportsyle()"
+    />
+  </div>
+  <div class="flex items-center gap-[5px] absolute right-[75px] bottom-[20px]">
+    <div
+      *ngFor="let _el of arrayObjImgsMainPage; let i = index"
+      (click)="onClickContainerBall(i)"
+      #containerAllBallRef
+      [ngClass]="
+        i === 0
+          ? 'rounded-2xl cursor-pointer bg-[black] w-[12px] h-[12px]'
+          : 'rounded-2xl cursor-pointer bg-[#999] w-[9px] h-[9px]'
+      "
+    ></div>
+  </div>
+</div>
+
 <p>home works!</p>
+<!-- product-sportstyle -->
